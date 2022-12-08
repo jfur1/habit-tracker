@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `first_name` VARCHAR(75),
     `last_name` VARCHAR(75),
     `email` VARCHAR(95) NOT NULL,
-    `password` VARCHAR(36) NOT NULL,
+    `password` VARCHAR(95) NOT NULL,
     `created` TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import Axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import styles from '../styles/Register.module.scss'
 
 const register = () => {
+    const router = useRouter()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -18,18 +21,30 @@ const register = () => {
         }))
     }
     
-    const onSubmit = (e) => {
-        e.preventDefault()
-    
-        if (password !== password2) {
-          alert('Passwords do not match');
-        } else {
-          const userData = {
-            email,
-            password,
-          }
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
-          await axios.post('http://localhost:8080/api/users/register')
+        const postData = async() => {
+            const userData = {
+                email,
+                password,
+              }
+              const res = await Axios.post(process.env.API_URL + 'register', userData);
+    
+              return res;
+        }
+
+        if (password !== password2) {
+            alert('Passwords do not match');
+        }
+        else {
+            postData().then((response) => {
+                console.log(response);
+                if(response.status === 201){
+                    localStorage.setItem('user', response.data.token);
+                    router.push('/login');
+                }
+            })
         }
     }
 
@@ -39,18 +54,18 @@ const register = () => {
                 <h2>Register</h2>
                 <form  onSubmit={onSubmit}>
                     <div className={styles['input-box']}>
-                        <input type="email" name="email" id='email' required/>
+                        <input type="email" name="email" id='email' value={email} onChange={onChange} required/>
                         <label>Email</label>
                     </div>
                     <div className={styles['input-box']}>
-                        <input type="password" name="password" id='password' required/>
+                        <input type="password" name="password" id='password'  value={password} onChange={onChange} required/>
                         <label>Password</label>
                     </div>
                     <div className={styles['input-box']}>
-                        <input type="password" name="password2" id='password2' required/>
+                        <input type="password" name="password2" id='password2'  value={password2} onChange={onChange} required/>
                         <label>Confirm Password</label>
                     </div>
-                    <a href="#" className={styles['submit']}>
+                    <a href="" onClick={onSubmit} className={styles['submit']}>
                         Submit
                     </a>
                 </form>

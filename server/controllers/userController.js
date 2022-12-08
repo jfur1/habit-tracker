@@ -1,11 +1,14 @@
 import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 
 // @Route:  /register
 // @Desc:   Register a new user
 // @Access: Public
 export const registerUser = async(req, res) => {
+    console.log(req.body)
     const { email, password } = req.body;
 
     if(!email || !password){
@@ -14,16 +17,23 @@ export const registerUser = async(req, res) => {
     }
 
     // Check if user exists
-    const userExists = await User.findOne({ email })
+    const userExists = await User.findOne({ 
+        where: {
+            email: email
+        }
+     })
 
     if (userExists) {
-        res.status(400)
+        res.status(400);
         throw new Error('User already exists')
     }
 
     // Hash password
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
+
+    console.log("Unencrypted pwd: ", password);
+    console.log('Hashed pwd:', hashedPassword)
 
     // Create user
     const user = await User.create({
@@ -50,7 +60,11 @@ export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
   
     // Check for user email
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ 
+        where: {
+            email: email
+        }
+     })
   
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({

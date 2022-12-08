@@ -10,15 +10,12 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({"Access-Control-Allow-Origin": "http://localhost:3000"}))
 
 
 // Base routes
-// app.use('/api/goals', require('./routes/goalRoutes'));
 app.use('/api/habits', habitRoutes);
 app.use('/api/', userRoutes);
-
-
 
 // get driver connection
 app.listen(port, () => {

@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Axios from 'axios'
+import { useRouter } from 'next/router'
 import styles from '../styles/Login.module.scss'
 
 const login = () => {
+    const router = useRouter()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -16,15 +19,35 @@ const login = () => {
         }))
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
+
+        const postData = async() => {
+            const userData = {
+                email,
+                password,
+              }
+              const res = await Axios.post(process.env.API_URL + 'login', userData);
     
-        const userData = {
-          email,
-          password,
+              return res;
         }
-    
-        // dispatch(login(userData))
+
+        if (!email || !password) {
+            alert('Please fill all required fields.');
+        }
+        else {
+            postData().then((response) => {
+                console.log(response);
+
+                if(response.status === 200){
+                    localStorage.setItem('user', response.data.token);
+                    router.push('/dashboard');
+                } else { // Failed login attempt
+                    alert('Incorrect username/password combination!');
+                }
+            })
+        }
+
       }
 
     return (
@@ -33,14 +56,14 @@ const login = () => {
                 <h2>Login</h2>
                 <form>
                     <div className={styles['input-box']}>
-                        <input type="email" name="email" id='email' onChange={onChange} required/>
+                        <input type="email" name="email" id='email' value={email} onChange={onChange} required/>
                         <label>Email</label>
                     </div>
                     <div className={styles['input-box']}>
-                        <input type="password" name="password" id='password'  onChange={onChange} required/>
+                        <input type="password" name="password" id='password' value={password} onChange={onChange} required/>
                         <label>Password</label>
                     </div>
-                    <a href="#" className={styles['submit']}>
+                    <a href="" onClick={onSubmit} className={styles['submit']}>
                         Submit
                     </a>
                 </form>
