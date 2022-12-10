@@ -8,6 +8,7 @@ const AuthContext = React.createContext({
     setAuthState: () => {},
     isUserAuthenticated: () => !!localStorage.getItem('user')
 });
+
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
