@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../src/context/auth-context.js'
+import styles from '../styles/Dashboard.module.scss'
 
 const dashboard = () => {
     const router = useRouter();
@@ -14,16 +15,13 @@ const dashboard = () => {
         ? router.push("/dashboard")
         : router.push("/");
     }, [])
-
-    const logout = () => {
-      localStorage.removeItem('user');
-      router.push('/');
-    }
     
     return (
-        <div>dashboard
-            <button onClick={logout}>Sign Out</button>
+        <>
+        <div className={styles.main}>dashboard
+            
         </div>
+        </>
     )
 }
 

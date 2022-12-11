@@ -1,0 +1,43 @@
+.container {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background-color: #e1e1e13b;
+    border-radius: 12px;
+    
+    .navList {
+    margin: 0;
+    padding: 10px 0px;
+    
+    .navbar {
+        margin: 0;
+        padding: 0;
+
+        .iconList {
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0;
+        
+        .icons {
+            margin: 0;
+            padding: 5px;
+            list-style-type: none;
+            
+            .icon {
+            font-size: 25px;
+            
+            &:hover {
+                color: #fb3958;
+            }
+            }
+            
+            .active {
+            color: red;
+            }
+        }
+        }
+    }
+    }
+}
