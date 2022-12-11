@@ -1,55 +1,54 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../../styles/NavBar.module.scss'
 import { FaUserAlt, FaHome, FaRegPlusSquare, FaRegChartBar, FaLayerGroup } from "react-icons/fa";
-import { AuthContext } from '../../src/context/auth-context.js'
+import { AuthContext } from '../context/auth-context.js'
 
 
-const NavBar = () => {
+const NavBar = ({ currentIdx }) => {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState(0);
     const authContext = useContext(AuthContext);
+    const [activeTab, setActiveTab] = useState(currentIdx);
+    console.log(router.pathname)
 
     const MENU_LIST = [
         { href: '/dashboard'},
         { href: '/habits'},
         { href: '/newHabit'},
         { href: '/stats'},
-        { href: '/settings'},
-    ]
+        { href: '/settings'}
+    ];
 
     const handleClick = (activeIdx) => {
-        setActiveTab(activeIdx)
+        if(router.pathname === MENU_LIST[activeIdx].href)
+            return
         router.push(MENU_LIST[activeIdx].href);
     }
 
     return (
-        authContext.isUserAuthenticated()
-        ?
         <div className={styles.container}>
             <div className={styles.navList}>
                 <nav className={styles.navbar}>
                     <ul className={styles.iconList}>
                         <li className={styles.icons}>
-                            <FaHome className={styles.icon} onClick={() => handleClick(0)}/>
+                            <FaHome className={`${styles.icon} ${router.pathname === '/dashboard' ? styles.active : ""}`} onClick={() => handleClick(0)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaLayerGroup className={styles.icon} onClick={() => handleClick(1)}/>
+                            <FaLayerGroup className={`${styles.icon} ${router.pathname === '/habits' ? styles.active : ""}`} onClick={() => handleClick(1)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaRegPlusSquare className={styles.icon} onClick={() => handleClick(2)}/>
+                            <FaRegPlusSquare className={`${styles.icon} ${router.pathname === '/newHabit' ? styles.active : ""}`} onClick={() => handleClick(2)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaRegChartBar className={styles.icon} onClick={() => handleClick(3)}/>
+                            <FaRegChartBar className={`${styles.icon} ${router.pathname === '/stats' ? styles.active : ""}`} onClick={() => handleClick(3)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaUserAlt className={styles.icon} onClick={() => handleClick(4)}/>
+                            <FaUserAlt className={`${styles.icon} ${router.pathname === '/settings' ? styles.active : ""}`} onClick={() => handleClick(4)}/>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
-        : null
     )
 }
 

@@ -28,13 +28,13 @@
             .icon {
             font-size: 25px;
             
-            &:hover {
-                color: #fb3958;
-            }
-            }
-            
-            .active {
-            color: red;
+                &:hover {
+                    color: #fb3958;
+                }
+                
+                &.active {
+                    color: red;
+                }
             }
         }
         }

@@ -6,7 +6,14 @@ const AuthContext = React.createContext({
         token: ""
     },
     setAuthState: () => {},
-    isUserAuthenticated: () => !!localStorage.getItem('user')
+    isUserAuthenticated: () => {
+        if (typeof window !== 'undefined') {
+            // Perform localStorage action
+            return !!localStorage.getItem('user')
+        } else {
+            return false
+        }
+    }
 });
 
 const { Provider } = AuthContext;

@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../src/context/auth-context.js'
 import styles from '../styles/Dashboard.module.scss'
+import NavBar from '../src/components/NavBar.jsx'
 
 const dashboard = () => {
     const router = useRouter();
@@ -21,6 +22,7 @@ const dashboard = () => {
         <div className={styles.main}>dashboard
             
         </div>
+        <NavBar currentIdx={0}/>
         </>
     )
 }
