@@ -1,6 +1,7 @@
-import Product from '../models/habitModel.js'
+import Product from '../models/userModel.js'
 import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
+import Models from '../models/userModel.js'
 
 // @Route:  GET /api/habits
 // @Desc:   Return all habits for a given user
@@ -19,7 +20,7 @@ export const getUserHabits = async(user_id) => {
 }
 
 
-// @Route:  GET /api/habits/all
+// @Route:  GET /api/habits
 // @Desc:   Return all habits (Test route)
 // @Access: Private
 export const getAllHabits = asyncHandler(async (req, res) => {
@@ -52,20 +53,16 @@ export const createHabit = asyncHandler(async (req, res) => {
         icon
     } = req.body;
 
-    const habit = await Habit.create({
-        user_id,
-        title,
-        schedule,
-        frequency,
-        units,
-        type,
-        description,
-        color,
-        icon
-    })
+    console.log('Trying to insert: ', req.body)
 
-    if(habit)
-        res.status(201).json(habit);
+    const [rows] = await connectionPool.query(`
+    INSERT INTO
+    habits (user_id, title, schedule, frequency, units, type, description, color, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [user_id, title, schedule, frequency, units, type, description, color, icon]);
+    console.log('rows:', rows)
+
+    if(rows)
+        res.status(201).json(rows);
     else
         res.status(400).json({ msg: "Err. Please try again."})
 })

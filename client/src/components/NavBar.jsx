@@ -2,15 +2,15 @@ import React, { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../../styles/NavBar.module.scss'
 import { FaUserAlt, FaHome, FaRegPlusSquare, FaRegChartBar, FaLayerGroup } from "react-icons/fa";
-import { AuthContext } from '../context/auth-context.js'
+// import { AuthContext } from '../context/auth-context.js'
 import NewHabit from '../../pages/newHabit.jsx'
 
 const NavBar = ({ currentIdx }) => {
     const router = useRouter();
-    const authContext = useContext(AuthContext);
+    // const authContext = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState(currentIdx);
     const [showNewHabitForm, setShowNewHabitForm] = useState(false)
-    console.log(router.pathname)
+    // console.log(router.pathname)
 
     const MENU_LIST = [
         { href: '/dashboard'},

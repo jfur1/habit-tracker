@@ -40,10 +40,12 @@ const login = () => {
                 console.log(response);
 
                 if(response.status === 200){
-                    localStorage.setItem('user', {
+                    const userData = {
+                        user_id: response.data.user_id,
                         email: response.data.email,
                         token: response.data.token
-                    });
+                    }
+                    localStorage.setItem('user', JSON.stringify(userData));
                     router.push('/dashboard');
                 } else { // Failed login attempt
                     alert('Incorrect username/password combination!');

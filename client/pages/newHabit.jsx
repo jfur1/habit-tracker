@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import Axios from 'axios'
 import styles from '../styles/newHabit.module.scss'
 import NavBar from '../src/components/NavBar.jsx'
 import { FaCheck } from 'react-icons/fa'
+import { useRouter } from 'next/router'
 
 const NewHabit = ({ setShowNewHabitForm }) => {
+  const router = useRouter()
   const colors = [
     '#E74C3C',
     '#F4D03F',
@@ -76,20 +79,45 @@ const NewHabit = ({ setShowNewHabitForm }) => {
     // if(!title || !schedule)
 
     const postData = async() => {
+
+      // if(!authContext.isUserAuthenticated()){
+      //   console.log('Must be signed in to create a new habit!');
+      //   return;
+      // }
+
+      const user = JSON.parse(localStorage.getItem('user'));
+      const user_id = user.user_id;
+
       const habitData = {
-          // user_id: 
-          title,
-          // schedule:
+          user_id: user_id,
+          title: title,
+          schedule: selectedDays.toString(),
           frequency: frequency,
           units: units,
+          type: type,
           description: description,
           color: colors[colorIdx],
           icon: icon
         }
-        const res = await Axios.post(process.env.API_URL + 'login', habitData);
+        const headers = {
+          "Authorization": "Bearer " + user.token,
+          "Content-Type": 'application/json'
+        }
+        const res = await Axios.post(process.env.API_URL + 'habits', habitData, {
+          headers: headers
+        });
 
         return res;
-  }
+    }
+
+    postData().then((data) => {
+      if(data.status === 201){
+        console.log('Results after trying to create new habit:', data)
+        // Close form after success
+        router.route('/dashboard')
+      }
+    })
+
   }
 
 
@@ -156,11 +184,12 @@ const NewHabit = ({ setShowNewHabitForm }) => {
                       <p className={styles.subtitle}>Or create a custom schedule</p>
 
                       <div className={styles.row}>
-                        {weekdays.map((day) => {
+                        {weekdays.map((day, idx) => {
                           return (
                             <p 
                               className={styles.scheduleOption}
                               id={day}
+                              key={idx}
                               value={day}
                               style={selectedDays.includes(day)
                                 ? {backgroundColor: 'blue'} 
@@ -190,7 +219,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
 
                     <div className={styles.description}>
                       <h2 className={styles.title}>Description</h2>
-                      <textarea rows={3} className={styles.descInput} placeholder={`Why is this goal important?`}/>
+                      <textarea rows={3} className={styles.descInput} placeholder={`Why is this goal important?`} name='description' valuee={description} onChange={onChange}/>
                       
                     </div>
                 </form>

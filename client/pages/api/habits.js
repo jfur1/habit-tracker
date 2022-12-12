@@ -8,17 +8,25 @@ export default login = async (req, res) => {
 
         console.log(req.body);
 
-        const { title, color, schedule, frequency, description } = req.body;
-
-        const habitData = { 
-            title, 
+        const { user_id, title, schedule, color, schedule, frequency, description } = req.body;
+        
+        const headers = {
+          "Authorization": "Bearer " + token,
+          "Content-Type": 'application/json'
+        }
+        const habitData = {
+            user_id,
+            title,
+            schedule,
             color,
             schedule,
             frequency,
             description 
         }
 
-        const response = await Axios.post(API_URL + 'habits', habitData)
+        const response = await Axios.post(API_URL + 'habits', habitData, {
+          headers: headers
+        })
 
         console.log('API RESPONSE: ', response)
 

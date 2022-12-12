@@ -6,16 +6,16 @@ import NavBar from '../src/components/NavBar.jsx'
 
 const dashboard = () => {
     const router = useRouter();
-    const authContext = useContext(AuthContext);
+    // const authContext = useContext(AuthContext);
 
-    useEffect(() => {
-        console.log('Auth Status:', authContext.isUserAuthenticated())
+    // useEffect(() => {
+    //     console.log('Auth Status:', authContext.isUserAuthenticated())
 
-        // checks if the user is authenticated
-        authContext.isUserAuthenticated()
-        ? router.push("/dashboard")
-        : router.push("/");
-    }, [])
+    //     // checks if the user is authenticated
+    //     authContext.isUserAuthenticated()
+    //     ? router.push("/dashboard")
+    //     : router.push("/");
+    // }, [])
     
     return (
         <>

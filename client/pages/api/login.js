@@ -1,8 +1,11 @@
 import Axios from 'axios'
 const PROXY = 'http://localhost:8080'
 const API_URL = PROXY + '/api/'
+import { authContext } from '../../src/context/auth-context.js'
+import React, { useContext } from 'react'
 
-export default login = async (req, res) => {
+const login = async (req, res) => {
+    // const authContext = useContext(AuthContext);
 
     if (req.method === 'POST') {
 
@@ -13,17 +16,26 @@ export default login = async (req, res) => {
             password 
         }
 
-        const response = await Axios.post(API_URL + 'login', userData)
+        const response = await Axios.post(process.env.API_URL + 'login', userData)
 
-        console.log('API RESPONSE: ', response)
+        console.log(response)
 
-        if(response.data){
-            res.status(201).send(response);
-        } else {
+        if (response.data) {
+            const user = localStorage.setItem('user', response.data)
+
+            // authContext.setAuthState(user).then((res) => {
+            //     console.log(res);
+            //     return res;
+            // });
+
+        }
+         else {
             res.status(400).send('Unexpected error. Please try again!')
         }
         
     } else {
       // Handle any other HTTP method
     }
-  }
+}
+
+export default login

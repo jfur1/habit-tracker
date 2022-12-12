@@ -2,7 +2,7 @@ import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import User from '../models/userModel.js'
+import Models from '../models/userModel.js'
 
 // @Route:  /register
 // @Desc:   Register a new user
@@ -17,7 +17,7 @@ export const registerUser = async(req, res) => {
     }
 
     // Check if user exists
-    const userExists = await User.findOne({ 
+    const userExists = await Models.User.findOne({ 
         where: {
             email: email
         }
@@ -36,13 +36,14 @@ export const registerUser = async(req, res) => {
     console.log('Hashed pwd:', hashedPassword)
 
     // Create user
-    const user = await User.create({
+    const user = await Models.User.create({
         email,
         password: hashedPassword,
     })
 
     if (user) {
         res.status(201).json({
+          user_id: user.user_id,
           email: user.email,
           token: generateToken(user.user_id),
         })
@@ -60,14 +61,15 @@ export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
   
     // Check for user email
-    const user = await User.findOne({ 
+    const user = await Models.User.findOne({ 
         where: {
             email: email
         }
      })
-  
+
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
+      res.status(200).json({
+        user_id: user.user_id,
         email: user.email,
         token: generateToken(user.user_id),
       })
