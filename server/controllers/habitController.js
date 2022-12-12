@@ -2,7 +2,7 @@ import Product from '../models/habitModel.js'
 import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
 
-// @Route:  /api/habits
+// @Route:  GET /api/habits
 // @Desc:   Return all habits for a given user
 // @Access: Private
 export const getUserHabits = async(user_id) => {
@@ -19,7 +19,7 @@ export const getUserHabits = async(user_id) => {
 }
 
 
-// @Route:  /api/habits/all
+// @Route:  GET /api/habits/all
 // @Desc:   Return all habits (Test route)
 // @Access: Private
 export const getAllHabits = asyncHandler(async (req, res) => {
@@ -32,4 +32,57 @@ export const getAllHabits = asyncHandler(async (req, res) => {
     console.log('Results: ', rows)
 
     res.status(200).json(rows)
+})
+
+
+
+// @Route:  POST /api/habits
+// @Desc:   Create new habit
+// @Access: Private
+export const createHabit = asyncHandler(async (req, res) => {
+    const {
+        user_id,
+        title,
+        schedule,
+        frequency,
+        units,
+        type,
+        description,
+        color,
+        icon
+    } = req.body;
+
+    const habit = await Habit.create({
+        user_id,
+        title,
+        schedule,
+        frequency,
+        units,
+        type,
+        description,
+        color,
+        icon
+    })
+
+    if(habit)
+        res.status(201).json(habit);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+})
+
+
+
+// @Route:  PUT /api/habits
+// @Desc:   Update existing habit
+// @Access: Private
+export const updateHabit = asyncHandler(async (req, res) => {
+
+})
+
+
+// @Route:  DELETE /api/habits/:id
+// @Desc:   Delete Goal
+// @Access: Private
+export const deleteHabit = asyncHandler(async (req, res) => {
+
 })

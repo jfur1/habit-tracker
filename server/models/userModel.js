@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize'
 import db from '../config/database.js'
+import Habit from './habitModel.js'
 
 const User = db.define(`users`, {
     user_id: {
@@ -25,5 +26,7 @@ const User = db.define(`users`, {
     freezeTableName: true,
     timestamps: false
 });
+
+User.hasMany(Habit);    // Set one to many relationship
  
 export default User;
