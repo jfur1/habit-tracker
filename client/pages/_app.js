@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import React, { useEffect, useContext } from 'react'
 import Layout from '../src/layouts/Layout.js'
 

@@ -3,12 +3,13 @@ import { useRouter } from 'next/router'
 import styles from '../../styles/NavBar.module.scss'
 import { FaUserAlt, FaHome, FaRegPlusSquare, FaRegChartBar, FaLayerGroup } from "react-icons/fa";
 import { AuthContext } from '../context/auth-context.js'
-
+import NewHabit from '../../pages/newHabit.jsx'
 
 const NavBar = ({ currentIdx }) => {
     const router = useRouter();
     const authContext = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState(currentIdx);
+    const [showNewHabitForm, setShowNewHabitForm] = useState(false)
     console.log(router.pathname)
 
     const MENU_LIST = [
@@ -22,11 +23,18 @@ const NavBar = ({ currentIdx }) => {
     const handleClick = (activeIdx) => {
         if(router.pathname === MENU_LIST[activeIdx].href)
             return
-        router.push(MENU_LIST[activeIdx].href);
+        if(activeIdx === 2){
+            setShowNewHabitForm(true)
+            setActiveTab(2)
+        } else {
+            router.push(MENU_LIST[activeIdx].href);
+        }
     }
 
     return (
+            <>
         <div className={styles.container}>
+        { showNewHabitForm ? <NewHabit setShowNewHabitForm={setShowNewHabitForm}/> : null} 
             <div className={styles.navList}>
                 <nav className={styles.navbar}>
                     <ul className={styles.iconList}>
@@ -49,6 +57,7 @@ const NavBar = ({ currentIdx }) => {
                 </nav>
             </div>
         </div>
+        </>
     )
 }
 
