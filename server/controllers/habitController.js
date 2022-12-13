@@ -1,13 +1,15 @@
-import Product from '../models/userModel.js'
 import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
-import Models from '../models/userModel.js'
 
 // @Route:  GET /api/habits
 // @Desc:   Return all habits for a given user
 // @Access: Private
-export const getUserHabits = async(user_id) => {
+export const getHabits = asyncHandler(async (req, res) => {
     // This syntax returns the first element from the array of results and stores it in a new array called 'rows'.
+
+    const user_id = req.params.id
+
+    console.log('id: ', user_id)
 
     // PREPARED STATEMENT SYNTAX
     const [rows] = await connectionPool.query(`
@@ -16,25 +18,11 @@ export const getUserHabits = async(user_id) => {
     WHERE user_id = ?
     `, [user_id]);
 
-    return rows;
-}
-
-
-// @Route:  GET /api/habits
-// @Desc:   Return all habits (Test route)
-// @Access: Private
-export const getAllHabits = asyncHandler(async (req, res) => {
-    console.log('Fetching all habits...')
-
-    const [rows] = await connectionPool.query(`
-    SELECT * 
-    FROM habits`);
-
-    console.log('Results: ', rows)
-
-    res.status(200).json(rows)
+    if(rows)
+        res.status(200).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
 })
-
 
 
 // @Route:  POST /api/habits

@@ -2,7 +2,6 @@ import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import Models from '../models/userModel.js'
 
 // @Route:  /register
 // @Desc:   Register a new user
@@ -17,11 +16,11 @@ export const registerUser = async(req, res) => {
     }
 
     // Check if user exists
-    const userExists = await Models.User.findOne({ 
-        where: {
-            email: email
-        }
-     })
+    const userExists = await connectionPool.query(`
+    SELECT * 
+    FROM users
+    WHERE email = ?
+    `, [email]);
 
     if (userExists) {
         res.status(400);
@@ -36,10 +35,11 @@ export const registerUser = async(req, res) => {
     console.log('Hashed pwd:', hashedPassword)
 
     // Create user
-    const user = await Models.User.create({
-        email,
-        password: hashedPassword,
-    })
+    const user = await connectionPool.query(`
+    INSERT INTO
+    users (email, password)
+    VALUES (?, ?)
+    `, [email, hashedPassword]);
 
     if (user) {
         res.status(201).json({
@@ -61,11 +61,14 @@ export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
   
     // Check for user email
-    const user = await Models.User.findOne({ 
-        where: {
-            email: email
-        }
-     })
+    var [user] = await connectionPool.query(`
+    SELECT * 
+    FROM users
+    WHERE email = ?
+    `, [email]);
+
+    user = user[0]
+    console.log(user)
 
     if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({

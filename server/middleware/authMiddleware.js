@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
-import Models from '../models/userModel.js'
+import connectionPool from '../config/conn.js'
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
@@ -18,11 +18,11 @@ const protect = asyncHandler(async (req, res, next) => {
 
       if(decoded){
         // Get user from the token
-        const res = await Models.User.findOne({
-          where: {
-            user_id: decoded.id
-          }
-        })
+        const res = await connectionPool.query(`
+        SELECT * 
+        FROM users
+        WHERE user_id = ?
+        `, [decoded.id]);
 
         if(res)
           next()

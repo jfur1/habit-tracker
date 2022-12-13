@@ -80,11 +80,6 @@ const NewHabit = ({ setShowNewHabitForm }) => {
 
     const postData = async() => {
 
-      // if(!authContext.isUserAuthenticated()){
-      //   console.log('Must be signed in to create a new habit!');
-      //   return;
-      // }
-
       const user = JSON.parse(localStorage.getItem('user'));
       const user_id = user.user_id;
 
@@ -103,7 +98,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
           "Authorization": "Bearer " + user.token,
           "Content-Type": 'application/json'
         }
-        const res = await Axios.post(process.env.API_URL + 'habits', habitData, {
+        const res = await Axios.post(process.env.API_URL + `habits/` + user_id, habitData, {
           headers: headers
         });
 
@@ -114,7 +109,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
       if(data.status === 201){
         console.log('Results after trying to create new habit:', data)
         // Close form after success
-        router.route('/dashboard')
+        setShowNewHabitForm(false)
       }
     })
 
