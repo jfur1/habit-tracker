@@ -1,10 +1,13 @@
 import '../styles/globals.scss'
 import React, { useEffect, useContext } from 'react'
-import Layout from '../src/layouts/Layout.js'
+import { AuthProvider } from '../src/contexts/auth-context.js'
+import { DataProvider } from '../src/contexts/data-context.js'
 
 function MyApp({ Component, pageProps }) {
   return (
-      <Component {...pageProps} />
+    <AuthProvider>
+        <Component {...pageProps} />
+    </AuthProvider>
   )
 }
 

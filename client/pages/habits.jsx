@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Axios from 'axios'
+import {AuthContext, useAuth} from '../src/contexts/auth-context.js'
 import NavBar from '../src/components/NavBar.jsx'
 
 const habits = () => {
   
   const [habits, setHabits] = useState(null)
-
+  const { isUserAuthenticated, isLoading, user } = useAuth();
+  
   useEffect(() => {
-    // Get all habits for a user
-    const getData = async() => {
-      const user = JSON.parse(localStorage.getItem('user'));
+    // Get all existing habits once we receive user from the context
 
+    const getData = async () => {
       const headers = {
         "Authorization": "Bearer " + user.token,
         "Content-Type": 'application/json'
@@ -21,14 +22,21 @@ const habits = () => {
 
       return res;
     }
-    getData().then((response) => {
-      if(response.status === 200){
-        console.log('Returned the following habits:', response)
-        setHabits(response.data);
-      }
-    })
 
-  }, [])
+    if(user){
+      console.log("Received user from context: ", user)
+      getData().then((response) => {
+        if(response.status === 200){
+          console.log('Returned the following habits:', response)
+          setHabits(response.data);
+        }
+      })
+    }
+
+  }, [user])
+
+  if(isLoading)
+    return <h1>Loading...</h1>
   
   return (
     <>

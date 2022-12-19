@@ -3,9 +3,12 @@ import Link from 'next/link'
 import Axios from 'axios'
 import { useRouter } from 'next/router'
 import styles from '../styles/Login.module.scss'
+import {AuthContext, useAuth} from '../src/contexts/auth-context.js'
 
 const login = () => {
     const router = useRouter()
+    const { isUserAuthenticated, loading, setUser } = useAuth();
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -46,6 +49,8 @@ const login = () => {
                         token: response.data.token
                     }
                     localStorage.setItem('user', JSON.stringify(userData));
+
+                    setUser(userData);
                     router.push('/dashboard');
                 } else { // Failed login attempt
                     alert('Incorrect username/password combination!');

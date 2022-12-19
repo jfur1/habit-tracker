@@ -19,9 +19,9 @@ const protect = asyncHandler(async (req, res, next) => {
       if(decoded){
         // Get user from the token
         const res = await connectionPool.query(`
-        SELECT * 
-        FROM users
-        WHERE user_id = ?
+          SELECT * 
+          FROM users
+          WHERE user_id = ?
         `, [decoded.id]);
 
         if(res)
