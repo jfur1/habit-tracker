@@ -1,12 +1,46 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import Axios from 'axios'
 import { useRouter } from 'next/router'
 import styles from '../styles/Dashboard.module.scss'
 import NavBar from '../src/components/NavBar.jsx'
-import {AuthContext, useAuth} from '../src/contexts/auth-context.js'
+import { AuthContext, useAuth } from '../src/contexts/auth-context.js'
+import { DataContext, useDataContext } from '../src/contexts/data-context.js'
+import LoadingScreen from './loading.jsx'
+import ToDoCard from '../src/components/ToDoCard.jsx'
 
 const dashboard = () => {
     const router = useRouter();
-    const { isUserAuthenticated, loading, user } = useAuth();
+    const { isUserAuthenticated, isLoading, user } = useAuth();
+    const { userDataLoading, setUserData, userData } = useDataContext();
+    const [habits, setHabits] = useState(null);
+
+    useEffect(() => {
+        // Get all existing habits once we receive user from the context
+    
+        const getData = async () => {
+          const headers = {
+            "Authorization": "Bearer " + user.token,
+            "Content-Type": 'application/json',
+            "id": user.user_id
+          }
+          const res = await Axios.get(process.env.API_URL + `habits`, {
+            headers: headers
+          });
+    
+          return res;
+        }
+    
+        if(user){
+          console.log("Received user from context: ", user)
+          getData().then((response) => {
+            if(response.status === 200){
+                console.log('Returned the following habits:', response)
+                setHabits(response.data);
+            }
+          })
+        }
+    
+      }, [user]);
 
     const TodaysDate = () => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', "Oct", 'Nov', 'Dec'];
@@ -14,7 +48,9 @@ const dashboard = () => {
 
         return (
             <div className={styles.title}>
-                <h1 className={styles.date}>{months[today.getMonth()]} {today.getDate()}</h1>
+                <h1 className={styles.date}>
+                    {months[today.getMonth()]} {today.getDate()}
+                </h1>
                 <p>Lorem Ipsum</p>
             </div>
         )
@@ -48,13 +84,39 @@ const dashboard = () => {
             </ul>
         )
     }
+
+    // Returns ToDoCard for each habit that occurs today
+    const TodaysHabits = ({ habits }) => {
+        const today = new Date();
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        const dow = today.getDay();
+        const currentDayName = days[dow];
+
+        return (
+            <div className={styles.habitsList}>
+                {habits.map((habit, idx) => {
+                    if(habit.schedule.indexOf(currentDayName)){
+                        return (
+                            <ToDoCard key={idx} habit={habit}/>
+                        )
+                    }
+                })}
+            </div>
+        )
+    }
+
+
+    if(isLoading )
+        return <LoadingScreen/>
     
     return (
         <div className={styles.main}>
             <TodaysDate/>
             <WeeklyRow/>
-            
-            
+            { habits 
+                ? <TodaysHabits habits={habits}/> 
+                : null
+            }
             <NavBar currentIdx={0}/>
         </div>
     )

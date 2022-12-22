@@ -83,6 +83,32 @@ export const createHabit = asyncHandler(async (req, res) => {
 // @Desc:   Update existing habit
 // @Access: Private
 export const updateHabit = asyncHandler(async (req, res) => {
+    const {
+        habit_id,
+        user_id,
+        title,
+        schedule,
+        frequency,
+        units,
+        type,
+        description,
+        color,
+        icon
+    } = req.body;
+    console.log('Trying to upsert the following: ', req.body);
+
+    const [rows] = await connectionPool.query(`
+    UPDATE habits
+    SET title=?, schedule=?, frequency=?, units=?, type=?, description=?, color=?, icon=?
+    WHERE user_id = ?
+    AND habit_id = ?
+    `, [title, schedule, frequency, units, type, description, color, icon, user_id, habit_id]);
+    console.log('rows:', rows)
+
+    if(rows)
+        res.status(201).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
 
 })
 

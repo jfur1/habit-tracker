@@ -17,10 +17,8 @@
     display: flex;
     justify-content: space-around;
     padding: 0.5rem 1rem;
-    // border: 1px solid red;
 
     li {
-        // border: 1px solid red;
         border-radius: 25px;
         display: flex;
         flex-direction: column;
@@ -34,9 +32,19 @@
 
         .day{
             margin: 0;
+            font-size: 20px;
         }
         .date{
             margin: 0;
+            font-size: 20px;
         }
     }
+}
+
+.habitsList{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap:    20px;
+    grid-column-gap: 5rem;
 }
