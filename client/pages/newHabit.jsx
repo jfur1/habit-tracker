@@ -4,6 +4,8 @@ import styles from '../styles/newHabit.module.scss'
 import NavBar from '../src/components/NavBar.jsx'
 import { FaCheck } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import { ICONS } from '../src/components/Icon.jsx'
+import Icon from '../src/components/Icon.jsx'
 
 const NewHabit = ({ setShowNewHabitForm }) => {
   const router = useRouter()
@@ -17,7 +19,8 @@ const NewHabit = ({ setShowNewHabitForm }) => {
     '#AAB7B8'
   ];
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  
+  const [showIconMenu, setShowIconMenu] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState(0);
   const [counter, setCounter] = useState(1);
   const [colorIdx, setColorIdx] = useState(0)
   const [selectedDays, setSelectedDays] = useState([])
@@ -92,7 +95,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
           type: type,
           description: description,
           color: colors[colorIdx],
-          icon: icon
+          icon: selectedIcon
         }
         const headers = {
           "Authorization": "Bearer " + user.token,
@@ -109,10 +112,10 @@ const NewHabit = ({ setShowNewHabitForm }) => {
       if(data.status === 201){
         console.log('Results after trying to create new habit:', data)
         // Close form after success
-        setShowNewHabitForm(false)
+        setShowNewHabitForm(false);
+        router.reload(window.location.pathname);
       }
     })
-
   }
 
 
@@ -122,6 +125,24 @@ const NewHabit = ({ setShowNewHabitForm }) => {
         <div className={styles.contentTable}>
           <div className={styles.contentCell}>
             <div className={styles.modalInner}>
+              {showIconMenu 
+                ? 
+                <div className={styles.iconsModal}>
+                  <p className={styles.close} onClick={() => setShowIconMenu(false)}>Close</p>
+                  <div className={styles.iconsContainer}>
+                    {ICONS.map((el, idx) => 
+                      <Icon 
+                        key={el.iconName} 
+                        index={idx} 
+                        iconColor={selectedIcon === idx ? colors[colorIdx] : "#222"} 
+                        name={'icon'}
+                        value={idx}
+                        onClick={setSelectedIcon}
+                      />
+                    )}
+                  </div>
+                </div>
+                : null}
               <div className={styles.modalHeader}>
                 <span className={styles.cancel} data-modal-close="" aria-label="Exit goal form" onClick={() => setShowNewHabitForm(false)}>
                   Cancel
@@ -134,8 +155,20 @@ const NewHabit = ({ setShowNewHabitForm }) => {
 
               <div className={styles.modalContent}>
                 <form onSubmit={onSubmit}>
-                    <input type="text" name="title" id='title' placeholder="Title" value={title} onChange={onChange} required/>
-                    
+                    <div className={styles.titleRow}>
+                      <input type="text" name="title" id='title' placeholder="Title" value={title} onChange={onChange} required/>
+
+                      <span className={styles.iconPicker}>
+                        <Icon 
+                          key={'iconPicker'} 
+                          index={selectedIcon} 
+                          iconColor={ colors[colorIdx] } 
+                          name={'icon'}
+                          value={selectedIcon}
+                          onClick={() => setShowIconMenu(true)}
+                        />
+                      </span>
+                    </div>
                     <div className={styles.colorPicker}>
                     {colors.map((color, idx) => 
                       <span key={idx} className={styles.colorOption} style={{backgroundColor: color}} onClick={() => setColorIdx(idx)} >
@@ -214,8 +247,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
 
                     <div className={styles.description}>
                       <h2 className={styles.title}>Description</h2>
-                      <textarea rows={3} className={styles.descInput} placeholder={`Why is this goal important?`} name='description' valuee={description} onChange={onChange}/>
-                      
+                      <textarea rows={3} className={styles.descInput} placeholder={`Why is this goal important?`} name='description' value={description} onChange={onChange}/>
                     </div>
                 </form>
               </div>

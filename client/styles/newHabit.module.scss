@@ -13,7 +13,7 @@
     display: block;
     
     height: 95vh;
-    z-index: 1;
+    // z-index: 1;
     animation: fadeIn 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
     .modalInner {
       animation: summonUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
@@ -134,6 +134,11 @@
       }
     }
   }
+  .titleRow{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
 
   .description{
     display: flex;
@@ -155,6 +160,50 @@
     justify-content: center;
   }
 
+  .iconPicker{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+  }
+
+
+  .iconsModal{
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 75vw;
+    height: 75vh;
+    overflow-y: auto;
+    padding: 1rem;
+    transform: translate(-50%, -50%);
+    background: rgb(215, 215, 215);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .close{
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #222;
+        padding: 0 1rem;
+        font-size: 18px;
+    }
+    
+    .iconsContainer{
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-gap: 2rem;
+    }
+  }
+
   .colorOption{
     height: 30px;
     width: 30px;
@@ -173,7 +222,6 @@
     padding: 10px;
     font-size: 16px;
     color: #fff;
-    margin-bottom: 30px;
     border: none;
     border-radius: 10px;
     outline: none;

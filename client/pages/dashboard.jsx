@@ -111,12 +111,16 @@ const dashboard = () => {
     
     return (
         <div className={styles.main}>
+
             <TodaysDate todaysCount={todaysCount}/>
             <WeeklyRow/>
-            { habits 
-                ? <TodaysHabits todaysCount={todaysCount} setTodaysCount={setTodaysCount} habits={habits}/> 
-                : null
-            }
+
+            <div className={styles.listContainer}>
+                { habits 
+                    ? <TodaysHabits todaysCount={todaysCount} setTodaysCount={setTodaysCount} habits={habits}/> 
+                    : null
+                }
+            </div>
             <NavBar currentIdx={0}/>
         </div>
     )

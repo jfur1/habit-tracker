@@ -4,6 +4,8 @@ import styles from '../styles/newHabit.module.scss'
 import NavBar from '../src/components/NavBar.jsx'
 import { FaCheck } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import { ICONS } from '../src/components/Icon.jsx'
+import Icon from '../src/components/Icon.jsx'
 
 const updateHabit = ({ setShowNewHabitForm, habit }) => {
     console.log(habit)
@@ -19,7 +21,8 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
       '#AAB7B8'
     ];
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    
+    const [showIconMenu, setShowIconMenu] = useState(false);
+    const [selectedIcon, setSelectedIcon] = useState(0);
     const [counter, setCounter] = useState(!!habit ? habit.frequency : 1);
     const [colorIdx, setColorIdx] = useState(!!habit ? colors.indexOf(habit.color) : 0)
     const [selectedDays, setSelectedDays] = useState(!!habit ? habit.schedule.split(',') : [])
@@ -96,7 +99,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
             type: type,
             description: description,
             color: colors[colorIdx],
-            icon: icon
+            icon: selectedIcon
           }
           const headers = {
             "Authorization": "Bearer " + user.token,
@@ -112,8 +115,9 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
       postData().then((data) => {
         if(data.status === 200){
           console.log('Results after trying to create new habit:', data)
-          // Close form after success
-          setShowNewHabitForm(false)
+            // Close form after success
+            setShowNewHabitForm(false);
+            router.reload(window.location.pathname);
         }
       })
     }
@@ -125,6 +129,24 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
           <div className={styles.contentTable}>
             <div className={styles.contentCell}>
               <div className={styles.modalInner}>
+              {showIconMenu 
+                ? 
+                <div className={styles.iconsModal}>
+                  <p className={styles.close} onClick={() => setShowIconMenu(false)}>Close</p>
+                  <div className={styles.iconsContainer}>
+                    {ICONS.map((el, idx) => 
+                      <Icon 
+                        key={el.iconName} 
+                        index={idx} 
+                        iconColor={selectedIcon === idx ? colors[colorIdx] : "#222"} 
+                        name={'icon'}
+                        value={idx}
+                        onClick={setSelectedIcon}
+                      />
+                    )}
+                  </div>
+                </div>
+                : null}
                 <div className={styles.modalHeader}>
                   <span className={styles.cancel} data-modal-close="" aria-label="Exit goal form" onClick={() => setShowNewHabitForm(false)}>
                     Cancel
@@ -137,7 +159,20 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
   
                 <div className={styles.modalContent}>
                   <form onSubmit={onSubmit}>
+                  <div className={styles.titleRow}>
                       <input type="text" name="title" id='title' placeholder="Title" value={title} onChange={onChange} required/>
+
+                      <span className={styles.iconPicker}>
+                        <Icon 
+                          key={'iconPicker'} 
+                          index={selectedIcon} 
+                          iconColor={ colors[colorIdx] } 
+                          name={'icon'}
+                          value={selectedIcon}
+                          onClick={() => setShowIconMenu(true)}
+                        />
+                      </span>
+                    </div>
                       
                       <div className={styles.colorPicker}>
                       {colors.map((color, idx) => 
