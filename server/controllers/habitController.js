@@ -1,13 +1,13 @@
 import connectionPool from '../config/conn.js'
 import asyncHandler from 'express-async-handler'
 
-// @Route:  GET /api/habits
+// @Route:  GET /api/habits/all
 // @Desc:   Return all habits for a given user
 // @Access: Private
 export const getHabits = asyncHandler(async (req, res) => {
     // This syntax returns the first element from the array of results and stores it in a new array called 'rows'.
 
-    const user_id = req.params.id
+    const user_id = req.headers.id;
 
     console.log('id: ', user_id)
 
@@ -24,6 +24,28 @@ export const getHabits = asyncHandler(async (req, res) => {
         res.status(400).json({ msg: "Err. Please try again."})
 })
 
+
+// @Route:  GET /api/habits
+// @Desc:   Return all habits for a given user
+// @Access: Private
+export const getHabit = asyncHandler(async (req, res) => {
+    const user_id = req.headers.id;
+    const habit_id = req.params.habit_id;
+
+    // PREPARED STATEMENT SYNTAX
+    const [rows] = await connectionPool.query(`
+    SELECT * 
+    FROM habits
+    WHERE user_id = ? 
+    AND habit_id = ?
+    `, [user_id, habit_id]);
+
+    if(rows)
+        res.status(200).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+
+})
 
 // @Route:  POST /api/habits
 // @Desc:   Create new habit

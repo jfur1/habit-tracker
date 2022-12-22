@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Axios from 'axios'
 import { useRouter } from "next/router";
 import { AuthContext, useAuth } from '../../../src/contexts/auth-context.js'
 import { DataContext, useDataContext } from '../../../src/contexts/data-context.js'
@@ -13,20 +14,42 @@ const index = () => {
 
   // Here, we need to get habit with the given ID, from the context
   useEffect(() => {
-    console.log(userData)
+    const getData = async() => {     // Fetch data from external API
+      const headers = {
+        "Authorization": "Bearer " + user.token,
+        "Content-Type": 'application/json',
+        "id": user.user_id
+      };
+      const res = await Axios.get(process.env.API_URL + 'habits/' + habitID, {
+        headers: headers
+      })
+      
+      return res;
+    }
+
+    if(user){
+      console.log("Received user from context: ", user)
+      getData().then((response) => {
+        if(response.status === 200){
+          console.log('Returned the following habits:', response.data[0])
+              setHabit(response.data[0]);
+        }
+      })
+    }
 
   }, [])
 
 
-  if(isLoading || userDataLoading)
+  if(isLoading)
     return <LoadingScreen/>
 
   return (
     <>
       <div>Post ID: {habitID}</div>
       <div>user: {user.email}</div>
-      {/* <div>{userData[0]?.title}</div>
-      <div>{userData[0]?.description}</div> */}
+      <div>User ID: {user.user_id}</div>
+      <div>{habit?.title}</div>
+      <div>{habit?.description}</div>
     </>
   )
 }

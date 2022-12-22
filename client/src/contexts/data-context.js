@@ -19,7 +19,7 @@ export const DataProvider = ({ children }) => {
               "Authorization": "Bearer " + user.token,
               "Content-Type": 'application/json'
             }
-            const res = await Axios.get(process.env.API_URL + `habits/` + user.user_id, {
+            const res = await Axios.get(process.env.API_URL + `habits/all/` + user.user_id, {
               headers: headers
             });
 
@@ -32,8 +32,9 @@ export const DataProvider = ({ children }) => {
             getData().then((response) => {
                 if(response.status === 200){
                 console.log('Returned the following habits:', response.data)
-                setHabits(response.data);
-                setUserData(response.data);
+                    setHabits(response.data);
+                    setUserData(response.data);
+                    setLoading(false);
                 }
             })
         }
