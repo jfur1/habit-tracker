@@ -18,6 +18,7 @@ const index = () => {
   const [habit, setHabit] = useState(null);
   const [targetDays, setTargetDays] = useState([])
   const [showNewHabitForm, setShowNewHabitForm] = useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
 
   // Here, we need to get habit with the given ID, from the context
   useEffect(() => {
@@ -58,12 +59,34 @@ const index = () => {
   const updateHabit = () => {
     setShowNewHabitForm(true);
   }
+  const deleteHabit = async() => {
+      const headers = {
+        "Authorization": "Bearer " + user.token,
+        "Content-Type": 'application/json',
+        "id": user.user_id
+      };
+      const res = await Axios.delete(process.env.API_URL + 'habits/' + habitID, {
+        headers: headers
+      })
+      
+      if(res.status === 204){
+        // Navigate to habits page upon successful delete
+        router.push('/habits');
+      }
+  }
 
-  const deleteHabit = () => {
+  const ConfirmDeleteModal = () => {
     // are you sure ?
     return (
-      <div>
-        R U SURE
+      <div className={styles.modalContainer}>
+        <div className={styles.modal}>
+          <h1>Are you sure?</h1>
+          <p>Are you sure that you want to delete this goal? This is a permanent action.</p>
+          <span className={styles.btnRow}>
+            <button className={styles.closeModal} onClick={() => setShowConfirmModal(false)}>Cancel</button>
+            <button className={styles.confirmModal} onClick={deleteHabit}>Delete</button>
+          </span>
+        </div>
       </div>
     )
   }
@@ -74,7 +97,13 @@ const index = () => {
 
   return (
     <main className={styles.container}>
-      { showNewHabitForm ? <UpdateHabit habit={habit} setShowNewHabitForm={setShowNewHabitForm}/> : null} 
+      { showNewHabitForm 
+        ? <UpdateHabit habit={habit} setShowNewHabitForm={setShowNewHabitForm}/> 
+        : null} 
+
+      { showConfirmModal 
+        ? <ConfirmDeleteModal habitID={habitID} setShowConfirmModal={setShowConfirmModal}/> 
+        : null} 
 
       <div className={styles.top}>
         <IoIosArrowBack className={styles.backBtn} onClick={goBack}/>
@@ -89,7 +118,7 @@ const index = () => {
           <BsThreeDotsVertical className={styles.moreBtn} onClick={showMore}/>
             <div className={styles.dropdown}>
               <a className={styles.dropdownItem} onClick={updateHabit}><div>Edit Habit</div></a>
-              <a className={styles.dropdownItem} onClick={deleteHabit}>
+              <a className={styles.dropdownItem} onClick={() => setShowConfirmModal(true)}>
                 <div>Delete Habit</div>
               </a>
             </div>

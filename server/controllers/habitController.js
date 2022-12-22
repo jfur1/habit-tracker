@@ -106,7 +106,7 @@ export const updateHabit = asyncHandler(async (req, res) => {
     console.log('rows:', rows)
 
     if(rows)
-        res.status(201).json(rows);
+        res.status(200).json(rows);
     else
         res.status(400).json({ msg: "Err. Please try again."})
 
@@ -117,5 +117,18 @@ export const updateHabit = asyncHandler(async (req, res) => {
 // @Desc:   Delete Goal
 // @Access: Private
 export const deleteHabit = asyncHandler(async (req, res) => {
+    const habitID = req.params.habit_id;
+
+    console.log('Trying to delete habit with ID: ',  req.params.habit_id)
+
+    const [rows] = await connectionPool.query(`
+    DELETE FROM habits
+    WHERE habit_id = ?
+    `, [habitID]);
+
+    if(rows)
+        res.status(204).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
 
 })

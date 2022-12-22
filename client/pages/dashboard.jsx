@@ -13,7 +13,7 @@ const dashboard = () => {
     const { isUserAuthenticated, isLoading, user } = useAuth();
     const { userDataLoading, setUserData, userData } = useDataContext();
     const [habits, setHabits] = useState(null);
-
+    const [todaysCount, setTodaysCount] = useState(null);
     useEffect(() => {
         // Get all existing habits once we receive user from the context
     
@@ -42,7 +42,7 @@ const dashboard = () => {
     
       }, [user]);
 
-    const TodaysDate = () => {
+    const TodaysDate = ( ) => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', "Oct", 'Nov', 'Dec'];
         const today = new Date(); 
 
@@ -51,7 +51,7 @@ const dashboard = () => {
                 <h1 className={styles.date}>
                     {months[today.getMonth()]} {today.getDate()}
                 </h1>
-                <p>Lorem Ipsum</p>
+                <p className={styles.msg}>Lorem Ipsum</p>
             </div>
         )
     }
@@ -95,7 +95,7 @@ const dashboard = () => {
         return (
             <div className={styles.habitsList}>
                 {habits.map((habit, idx) => {
-                    if(habit.schedule.indexOf(currentDayName)){
+                    if(habit.schedule.indexOf(currentDayName) >= 0){
                         return (
                             <ToDoCard key={idx} habit={habit}/>
                         )
@@ -111,10 +111,10 @@ const dashboard = () => {
     
     return (
         <div className={styles.main}>
-            <TodaysDate/>
+            <TodaysDate todaysCount={todaysCount}/>
             <WeeklyRow/>
             { habits 
-                ? <TodaysHabits habits={habits}/> 
+                ? <TodaysHabits todaysCount={todaysCount} setTodaysCount={setTodaysCount} habits={habits}/> 
                 : null
             }
             <NavBar currentIdx={0}/>

@@ -20,7 +20,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
     ];
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     
-    const [counter, setCounter] = useState(1);
+    const [counter, setCounter] = useState(!!habit ? habit.frequency : 1);
     const [colorIdx, setColorIdx] = useState(!!habit ? colors.indexOf(habit.color) : 0)
     const [selectedDays, setSelectedDays] = useState(!!habit ? habit.schedule.split(',') : [])
     const [formData, setFormData] = useState({
@@ -110,7 +110,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
       }
   
       postData().then((data) => {
-        if(data.status === 201){
+        if(data.status === 200){
           console.log('Results after trying to create new habit:', data)
           // Close form after success
           setShowNewHabitForm(false)
