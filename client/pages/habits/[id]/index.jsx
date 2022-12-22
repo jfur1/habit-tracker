@@ -13,7 +13,7 @@ const index = () => {
 
   // Here, we need to get habit with the given ID, from the context
   useEffect(() => {
-    
+    console.log(userData)
 
   }, [])
 
