@@ -9,7 +9,7 @@ const index = () => {
   const router = useRouter();
   const habitID = router.query.id;
   const { isUserAuthenticated, isLoading, user } = useAuth();
-  const { userDataLoading, userData, setUserData } = useDataContext();
+  const { userDataLoading, userData, setUserData, setUserDataLoading } = useDataContext();
   const [habit, setHabit] = useState(null)
 
   // Here, we need to get habit with the given ID, from the context
@@ -23,7 +23,7 @@ const index = () => {
       const res = await Axios.get(process.env.API_URL + 'habits/' + habitID, {
         headers: headers
       })
-      
+      setUserDataLoading(false)
       return res;
     }
 
@@ -37,10 +37,10 @@ const index = () => {
       })
     }
 
-  }, [])
+  }, [habitID])
 
 
-  if(isLoading)
+  if(isLoading || userDataLoading )
     return <LoadingScreen/>
 
   return (

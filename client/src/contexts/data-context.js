@@ -10,7 +10,7 @@ const { Provider } = DataContext;
 
 export const DataProvider = ({ children }) => {
     const [userData, setUserData] = useState(null)
-    const [userDataLoading, setLoading] = useState(true)
+    const [userDataLoading, setUserDataLoading] = useState(true)
     const { isUserAuthenticated, isLoading, user } = useAuth();
 
     useEffect(() => {
@@ -22,6 +22,8 @@ export const DataProvider = ({ children }) => {
             const res = await Axios.get(process.env.API_URL + `habits/all/` + user.user_id, {
               headers: headers
             });
+            
+            setUserDataLoading(false);
 
             return res;
         }
@@ -31,10 +33,9 @@ export const DataProvider = ({ children }) => {
             console.log("Received user from context: ", user)
             getData().then((response) => {
                 if(response.status === 200){
-                console.log('Returned the following habits:', response.data)
-                    setHabits(response.data);
+                    console.log('Returned the following habits:', response.data)
                     setUserData(response.data);
-                    setLoading(false);
+                    setUserDataLoading(false);
                 }
             })
         }
@@ -45,7 +46,8 @@ export const DataProvider = ({ children }) => {
             value={{
                 userData,
                 setUserData,
-                userDataLoading
+                userDataLoading,
+                setUserDataLoading
             }}
         >
             {children}
