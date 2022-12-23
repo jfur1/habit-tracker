@@ -19,7 +19,7 @@ const ToDoCard = ({ habit }) => {
         <div className={styles["upper"]}>
             <span className={styles.iconContainer} style={{ margin: '1rem' }}>
             {!!habit?.icon || habit?.icon === 0
-                ? ICONS[habit.icon].icon
+                ? <Icon showIcon={true} index={habit.icon} squareSize={65} strokeWidth={4}/>
                 : null
             }
             </span>

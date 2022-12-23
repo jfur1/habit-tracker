@@ -12,7 +12,7 @@ import { GrYoga } from 'react-icons/gr'
 
 
 export const ICONS = [
-    { iconName: 'running', icon: <FaRunning/>},
+    { iconName: 'running', icon: <FaRunning />},
     { iconName: 'no-smoking', icon: <MdSmokeFree/>},
     { iconName: 'no-gaming', icon: <MdVideogameAssetOff/>},
     { iconName: 'diet', icon: <MdNoFood/>},
@@ -43,11 +43,11 @@ export const ICONS = [
 ];
 
 
-const Icon = ({ index, iconName, iconColor, onClick, name, value }) => { 
+const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, numerator, denominator, strokeWidth, showIcon }) => { 
 
     let i = index
 
-    if(!index && !iconName  && index !== 0){
+    if(!index && !iconName && index !== 0){
         console.log('need an index or iconName');
         return null;
     }
@@ -61,16 +61,86 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value }) => {
         })
     }
 
+    // Size of the enclosing square
+    const sqSize = squareSize;
+    // percent = parseFloat(numerator) / parseFloat(denominator)
+    const percent = (parseFloat(parseFloat(numerator) / parseFloat(denominator)* 100)).toFixed(2);
+    // SVG centers the stroke width on the radius, subtract out so circle fits in square
+    const radius = (sqSize - strokeWidth) / 2;
+    // Enclose cicle in a circumscribing square
+    const viewBox = `0 0 ${sqSize} ${sqSize}`;
+    // Arc length at 100% coverage is the circle circumference
+    const dashArray = radius * Math.PI * 2;
+    // Scale 100% coverage overlay with the actual percent
+    const dashOffset = dashArray - dashArray * percent / 100;
 
     return (
+
         <div
-            name={name}
-            value={value}
-            onClick={typeof(onClick) !== 'undefined' ? () => onClick(value) : null} 
-            className={styles.iconContainer} style={ iconColor ? { color : iconColor} : '#222' }>
-            {ICONS[i].icon}
+            width={sqSize}
+            height={sqSize}
+            viewBox={viewBox}>
+            <svg
+                width={sqSize}
+                height={sqSize}
+                viewBox={viewBox}>
+            <circle
+              className={styles.circleBackground}
+              cx={sqSize / 2}
+              cy={sqSize / 2}
+              r={radius}
+              strokeWidth={`${strokeWidth}px`} />
+            <circle
+              className={styles.circleProgress}
+              cx={sqSize / 2}
+              cy={sqSize / 2}
+              r={radius}
+              strokeWidth={`${strokeWidth}px`}
+              // Start progress marker at 12 O'Clock
+              transform={`rotate(-90 ${sqSize / 2} ${sqSize / 2})`}
+              style={{
+                strokeDasharray: dashArray,
+                strokeDashoffset: dashOffset,
+                stroke: iconColor
+              }}/>
+              {!showIcon ?
+                <text
+                    className={styles.circleText}
+                    style={{fill: 'white'}}
+                    x="50%"
+                    y="50%"
+                    dy=".3em"
+                    textAnchor="middle"
+                >
+                {/* {percent} */}
+                ({numerator} / {denominator})
+                </text> 
+                : null}
+ 
+            {showIcon
+                ? 
+                <g
+                    style={{
+                        transform: `translateY(25%) translateX(25%) scale(2.0)`
+                    }}
+                >
+                    {ICONS[i].icon}
+                </g>
+                // ICONS[i].icon
+            : null }
+            
+            </svg>
         </div>
     )
 }
+
+Icon.defaultProps = {
+    squareSize: 100,
+    percentage: 25,
+    strokeWidth: 10,
+    numerator: 0,
+    denominator: 7
+  }; 
+  
 
 export default Icon

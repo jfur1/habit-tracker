@@ -14,8 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
-    transform: scale(2);
+    flex-direction: column;
 }
 
 .container {
@@ -84,4 +83,34 @@
 }
 .close-btn:before{
 	content: "\d7";
+}
+
+
+
+.circleBackground,
+.circleProgress {
+    fill: none;
+}
+
+.circleBackground{
+    stroke: #ddd;
+}
+
+.circleProgress {
+    stroke: red;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.circleText {
+    font-size: 1em;
+    font-weight: bold;
+    fill: red;
+}
+
+.icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
