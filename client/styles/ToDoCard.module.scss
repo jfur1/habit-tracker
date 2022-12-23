@@ -18,9 +18,70 @@
     transform: scale(2);
 }
 
-.addBtn{
-    transform: scale(2.5);
+.container {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 20px;
+    width: 96vw;
+    height: 100px;
+    max-height: 95vh;
+    color: white;
+    transition: all 300ms ease-in-out;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  }
+  
+  .container p {
+    opacity: 0.6;
+  }
+  
+  .container h3 {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  
+  .upper {
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .lower {
+    padding: 20px 40px;
+  }
+  
+  .lower h4 {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #2999f5;
+  }
+  
+  div.expand {
+    height: 60vh;
+  }
+
+  .close-btn{
+	transition: transform .25s, opacity .25s;
+	opacity: .7;
+	cursor: pointer;
+	font-size: 3em;
+	font-family: serif;
+	line-height: 1;
     justify-self: center;
     overflow: hidden;
     vertical-align: middle;
+    transform: rotate(45deg);
+
+    &.open{
+        content: "\d7";
+        transform: rotate(90deg);
+    }
+}
+.close-btn:before{
+	content: "\d7";
 }
