@@ -106,7 +106,10 @@ const index = () => {
         : null} 
 
       <div className={styles.top}>
-        <IoIosArrowBack className={styles.backBtn} onClick={goBack}/>
+        <span className={styles.backBtnContainer}>
+         <IoIosArrowBack className={styles.backBtn} onClick={goBack}/> 
+        </span>
+
 
         <span className={styles.titleContainer}>
           <Icon index={habit?.icon.toString()} iconColor={habit?.color}/>

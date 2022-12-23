@@ -22,7 +22,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
     ];
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const [showIconMenu, setShowIconMenu] = useState(false);
-    const [selectedIcon, setSelectedIcon] = useState(0);
+    const [selectedIcon, setSelectedIcon] = useState(!!habit ? habit.icon : 0);
     const [counter, setCounter] = useState(!!habit ? habit.frequency : 1);
     const [colorIdx, setColorIdx] = useState(!!habit ? colors.indexOf(habit.color) : 0)
     const [selectedDays, setSelectedDays] = useState(!!habit ? habit.schedule.split(',') : [])
@@ -151,7 +151,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
                   <span className={styles.cancel} data-modal-close="" aria-label="Exit goal form" onClick={() => setShowNewHabitForm(false)}>
                     Cancel
                   </span>
-                  <h2 className={styles.formTitle}>New Habit</h2>
+                  <h2 className={styles.formTitle}>Update Habit</h2>
                   <span className={styles.submit} data-modal-close="" aria-label="Submit new goal" onClick={onSubmit}>
                     Submit
                   </span>

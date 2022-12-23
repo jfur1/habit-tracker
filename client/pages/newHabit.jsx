@@ -129,6 +129,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
                 ? 
                 <div className={styles.iconsModal}>
                   <p className={styles.close} onClick={() => setShowIconMenu(false)}>Close</p>
+                  {/* <h2>Select an Icon</h2> */}
                   <div className={styles.iconsContainer}>
                     {ICONS.map((el, idx) => 
                       <Icon 

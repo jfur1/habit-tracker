@@ -7,6 +7,8 @@ import { DataContext, useDataContext } from '../../src/contexts/data-context.js'
 import NavBar from '../../src/components/NavBar.jsx'
 import styles from '../../styles/Habits.module.scss'
 import Link from "next/link";
+import { ICONS } from '../../src/components/Icon.jsx'
+import Icon from '../../src/components/Icon.jsx'
 
 const habits = () => {
   const router = useRouter();
@@ -71,7 +73,10 @@ const habits = () => {
                     className={styles.card}
                     style={{ backgroundColor: habit.color }}
                   >
-                    <h5>{habit.title}</h5>
+                    <span className={styles.iconContainer} style={{ margin: '1rem' }}>
+                      {ICONS[habit.icon].icon}
+                    </span>
+                    <h1 className={styles.title}>{habit.title}</h1>
                     <p></p>
                   </li>
                 </Link>

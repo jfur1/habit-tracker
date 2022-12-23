@@ -22,12 +22,20 @@ main.container{
 
     .title{
         font-weight: 400;
-        font-size: 40px;
+        font-size: clamp(32px, 36px, 38px);
+        padding: 0 0.5rem;
+    }
+
+    .backBtnContainer{
+        display: flex;
     }
 
     .titleContainer{
+        max-width: 65vw;
         display: flex;
         align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 }
 
