@@ -43,7 +43,7 @@ export const ICONS = [
 ];
 
 
-const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, numerator, denominator, strokeWidth, showIcon }) => { 
+const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, numerator, denominator, strokeWidth, showIcon, showRings, showStat }) => { 
 
     let i = index
 
@@ -74,72 +74,94 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
     // Scale 100% coverage overlay with the actual percent
     const dashOffset = dashArray - dashArray * percent / 100;
 
-    return (
+    const fillColor = null;
 
-        <div
+    const Cirlces = () => {
+        return (
+            <svg
             width={sqSize}
             height={sqSize}
             viewBox={viewBox}>
+            <circle
+                className={styles.circleBackground}
+                cx={sqSize / 2}
+                cy={sqSize / 2}
+                r={radius}
+                strokeWidth={`${strokeWidth}px`} />
+                <circle
+                className={styles.circleProgress}
+                cx={sqSize / 2}
+                cy={sqSize / 2}
+                r={radius}
+                strokeWidth={`${strokeWidth}px`}
+                // Start progress marker at 12 O'Clock
+                transform={`rotate(-90 ${sqSize / 2} ${sqSize / 2})`}
+                style={{
+                    strokeDasharray: dashArray,
+                    strokeDashoffset: dashOffset,
+                    stroke: iconColor
+                }}/>
+            </svg>
+        )
+    }
+
+    return (
+
+
             <svg
                 width={sqSize}
                 height={sqSize}
-                viewBox={viewBox}>
-            <circle
-              className={styles.circleBackground}
-              cx={sqSize / 2}
-              cy={sqSize / 2}
-              r={radius}
-              strokeWidth={`${strokeWidth}px`} />
-            <circle
-              className={styles.circleProgress}
-              cx={sqSize / 2}
-              cy={sqSize / 2}
-              r={radius}
-              strokeWidth={`${strokeWidth}px`}
-              // Start progress marker at 12 O'Clock
-              transform={`rotate(-90 ${sqSize / 2} ${sqSize / 2})`}
-              style={{
-                strokeDasharray: dashArray,
-                strokeDashoffset: dashOffset,
-                stroke: iconColor
-              }}/>
-              {!showIcon ?
-                <text
-                    className={styles.circleText}
-                    style={{fill: 'white'}}
-                    x="50%"
-                    y="50%"
-                    dy=".3em"
-                    textAnchor="middle"
-                >
-                {/* {percent} */}
-                ({numerator} / {denominator})
-                </text> 
+                viewBox={viewBox}    
+            >
+
+                
+              {showRings ?
+                <>
+                <Cirlces/>
+                {showStat
+                    ? 
+                    <text
+                        className={styles.circleText}
+                        style={{fill: 'white'}}
+                        x="50%"
+                        y="50%"
+                        dy=".3em"
+                        textAnchor="middle"
+                    >
+                    {/* {percent} */}
+                    ({numerator} / {denominator})
+                    </text> 
+                    : null}
+                </>
                 : null}
  
-            {showIcon
+            {showIcon || !showRings
                 ? 
                 <g
+                    onClick={typeof(onClick) !== 'undefined' ? () => onClick(value) : null}
                     style={{
-                        transform: `translateY(25%) translateX(25%) scale(2.0)`
+                        transform: `translateY(25%) translateX(25%) scale(2.0)`,
+                        color: iconColor
                     }}
                 >
-                    {ICONS[i].icon}
+                    {ICONS[index].icon}
                 </g>
                 // ICONS[i].icon
             : null }
             
             </svg>
-        </div>
     )
 }
 
 Icon.defaultProps = {
-    squareSize: 100,
+    squareSize: 65,
     percentage: 25,
-    strokeWidth: 10,
+    strokeWidth: 4,
     numerator: 0,
-    denominator: 7
+    denominator: 7,
+    showRings: false,
+    showIcon: true,
+    showStat: false,
   }; 
   
 

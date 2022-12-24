@@ -133,6 +133,8 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
                 ? 
                 <div className={styles.iconsModal}>
                   <p className={styles.close} onClick={() => setShowIconMenu(false)}>Close</p>
+                  <p className={styles.ok} style={{ color: habit.color }}
+                    onClick={() => setShowIconMenu(false)}>OK</p>
                   <div className={styles.iconsContainer}>
                     {ICONS.map((el, idx) => 
                       <Icon 
@@ -165,6 +167,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
                       <span className={styles.iconPicker}>
                         <Icon 
                           key={'iconPicker'} 
+                          showRing={false}
                           index={selectedIcon} 
                           iconColor={ colors[colorIdx] } 
                           name={'icon'}

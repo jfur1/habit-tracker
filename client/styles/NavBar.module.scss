@@ -1,9 +1,9 @@
 .container {
     display: block;
+    background-color: var(--app-bg);
     position: fixed;
     bottom: 0;
     width: 100vw;
-    border-radius: 12px;
     
     .navList {
         margin: 0;
