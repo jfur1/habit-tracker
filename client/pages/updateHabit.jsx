@@ -121,6 +121,15 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
         }
       })
     }
+
+    const handleCounterChange = (count) => {
+      if(count < 1)
+        setCounter(1);
+      else if(count > 99)
+        setCounter(99);
+      else  
+        setCounter(count)
+    }
   
   
     return (
@@ -244,9 +253,9 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
                       <div className={styles.frequency}>
                         <h2 className={styles.title}>Frequency & Units</h2>
                         <div className={styles.counter}>
-                          <span className={styles.counterBtn} onClick={() => setCounter(counter - 1)}>-</span>
+                          <span className={styles.counterBtn} onClick={() => handleCounterChange(counter - 1)}>-</span>
                           <span className={styles.number}>{counter}</span>
-                          <span className={styles.counterBtn} onClick={() => setCounter(counter + 1)}>+</span>
+                          <span className={styles.counterBtn} onClick={() => handleCounterChange(counter + 1)}>+</span>
                           <p>times per day.</p>
                         </div>
                       </div>
