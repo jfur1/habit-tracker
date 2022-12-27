@@ -36,8 +36,12 @@ const dashboard = () => {
             if(response.status === 200){
                 console.log('Returned the following habits:', response)
                 setHabits(response.data);
+            } else{
+                router.push('/login')
             }
           })
+        } else {
+            router.push('/login')
         }
     
       }, [user]);
