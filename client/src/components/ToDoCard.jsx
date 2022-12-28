@@ -23,7 +23,11 @@ const ToDoCard = ({ habit }) => {
                 : null
             }
             </span>
-            <h1 className={styles.title}>{habit.title}</h1>
+            <div className={styles.col}>
+                <h1 className={styles.title}>{habit.title}</h1>
+                {/* <p>{habit.description}</p> */}
+            </div>
+
             <span 
                 class={styles["close-btn"] + ' ' + (isOpen ? styles['open'] : '')}
                 onClick={() => setIsOpen(!isOpen)}
