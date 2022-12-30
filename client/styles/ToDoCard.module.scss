@@ -3,11 +3,13 @@
     grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
     border-radius: 12px;
+
 }
 
 .title{
-    font-size: 30px;
+    font-size: clamp(23px, 27px, 30px);
     font-weight: 400;
+    margin: 0.25em 0 ;
 }
 
 .iconContainer{
@@ -48,6 +50,12 @@
     width: 100%;
     padding: 0;
     margin: 0;
+
+    col{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
   }
   
   .lower {
