@@ -1,0 +1,121 @@
+import connectionPool from '../config/conn.js'
+import asyncHandler from 'express-async-handler'
+
+// @Route:  GET /api/entries
+// @Desc:   Return ALL entries for a given user
+// @Access: Private
+export const getEntries = asyncHandler(async (req, res) => {
+    // This syntax returns the first element from the array of results and stores it in a new array called 'rows'.
+
+    const user_id = req.headers.id;
+
+    console.log('id: ', user_id)
+
+    // PREPARED STATEMENT SYNTAX
+    const [rows] = await connectionPool.query(`
+    SELECT * 
+    FROM entries
+    WHERE user_id = ?
+    `, [user_id]);
+
+    if(rows)
+        res.status(200).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+})
+
+// @Route:  GET /api/entries/:id
+// @Desc:   Return 1 entry
+// @Access: Private
+export const getEntry = asyncHandler(async (req, res) => {
+    const user_id = req.headers.id;
+    const entry_id = req.params.entry_id;
+
+    // PREPARED STATEMENT SYNTAX
+    const [rows] = await connectionPool.query(`
+    SELECT * 
+    FROM entries
+    WHERE user_id = ? 
+    AND entry_id = ?
+    `, [user_id, entry_id]);
+
+    if(rows)
+        res.status(200).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+
+})
+
+// @Route:  POST /api/entry
+// @Desc:   Create a new entry
+// @Access: Private
+export const createEntry = asyncHandler(async (req, res) => {
+    const {
+        user_id
+    } = req.body;
+
+    console.log('Trying to insert: ', req.body)
+
+    const [rows] = await connectionPool.query(`
+    INSERT INTO
+    habits (user_id, title, schedule, frequency, units, type, description, color, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [user_id ]);
+    console.log('rows:', rows)
+
+    if(rows)
+        res.status(201).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+})
+
+// @Route:  PUT /api/habits/:id
+// @Desc:   Update an existing habit
+// @Access: Private
+export const updateEntry = asyncHandler(async (req, res) => {
+    const {
+        habit_id,
+        user_id,
+        title,
+        schedule,
+        frequency,
+        units,
+        type,
+        description,
+        color,
+        icon
+    } = req.body;
+    console.log('Trying to upsert the following: ', req.body);
+
+    const [rows] = await connectionPool.query(`
+    UPDATE habits
+    SET title=?, schedule=?, frequency=?, units=?, type=?, description=?, color=?, icon=?
+    WHERE user_id = ?
+    AND habit_id = ?
+    `, [title, schedule, frequency, units, type, description, color, icon, user_id, habit_id]);
+    console.log('rows:', rows)
+
+    if(rows)
+        res.status(200).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+
+})
+
+// @Route:  DELETE /api/habits/:id
+// @Desc:   Delete Goal
+// @Access: Private
+export const deleteHabit = asyncHandler(async (req, res) => {
+    const entry_id = req.params.entry_id;
+
+    console.log('Trying to delete habit with ID: ',  req.params.entry_id)
+
+    const [rows] = await connectionPool.query(`
+    DELETE FROM habits
+    WHERE entry_id = ?
+    `, [entry_id]);
+
+    if(rows)
+        res.status(204).json(rows);
+    else
+        res.status(400).json({ msg: "Err. Please try again."})
+})

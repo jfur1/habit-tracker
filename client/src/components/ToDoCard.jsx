@@ -25,7 +25,7 @@ const ToDoCard = ({ habit }) => {
             </span>
             <div className={styles.col}>
                 <h1 className={styles.title}>{habit.title}</h1>
-                <p className={styles.desc}>{habit.description}</p>
+                {/* <p className={styles.desc}>{habit.description}</p> */}
             </div>
 
             <span 
