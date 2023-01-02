@@ -40,10 +40,8 @@ const dashboard = () => {
                 router.push('/login')
             }
           })
-        } else {
-            router.push('/login')
         }
-    
+
       }, [user]);
 
     const TodaysDate = ( ) => {
@@ -118,6 +116,11 @@ const dashboard = () => {
 
             <TodaysDate todaysCount={todaysCount}/>
             <WeeklyRow/>
+
+            {/* <div className={styles["listToggle"]}>
+                <p>Active</p>
+                <p>Completed</p>
+            </div> */}
 
             <div className={styles.listContainer}>
                 { habits 

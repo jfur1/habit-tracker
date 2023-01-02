@@ -3,18 +3,22 @@ import styles from '../../styles/ToDoCard.module.scss'
 import Icon from '../components/Icon.jsx'
 import { ICONS } from '../components/Icon.jsx'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import CircleSlider from '../components/CircleSlider.jsx'
 
 const ToDoCard = ({ habit }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [numerator, setNumerator] = useState(0);
+
+    const handleInput = (numberToSet) => {
+      if(numberToSet < 0 || numberToSet > habit.frequency)
+        return;
+
+      setNumerator(numberToSet)
+    }
 
     return (
-        // <div className={styles.card} style={{ backgroundColor: habit.color }}>
-        //     <h1 className={styles.title}>{habit.title}</h1>
-        // </div>
-
         <div
         className={styles["container"] + " " + (isOpen ? styles["expand"] : "")}
-        style={{ backgroundColor: habit.color }}
       >
         <div className={styles["upper"]}>
             <span className={styles.iconContainer} style={{ margin: '1rem' }}>
@@ -25,7 +29,7 @@ const ToDoCard = ({ habit }) => {
             </span>
             <div className={styles.col}>
                 <h1 className={styles.title}>{habit.title}</h1>
-                {/* <p className={styles.desc}>{habit.description}</p> */}
+                <p className={styles.desc}>{habit.description}</p>
             </div>
 
             <span 
@@ -34,13 +38,27 @@ const ToDoCard = ({ habit }) => {
             />
         </div>
         <div className={styles["lower"]}>
-          <h3>Goal: {habit.frequency} {habit.units}</h3>
-          <div>Every: {habit.schedule.split(',').map((day, idx) => 
-            <p>{day}</p>
-          )} {habit.units}</div>
-          <h3>
-            {habit.description}
+
+          <h3 className={styles["goal"]}>
+            Goal: {habit.frequency} {habit.units} per day
           </h3>
+
+          <div className={styles["row"]}>
+            <p className={styles["minus"]} onClick={() => handleInput(numerator - 1)}>-</p>
+            <CircleSlider 
+              squareSize="175"
+              strokeWidth="15"
+              numerator={numerator}
+              denominator={habit.frequency}
+              color={habit.color}
+            />
+            <p className={styles["plus"]} onClick={() => handleInput(numerator + 1)}>+</p>
+          </div>
+
+          <button className={styles["submit"]}>
+            {numerator === habit.frequency ? "Mark Completed" : "Save Progress"}
+          </button>
+          
         </div>
       </div>
     )

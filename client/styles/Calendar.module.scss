@@ -1,0 +1,80 @@
+
+.calendar{
+    display: flex;
+    justify-content: center;
+    color: var(--main-color);
+    background-color: transparent;
+  
+    &-header{
+        display: flex;
+        max-width: 75%;
+        align-items: center;
+        justify-content: space-around;
+        margin: 0 auto 1.25rem;
+
+        .previous,
+        .next{
+            text-align: center;
+            margin: 0;
+            font-size: 25px;
+            visibility: visible;
+
+
+            &.invisible{
+                visibility: hidden;
+            }
+        }
+    }
+    .calendar-card-body {
+        .monthName{
+            text-align: center;
+            margin: 0;
+            font-size: 30px;
+            font-weight: 400;
+        }
+       .dayNames{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem 1rem;
+            
+            .week-day{
+                color: var(--secondary-color);
+                font-size: clamp(18px, 20px, 22px);
+                
+                &.today{
+                  color: red;
+                }
+            }
+        }
+  
+        .calendar-day{
+        &.today{
+          color: red;
+        }
+        &:not(.empty){
+          text-align: center;
+          vertical-align: middle;
+          .number{
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+            font: 22px Arial, sans-serif;
+            margin: 0 auto;
+            padding: 0 ;
+  
+              &:hover {
+              background-color: var(--link-color-hover);
+              color: var(--link-color-active);
+              cursor: pointer;
+              
+              &.today{
+                color: red;
+              }
+            }
+          }
+        }
+      }
+    }
+  }

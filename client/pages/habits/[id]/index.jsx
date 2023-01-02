@@ -8,7 +8,9 @@ import styles from '../../../styles/HabitOverview.module.scss'
 import { IoIosArrowBack } from 'react-icons/io'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import Icon from '../../../src/components/Icon.jsx'
+import Calendar from '../../../src/components/Calendar.jsx'
 import UpdateHabit from '../../updateHabit.jsx'
+
 
 const index = () => {
   const router = useRouter();
@@ -19,6 +21,7 @@ const index = () => {
   const [targetDays, setTargetDays] = useState([])
   const [showNewHabitForm, setShowNewHabitForm] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [showMore, setShowMore] = useState(false)
 
   // Here, we need to get habit with the given ID, from the context
   useEffect(() => {
@@ -50,10 +53,6 @@ const index = () => {
 
   const goBack = () => {
     router.push('/habits')
-  }
-
-  const showMore = () => {
-    return;
   }
 
   const updateHabit = () => {
@@ -117,11 +116,11 @@ const index = () => {
         </span>
         
         <div className={styles["menu-nav"]}>
-          <div className={styles["dropdown-container"]} tabIndex="-1">
-          <BsThreeDotsVertical className={styles.moreBtn} onClick={showMore}/>
-            <div className={styles.dropdown}>
+          <div className={styles["dropdown-container"]}>
+          <BsThreeDotsVertical className={styles.moreBtn} onClick={() => setShowMore(!showMore)}/>
+            <div className={styles.dropdown + ' ' + (showMore ? styles.show : '')}>
               <a className={styles.dropdownItem} onClick={updateHabit}><div>Edit Habit</div></a>
-              <a className={styles.dropdownItem} onClick={() => setShowConfirmModal(true)}>
+              <a className={styles.dropdownItem } onClick={() => setShowConfirmModal(true)}>
                 <div>Delete Habit</div>
               </a>
             </div>
@@ -129,9 +128,10 @@ const index = () => {
         </div>
       </div>
 
-      <span className={styles.hrLine}></span>
+      <span className={styles.hrLine}/>
 
       <div className={styles.body}>
+        <Calendar/>
         <div className={styles.target}>
           {/* <p>{habit?.frequency} {habit?.units}</p> */}
           <p>Habit ID: {habit?.habit_id}</p>
