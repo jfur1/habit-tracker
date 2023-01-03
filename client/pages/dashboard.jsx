@@ -15,14 +15,14 @@ const dashboard = () => {
     const { userDataLoading, setUserData, userData } = useDataContext();
 
     const [isOpen, setIsOpen] = useState(null);
-
+    const [entries, setEntries] = useState(null);
     const [habits, setHabits] = useState(null);
     const [numerator, setNumerator] = useState(0);
     const [todaysCount, setTodaysCount] = useState(null);
     useEffect(() => {
         // Get all existing habits once we receive user from the context
     
-        const getData = async () => {
+        const getHabits = async () => {
           const headers = {
             "Authorization": "Bearer " + user.token,
             "Content-Type": 'application/json',
@@ -34,13 +34,34 @@ const dashboard = () => {
     
           return res;
         }
+
+        const getEntries = async () => {
+            const headers = {
+              "Authorization": "Bearer " + user.token,
+              "Content-Type": 'application/json',
+              "id": user.user_id
+            }
+            const res = await Axios.get(process.env.API_URL + `entries`, {
+              headers: headers
+            });
+      
+            return res;
+        }
     
         if(user){
           console.log("Received user from context: ", user)
-          getData().then((response) => {
+          getHabits().then((response) => {
             if(response.status === 200){
-                console.log('Returned the following habits:', response)
+                console.log('Returned the following habits:', response.data)
                 setHabits(response.data);
+            } else{
+                router.push('/login')
+            }
+          })
+          getEntries().then((entryRes) => {
+            if(entryRes.status === 200 || entryRes.status === 201){
+                console.log('Returned the following Entries:', entryRes.data)
+                setEntries(entryRes.data);
             } else{
                 router.push('/login')
             }
@@ -99,12 +120,25 @@ const dashboard = () => {
         const dow = today.getDay();
         const currentDayName = days[dow];
 
+        // Pad month & date if needed
+        const monthIdx = (today.getMonth() <= 8) ? ('0'+ (today.getMonth() + 1)): (today.getMonth() + 1)
+        const dayIdx = (today.getDate() <= 9) ? ('0'+ today.getDate()) : today.getDate()
+        
+        // Use ymdStamp as key
+        const currentYmd = today.getFullYear() + '-' + monthIdx + '-' + dayIdx
+        // console.log('Currrent ymd: ', currentYmd)
+
         return (
             <div className={styles.habitsList}>
                 {habits.map((habit, idx) => {
                     if(habit.schedule.indexOf(currentDayName) >= 0){
+                        
+                        const [habitEntry] = entries?.filter((entry, idx) => entry.habit_id === habit.habit_id)
+
+                        console.log('Habit Entry: ', habitEntry)
+
                         return (
-                            <ToDoCard key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>
+                            <ToDoCard entry={habitEntry} key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>
                         )
                     }
                 })}

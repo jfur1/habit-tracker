@@ -5,7 +5,7 @@ import protect from '../middleware/authMiddleware.js'
 
 const entryRoutes = express.Router();
 
-entryRoutes.route('/').get(protect, getHabit).post(protect, createHabit);
+entryRoutes.route('/').get(protect, getEntries).post(protect, createEntry);
 
 entryRoutes.route('/:id').get(protect, getEntry).put(protect, updateEntry).delete(protect, deleteEntry);
 

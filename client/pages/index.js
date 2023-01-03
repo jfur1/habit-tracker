@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Axios from 'axios'
 import { useRouter } from 'next/router'
 // import { AuthContext } from '../src/context/auth-context.js'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 
 export default function Home() {
   const router = useRouter()

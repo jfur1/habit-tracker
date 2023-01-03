@@ -46,30 +46,71 @@ export const getEntry = asyncHandler(async (req, res) => {
 
 })
 
-// @Route:  POST /api/entry
+// @Route:  POST /api/entries
 // @Desc:   Create a new entry
 // @Access: Private
 export const createEntry = asyncHandler(async (req, res) => {
     const {
-        user_id
+        user_id,
+        ymd,
+        dowIdx,
+        habit_id,
+        frequency,
+        units
     } = req.body;
 
-    console.log('Trying to insert: ', req.body)
+    console.log('Checking for existing entry....')
+    console.log('YMD: ', ymd)
+    console.log('userID: ', user_id)
+    console.log('habit_id: ', habit_id)
 
-    const [rows] = await connectionPool.query(`
-    INSERT INTO
-    habits (user_id, title, schedule, frequency, units, type, description, color, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [user_id ]);
-    console.log('rows:', rows)
 
-    if(rows)
-        res.status(201).json(rows);
-    else
-        res.status(400).json({ msg: "Err. Please try again."})
+    const [existing] = await connectionPool.query(`
+    SELECT * 
+    FROM entries
+    WHERE user_id = ?
+    AND ymd = ?
+    AND habit_id = ?
+    `, [user_id, ymd, habit_id]);
+
+    // Create
+    if(!existing.length > 0){
+        const [rows] = await connectionPool.query(`
+        INSERT INTO
+        entries (user_id, ymd, dowIdx, habit_id, frequency, units) VALUES (?, ?, ?, ?, ?, ?)
+        `, [user_id, ymd, dowIdx, habit_id, frequency, units]);
+
+        console.log('rows:', rows)
+
+        if(rows)
+            res.status(200).json(rows);
+        else
+            res.status(400).json({ msg: "Err. Please try again."})
+    } else {
+        const [rows] = await connectionPool.query(`
+        UPDATE entries
+        SET user_id=?, ymd=?, dowIdx=?, habit_id=?, frequency=?, units=?
+        WHERE user_id = ?
+        AND habit_id = ?
+        AND ymd = ?
+        `, [user_id, ymd, dowIdx, habit_id, frequency, units, user_id, habit_id, ymd]);
+
+        console.log('rows:', rows)
+
+        if(rows)
+            res.status(201).json(rows);
+        else
+            res.status(400).json({ msg: "Err. Please try again."})
+    }
+
+
+
+
+
 })
 
-// @Route:  PUT /api/habits/:id
-// @Desc:   Update an existing habit
+// @Route:  PUT /api/entries/:id
+// @Desc:   Update an existing Entry
 // @Access: Private
 export const updateEntry = asyncHandler(async (req, res) => {
     const {
@@ -87,7 +128,7 @@ export const updateEntry = asyncHandler(async (req, res) => {
     console.log('Trying to upsert the following: ', req.body);
 
     const [rows] = await connectionPool.query(`
-    UPDATE habits
+    UPDATE entries
     SET title=?, schedule=?, frequency=?, units=?, type=?, description=?, color=?, icon=?
     WHERE user_id = ?
     AND habit_id = ?
@@ -101,10 +142,10 @@ export const updateEntry = asyncHandler(async (req, res) => {
 
 })
 
-// @Route:  DELETE /api/habits/:id
-// @Desc:   Delete Goal
+// @Route:  DELETE /api/entries/:id
+// @Desc:   Delete Entry
 // @Access: Private
-export const deleteHabit = asyncHandler(async (req, res) => {
+export const deleteEntry = asyncHandler(async (req, res) => {
     const entry_id = req.params.entry_id;
 
     console.log('Trying to delete habit with ID: ',  req.params.entry_id)
