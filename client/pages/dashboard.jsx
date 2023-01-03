@@ -135,7 +135,7 @@ const dashboard = () => {
                         
                         const [habitEntry] = entries?.filter((entry, idx) => entry.habit_id === habit.habit_id)
 
-                        console.log('Habit Entry: ', habitEntry)
+                        // console.log('Habit Entry: ', habitEntry)
 
                         return (
                             <ToDoCard entry={habitEntry} key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>

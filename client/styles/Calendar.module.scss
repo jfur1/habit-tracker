@@ -1,24 +1,27 @@
-
 .calendar{
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
+    // outline: 1px solid orange;
+
     color: var(--main-color);
     background-color: rgba(255, 255, 255, 0.171);
     border-radius: 16px;
-    padding: 1rem 1rem 0 1rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
 
     &-header{
+        // border: 1px solid green;
+
         display: flex;
         max-width: 75%;
         align-items: center;
         justify-content: space-around;
-        margin: 0 auto 1.25rem;
+        margin: 0 auto;
 
         .center{
             display: flex;
             align-items: center;
 
-            .dropdown{
+            .monthName{
                 font-size: 25px;
                 font-weight: 400;
             }
@@ -38,6 +41,8 @@
         }
     }
     .calendar-card-body {
+      // border: 1px solid blue;
+
 
         .monthName{
             text-align: center;
@@ -47,11 +52,20 @@
             font-weight: 400;
         }
 
-       .dayNames{
+        .calendar-table-row{
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 8px;
+
+          &.today{
+            color: red;
+          }
+
+          &.day-names{
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 1rem 1.5rem;
+            padding: 0 0.5rem;
             
             .week-day{
                 color: var(--secondary-font-color);
@@ -61,35 +75,46 @@
                   color: red;
                 }
             }
-        }
-  
-        .calendar-day{
-        &.today{
-          color: red;
-        }
-        &:not(.empty){
-          text-align: center;
-          vertical-align: middle;
-          .number{
+          }
+
+          .calendar-day{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 50%;
-            width: clamp(42px, 45px, 47px);
-            height: clamp(42px, 45px, 47px);
-            vertical-align: middle;
-            font: 20px Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-  
-              &:hover {
-              background-color: var(--link-color-hover);
-              color: var(--link-color-active);
-              cursor: pointer;
-              
-              &.today{
-                color: red;
+            height: 40px;
+            width: 40px;
+
+            &.empty{
+              color: var(--secondary-font-color);
+            }
+    
+            &.today{
+              color: red;
+            }
+            &:not(.empty){
+              text-align: center;
+              // border: 1px solid red;
+
+              .number{
+                font-size: clamp(18px, 20px, 22px);
+                font-weight: 300;
+                margin: 0;
+                padding: 0;
+      
+                  &:hover {
+                  background-color: var(--link-color-hover);
+                  color: var(--link-color-active);
+                  cursor: pointer;
+                  
+                  &.today{
+                    color: red;
+                  }
+                }
               }
             }
           }
         }
-      }
+      
     }
   }

@@ -18,6 +18,7 @@ const index = () => {
   const { isUserAuthenticated, isLoading, user } = useAuth();
   const { userDataLoading, userData, setUserData, setUserDataLoading } = useDataContext();
   const [habit, setHabit] = useState(null);
+  const [entries, setEntries] = useState(null)
   const [targetDays, setTargetDays] = useState([])
   const [showNewHabitForm, setShowNewHabitForm] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -34,7 +35,17 @@ const index = () => {
       const res = await Axios.get(process.env.API_URL + 'habits/' + habitID, {
         headers: headers
       })
-      setUserDataLoading(false)
+      return res;
+    }
+    const getEntries = async () => {
+      const headers = {
+        "Authorization": "Bearer " + user.token,
+        "Content-Type": 'application/json',
+        "id": user.user_id
+      }
+      const res = await Axios.get(process.env.API_URL + `entries/` + habitID, {
+        headers: headers
+      });
       return res;
     }
 
@@ -47,6 +58,13 @@ const index = () => {
               setTargetDays(response.data[0].schedule.split(','));
         }
       })
+      getEntries().then((entryRes) => {
+        if(entryRes.status === 200 || entryRes.status === 201){
+            console.log('Returned the following entries:', entryRes.data)
+            setEntries(entryRes.data);
+        }
+      })
+      setUserDataLoading(false)
     }
 
   }, [habitID])
@@ -131,7 +149,7 @@ const index = () => {
       <span className={styles.hrLine}/>
 
       <div className={styles.body}>
-        <Calendar/>
+        <Calendar entries={entries} habit={habit}/>
         <div className={styles.target}>
           {/* <p>{habit?.frequency} {habit?.units}</p> */}
           <p>Habit ID: {habit?.habit_id}</p>

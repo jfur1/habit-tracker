@@ -10,11 +10,12 @@ const { Provider } = DataContext;
 
 export const DataProvider = ({ children }) => {
     const [userData, setUserData] = useState(null)
+    const [entries, setEntries] = useState(null)
     const [userDataLoading, setUserDataLoading] = useState(true)
     const { isUserAuthenticated, isLoading, user } = useAuth();
 
     useEffect(() => {
-        const getData = async () => {
+        const getHabits = async () => {
             const headers = {
               "Authorization": "Bearer " + user.token,
               "Content-Type": 'application/json'
@@ -27,17 +28,35 @@ export const DataProvider = ({ children }) => {
 
             return res;
         }
-    
+        const getEntries = async () => {
+            const headers = {
+              "Authorization": "Bearer " + user.token,
+              "Content-Type": 'application/json',
+              "id": user.user_id
+            }
+            const res = await Axios.get(process.env.API_URL + `entries`, {
+              headers: headers
+            });
+      
+            return res;
+        }
 
         if(user){
             console.log("Received user from context: ", user)
-            getData().then((response) => {
+            getHabits().then((response) => {
                 if(response.status === 200){
                     console.log('Returned the following habits:', response.data)
                     setUserData(response.data);
-                    setUserDataLoading(false);
                 }
             })
+
+            getEntries().then((entryRes) => {
+                if(entryRes.status === 200 || entryRes.status === 201){
+                    console.log('Returned the following Entries:', entryRes.data)
+                    setEntries(entryRes.data);
+                }
+            })
+            setUserDataLoading(false);
         }
     }, [])
 
@@ -46,6 +65,8 @@ export const DataProvider = ({ children }) => {
             value={{
                 userData,
                 setUserData,
+                entries,
+                setEntries,
                 userDataLoading,
                 setUserDataLoading
             }}

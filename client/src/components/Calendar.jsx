@@ -3,7 +3,7 @@ import styles from '../../styles/Calendar.module.scss'
 import { BiChevronDown } from 'react-icons/bi'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
-const Calendar = () => {
+const Calendar = ({ entries, habit }) => {
 
   var today = new Date();
   var currentMonth = today.getMonth();
@@ -13,10 +13,36 @@ const Calendar = () => {
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const monthsFullName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
+  // d: Date
+  // Function returns entry for a given date, and [] if none exists
+  // Compares Date.toString() === entries[x].ymd.split('T')[0]
+  //      i.e, Compare dates, while ignoring timestamps
+  const getEntryForDate = (d) => {
+    // Pad month & date if needed
+    const monthIdx = (d.getMonth() <= 8) ? ('0'+ (d.getMonth() + 1)): (d.getMonth() + 1)
+    const dayIdx = (d.getDate() <= 9) ? ('0'+ d.getDate()) : d.getDate()
+    const tmpYmd = d.getFullYear() + '-' + monthIdx + '-' + dayIdx
 
+    return entries?.filter((entry) => entry.ymd.split('T')[0] === tmpYmd)
+  }
+  
   // check how many days in a month code from https://dzone.com/articles/determining-number-days-month
   const daysInMonth = (iMonth, iYear) => {
     return 32 - new Date(iYear, iMonth, 32).getDate();
+  }
+
+  const daysInPrevMonth = (iMonth, iYear) => {
+    let tmpMonth = iMonth
+    let tmpYear = iYear
+
+    // If we want nDays in prev month, when current month is January (idx = 0), 
+    // then "dencrement" month from 0 to 11 and decrement year by 1
+    if(iMonth === 0)
+      tmpMonth = 11
+      tmpYear = iYear - 1
+
+    return 32 - new Date(tmpYear, tmpMonth, 32).getDate();
   }
 
   const next = () => {
@@ -47,34 +73,48 @@ const Calendar = () => {
     const todayIdx = today.getDay()
   
     return (
-      <div className={styles.dayNames}>
+      <tr className={styles['calendar-table-row'] + ' ' + styles['day-names']}>
       {weekdayshort.map(day => (
           <span key={day} className={styles['week-day'] + ' ' + (day === weekdayshort[todayIdx] && currentYear === selectYear ? styles['today'] : '')}>
             {day.substring(0, 2)}
           </span>
       ))}
-      </div>
+      </tr>
     )
   }
 
   const CalendarDays = ({ month, year }) => {
     let firstDay = (new Date(year, month)).getDay();
+    let largestPrevBlankDate = daysInPrevMonth(month, year);
+    let j = firstDay
 
+    console.log(firstDay)
     let blanks = [];
 
     for (let i = 0; i < firstDay; i++) {
       blanks.push(
-        <td className={styles["calendar-day"] + ' ' + styles["empty"]}>{""}</td>
+        <td key={'empty-'+i} className={styles["calendar-day"] + ' ' + styles["empty"]}>{largestPrevBlankDate - j}</td>
       );
+      j--;
     }
 
     let weeklyRows = [];
     let nDaysInMonth = daysInMonth(month, year)
+    let tmpEntry, tmpDate
 
     for (let d = 1; d <= nDaysInMonth; d++) {
+      // Get entry for this day
+      tmpDate = new Date(year, month, d)
+      tmpEntry = getEntryForDate(tmpDate)
+      if(tmpEntry?.length > 0){
+        console.log('Calendar found entry for date: ', tmpEntry[0].ymd)
+        console.log('nCompleted on this date: ', tmpEntry[0].frequency)
+        console.log('nTarget for this date: ', habit.frequency)
+      }
+
       weeklyRows.push(
         <td 
-          key={d} 
+          key={'calendar-day-'+d} 
           className={styles["calendar-day"] + ' ' + (d === today.getDate() && currentYear === selectYear ? styles['today'] : '')}
         >
           <p className={styles['number']}>{d}</p>
@@ -94,23 +134,30 @@ const Calendar = () => {
           cells.push(row); // in current loop we still push current row to new container
         }
         if (i === totalSlots.length - 1) { // when end loop we add remain date
+          let nTrailingBlanks = 6 - (i % 7)
+          console.log('nTrailingBlanks:', nTrailingBlanks)
+          for(let n=0; n < nTrailingBlanks; n++){
+            cells.push(
+              <td key={'empty-'+i} className={styles["calendar-day"] + ' ' + styles["empty"]}>{n+1}</td>
+            )
+          }
+
           rows.push(cells);
         }
       }); 
     return (
       rows.map((d, i) => {
         // console.log(i)
-        return <tr key={i} className={styles['calendar-table-row']}>{d}</tr>;
+        return <tr key={'row-'+i} className={styles['calendar-table-row']}>{d}</tr>;
       })
     )
   }
 
   return (
     <div className={styles["calendar"]}>
-      <div className={styles['calendar-card-body']}>
+
         <div className={styles['calendar-header']}>
           <IoIosArrowBack className={styles["previous"]} onClick={previous}/> 
-
 
           <div className={styles["center"]}>
             <h2 className={styles["monthName"]}>{months[selectMonth]} {selectYear}</h2>
@@ -121,10 +168,14 @@ const Calendar = () => {
             className={styles["next"] + ' ' + (currentMonth === selectMonth && currentYear === selectYear ? styles['invisible'] : null)}
             onClick={next}
           />
-        </div>
+      </div>
+
+
+      <div className={styles['calendar-card-body']}>
         <DayNames/>
         <CalendarDays month={selectMonth} year={selectYear}/>
       </div>
+
     </div>
   )
 }
