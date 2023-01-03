@@ -7,23 +7,23 @@ main.container{
 
 
 .backBtn{
-    transform: scale(3);
+    transform: scale(2);
 }
 
 .moreBtn{
-    transform: scale(2);
+    transform: scale(1.75);
 }
 
 .top{
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    padding: 1rem;
+    justify-content: space-between;
+    padding: 1rem 2rem 0;
 
     .title{
         font-weight: 400;
         font-size: clamp(32px, 36px, 38px);
-        padding: 0 0.5rem;
+        text-align: center;
     }
 
     .backBtnContainer{
@@ -35,7 +35,6 @@ main.container{
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
     }
 }
 
@@ -82,7 +81,7 @@ main.container{
 
   .body{
     margin: 0;
-    padding: 1rem;
+    padding: 1rem 0.5rem;
   }
 
   .target{

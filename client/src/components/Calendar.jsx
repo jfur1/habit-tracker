@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../../styles/Calendar.module.scss'
 import { BiChevronDown } from 'react-icons/bi'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 const Calendar = () => {
 
@@ -108,15 +109,18 @@ const Calendar = () => {
     <div className={styles["calendar"]}>
       <div className={styles['calendar-card-body']}>
         <div className={styles['calendar-header']}>
-          <p className={styles["previous"]} onClick={previous}>&larr;</p>
-          
+          <IoIosArrowBack className={styles["previous"]} onClick={previous}/> 
+
 
           <div className={styles["center"]}>
             <h2 className={styles["monthName"]}>{months[selectMonth]} {selectYear}</h2>
             {/* <BiChevronDown className={styles["dropdown"]}/> */}
           </div>
 
-            <p className={styles["next"] + ' ' + (currentMonth === selectMonth && currentYear === selectYear ? styles['invisible'] : null)} onClick={next}>&rarr;</p>
+          <IoIosArrowForward
+            className={styles["next"] + ' ' + (currentMonth === selectMonth && currentYear === selectYear ? styles['invisible'] : null)}
+            onClick={next}
+          />
         </div>
         <DayNames/>
         <CalendarDays month={selectMonth} year={selectYear}/>

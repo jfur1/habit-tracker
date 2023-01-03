@@ -3,7 +3,9 @@
     display: flex;
     justify-content: center;
     color: var(--main-color);
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.171);
+    border-radius: 16px;
+    padding: 1rem 1rem 0 1rem;
 
     &-header{
         display: flex;
@@ -40,7 +42,8 @@
         .monthName{
             text-align: center;
             margin: 0;
-            font-size: 30px;
+            padding: 0.25rem 0;
+            font-size: 25px;
             font-weight: 400;
         }
 
@@ -48,10 +51,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 1rem 1rem;
+            padding: 0 1rem 1.5rem;
             
             .week-day{
-                color: var(--secondary-color);
+                color: var(--secondary-font-color);
                 font-size: clamp(18px, 20px, 22px);
                 
                 &.today{
@@ -69,8 +72,8 @@
           vertical-align: middle;
           .number{
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: clamp(42px, 45px, 47px);
+            height: clamp(42px, 45px, 47px);
             vertical-align: middle;
             font: 20px Arial, sans-serif;
             margin: 0;

@@ -106,12 +106,12 @@ const index = () => {
 
       <div className={styles.top}>
         <span className={styles.backBtnContainer}>
-         <IoIosArrowBack className={styles.backBtn} onClick={goBack}/> 
+         <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
         </span>
 
 
         <span className={styles.titleContainer}>
-          <Icon index={habit?.icon.toString()} iconColor={habit?.color}/>
+          {/* <Icon index={habit?.icon.toString()} iconColor={habit?.color}/> */}
           <h1 className={styles.title}>{habit?.title}</h1>
         </span>
         
