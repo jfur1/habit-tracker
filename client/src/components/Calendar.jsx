@@ -113,7 +113,7 @@ const Calendar = ({ entries, habit }) => {
       }
 
       weeklyRows.push(
-        <td 
+        <td
           key={'calendar-day-'+d} 
           className={styles["calendar-day"] + ' ' + (d === today.getDate() && currentYear === selectYear ? styles['today'] : '')}
         >

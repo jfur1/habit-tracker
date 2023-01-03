@@ -133,9 +133,10 @@ const dashboard = () => {
                 {habits.map((habit, idx) => {
                     if(habit.schedule.indexOf(currentDayName) >= 0){
                         
-                        const [habitEntry] = entries?.filter((entry, idx) => entry.habit_id === habit.habit_id)
+                        var habitEntry = entries?.filter((entry, idx) => entry.habit_id === habit.habit_id)
 
-                        // console.log('Habit Entry: ', habitEntry)
+                        if(habitEntry !== 'undefined')
+                            habitEntry = habitEntry[0]
 
                         return (
                             <ToDoCard entry={habitEntry} key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>
