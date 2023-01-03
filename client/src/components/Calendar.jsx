@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../../styles/Calendar.module.scss'
+import { BiChevronDown } from 'react-icons/bi'
 
 const Calendar = () => {
 
@@ -11,7 +12,7 @@ const Calendar = () => {
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const monthsFullName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  
+
   // check how many days in a month code from https://dzone.com/articles/determining-number-days-month
   const daysInMonth = (iMonth, iYear) => {
     return 32 - new Date(iYear, iMonth, 32).getDate();
@@ -47,7 +48,7 @@ const Calendar = () => {
     return (
       <div className={styles.dayNames}>
       {weekdayshort.map(day => (
-          <span key={day} className={styles['week-day'] + ' ' + (day === weekdayshort[todayIdx] ? styles['today'] : '')}>
+          <span key={day} className={styles['week-day'] + ' ' + (day === weekdayshort[todayIdx] && currentYear === selectYear ? styles['today'] : '')}>
             {day.substring(0, 2)}
           </span>
       ))}
@@ -73,7 +74,7 @@ const Calendar = () => {
       weeklyRows.push(
         <td 
           key={d} 
-          className={styles["calendar-day"] + ' ' + (d === today.getDate() ? styles['today'] : '')}
+          className={styles["calendar-day"] + ' ' + (d === today.getDate() && currentYear === selectYear ? styles['today'] : '')}
         >
           <p className={styles['number']}>{d}</p>
         </td>
@@ -108,7 +109,13 @@ const Calendar = () => {
       <div className={styles['calendar-card-body']}>
         <div className={styles['calendar-header']}>
           <p className={styles["previous"]} onClick={previous}>&larr;</p>
-          <h2 className={styles["monthName"]}>{months[selectMonth]} {selectYear}</h2>
+          
+
+          <div className={styles["center"]}>
+            <h2 className={styles["monthName"]}>{months[selectMonth]} {selectYear}</h2>
+            {/* <BiChevronDown className={styles["dropdown"]}/> */}
+          </div>
+
             <p className={styles["next"] + ' ' + (currentMonth === selectMonth && currentYear === selectYear ? styles['invisible'] : null)} onClick={next}>&rarr;</p>
         </div>
         <DayNames/>

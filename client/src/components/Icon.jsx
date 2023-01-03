@@ -140,7 +140,7 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
                 <g
                     onClick={typeof(onClick) !== 'undefined' ? () => onClick(value) : null}
                     style={{
-                        transform: `translateY(25%) translateX(25%) scale(2.0)`,
+                        transform: `translateY(25%) translateX(25%) scale(2)`,
                         color: iconColor
                     }}
                 >

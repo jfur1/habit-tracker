@@ -7,12 +7,17 @@ import { AuthContext, useAuth } from '../src/contexts/auth-context.js'
 import { DataContext, useDataContext } from '../src/contexts/data-context.js'
 import LoadingScreen from './loading.jsx'
 import ToDoCard from '../src/components/ToDoCard.jsx'
+import CircleSlider from '../src/components/CircleSlider.jsx'
 
 const dashboard = () => {
     const router = useRouter();
     const { isUserAuthenticated, isLoading, user } = useAuth();
     const { userDataLoading, setUserData, userData } = useDataContext();
+
+    const [isOpen, setIsOpen] = useState(null);
+
     const [habits, setHabits] = useState(null);
+    const [numerator, setNumerator] = useState(0);
     const [todaysCount, setTodaysCount] = useState(null);
     useEffect(() => {
         // Get all existing habits once we receive user from the context
@@ -99,7 +104,7 @@ const dashboard = () => {
                 {habits.map((habit, idx) => {
                     if(habit.schedule.indexOf(currentDayName) >= 0){
                         return (
-                            <ToDoCard key={idx} habit={habit}/>
+                            <ToDoCard key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>
                         )
                     }
                 })}

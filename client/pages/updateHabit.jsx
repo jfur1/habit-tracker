@@ -16,7 +16,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
       '#F4D03F',
       '#2ECC71',
       '#3498DB',
-      '#9B59B6',
+      '#B865D9',
       '#D2B48C',
       '#AAB7B8'
     ];

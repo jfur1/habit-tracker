@@ -20,6 +20,8 @@
     stroke: red;
     stroke-linecap: round;
     stroke-linejoin: round;
+    stroke-dashoffset: 10;
+    transition: 1000ms stroke-dashoffset
 }
 
 .circle-text {
@@ -27,3 +29,4 @@
     font-weight: bold;
     fill: red;
 }
+
