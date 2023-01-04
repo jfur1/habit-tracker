@@ -93,7 +93,7 @@ const Calendar = ({ entries, habit }) => {
 
     for (let i = 0; i < firstDay; i++) {
       blanks.push(
-        <td key={'empty-'+i} className={styles["calendar-day"] + ' ' + styles["empty"]}>{largestPrevBlankDate - j}</td>
+        <td key={'front-empty-'+i} className={styles["calendar-day"] + ' ' + styles["empty"]}>{largestPrevBlankDate - j}</td>
       );
       j--;
     }
@@ -135,10 +135,10 @@ const Calendar = ({ entries, habit }) => {
         }
         if (i === totalSlots.length - 1) { // when end loop we add remain date
           let nTrailingBlanks = 6 - (i % 7)
-          console.log('nTrailingBlanks:', nTrailingBlanks)
+
           for(let n=0; n < nTrailingBlanks; n++){
             cells.push(
-              <td key={'empty-'+i} className={styles["calendar-day"] + ' ' + styles["empty"]}>{n+1}</td>
+              <td key={'back-empty-'+n} className={styles["calendar-day"] + ' ' + styles["empty"]}>{n+1}</td>
             )
           }
 
