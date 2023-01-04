@@ -133,9 +133,12 @@ const dashboard = () => {
                 {habits.map((habit, idx) => {
                     if(habit.schedule.indexOf(currentDayName) >= 0){
                         
-                        var habitEntry = entries?.filter((entry, idx) => entry.habit_id === habit.habit_id)
+                        var habitEntry = entries?.filter((entry, idx) => (
+                            entry.habit_id === habit.habit_id
+                            && entry.ymd.split('T')[0] === currentYmd
+                        ))
 
-                        if(habitEntry !== 'undefined')
+                        if(habitEntry !== 'undefined' && habitEntry !== [])
                             habitEntry = habitEntry[0]
 
                         return (

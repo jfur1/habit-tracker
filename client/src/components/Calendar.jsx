@@ -13,7 +13,7 @@ const Calendar = ({ entries, habit }) => {
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const monthsFullName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  
+
   // d: Date
   // Function returns entry for a given date, and [] if none exists
   // Compares Date.toString() === entries[x].ymd.split('T')[0]
@@ -55,11 +55,11 @@ const Calendar = ({ entries, habit }) => {
   const previous = () => {
       console.log('PREVIOUS -- selectMonth: ', selectMonth)
       console.log('PREVIOUS -- selectYear: ', selectYear)
-      if(selectMonth === 0)
+      if(selectMonth === 0){
         setSelectYear(selectYear - 1)
-
-      if(selectMonth === 0)
         setSelectMonth(11)
+      }
+
       else
         setSelectMonth(selectMonth - 1)
   }
@@ -101,20 +101,45 @@ const Calendar = ({ entries, habit }) => {
     let weeklyRows = [];
     let nDaysInMonth = daysInMonth(month, year)
     let tmpEntry, tmpDate
+    var cellStyle = {}
 
     for (let d = 1; d <= nDaysInMonth; d++) {
       // Get entry for this day
       tmpDate = new Date(year, month, d)
       tmpEntry = getEntryForDate(tmpDate)
+      cellStyle = {
+        background: '',
+        outline: ''
+      };
+      
       if(tmpEntry?.length > 0){
         console.log('Calendar found entry for date: ', tmpEntry[0].ymd)
         console.log('nCompleted on this date: ', tmpEntry[0].frequency)
         console.log('nTarget for this date: ', habit.frequency)
+        
+        // Case 2: Semi-Complete (tmpEntry[0].frequency > 0 && tmpEntry[0].frequency < habit.frequency)
+        if(tmpEntry[0].frequency === habit.frequency)
+          cellStyle.backgroundColor = habit.color
+
+        // Case 3: Complete (tmpEntry[0].frequency === habit.frequency)
+        else if(tmpEntry[0].frequency === habit.frequency)
+          cellStyle.backgroundColor = habit.color
+
+        console.log(cellStyle)
+      } else if(tmpDate.getTime() <= today.getTime()) {
+        // Case 1: Incomplete (tmpEntry[0].frequency === 0) && ymd less than today
+        
+        cellStyle.outline = '1px solid' + habit?.color
+
       }
 
       weeklyRows.push(
         <td
           key={'calendar-day-'+d} 
+          style={{
+            backgroundColor: cellStyle.backgroundColor,
+            outline: cellStyle.outline
+          }}
           className={styles["calendar-day"] + ' ' + (d === today.getDate() && currentYear === selectYear ? styles['today'] : '')}
         >
           <p className={styles['number']}>{d}</p>
