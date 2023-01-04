@@ -152,8 +152,8 @@ const index = () => {
         <Calendar entries={entries} habit={habit}/>
         <div className={styles.target}>
           {/* <p>{habit?.frequency} {habit?.units}</p> */}
-          <p>Habit ID: {habit?.habit_id}</p>
-          <p>user_id: {habit?.user_id}</p>
+          {/* <p>Habit ID: {habit?.habit_id}</p> */}
+          {/* <p>user_id: {habit?.user_id}</p> */}
           <p>Frequency: {habit?.frequency}</p>
           <p>Units: {habit?.units}</p>
           <div className={styles.targetDays}>

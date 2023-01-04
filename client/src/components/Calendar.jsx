@@ -100,12 +100,14 @@ const Calendar = ({ entries, habit }) => {
 
     let weeklyRows = [];
     let nDaysInMonth = daysInMonth(month, year)
-    let tmpEntry, tmpDate
+    let tmpEntry, tmpDate, dateString, shortDayName
     var cellStyle = {}
 
     for (let d = 1; d <= nDaysInMonth; d++) {
       // Get entry for this day
       tmpDate = new Date(year, month, d)
+      dateString = tmpDate.toDateString()
+      shortDayName = dateString.split(' ')[0]
       tmpEntry = getEntryForDate(tmpDate)
       cellStyle = {
         background: '',
@@ -118,19 +120,20 @@ const Calendar = ({ entries, habit }) => {
         console.log('nTarget for this date: ', habit.frequency)
         
         // Case 2: Semi-Complete (tmpEntry[0].frequency > 0 && tmpEntry[0].frequency < habit.frequency)
-        if(tmpEntry[0].frequency === habit.frequency)
-          cellStyle.backgroundColor = habit.color
+        if(tmpEntry[0].frequency > 0 && tmpEntry[0].frequency < habit.frequency){
+          cellStyle.outline = '1px solid' + habit.color
+        }
 
         // Case 3: Complete (tmpEntry[0].frequency === habit.frequency)
-        else if(tmpEntry[0].frequency === habit.frequency)
+        else if(tmpEntry[0].frequency === habit.frequency){
           cellStyle.backgroundColor = habit.color
-
+        }
         console.log(cellStyle)
-      } else if(tmpDate.getTime() <= today.getTime()) {
+      } 
+      // Blanks -- must occur in same month and only according to habit.schedule
+      else if(tmpDate.getTime() <= today.getTime() && habit?.schedule.indexOf(shortDayName) >= 0) {
         // Case 1: Incomplete (tmpEntry[0].frequency === 0) && ymd less than today
-        
         cellStyle.outline = '1px solid' + habit?.color
-
       }
 
       weeklyRows.push(
