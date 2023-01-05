@@ -1,6 +1,8 @@
 import React, { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import NavBar from '../src/components/NavBar.jsx'
+import { DarkModeContext } from '../src/contexts/theme-context.js'
+import styles from '../styles/Settings.module.scss'
 
 const settings = () => {
   const router = useRouter();
@@ -10,10 +12,19 @@ const settings = () => {
     router.push('/');
   }
 
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+
+  const handleClick = () => {
+    toggleDarkMode();
+  }
+
+
   return (
     <>
-    <div>settings
+    <div className={styles.container}>settings
     </div>
+
+    <button onClick={handleClick}>Toggle Dark Mode</button>
 
     <button onClick={logout}>Sign Out</button>
     <NavBar currentIdx={4}/>

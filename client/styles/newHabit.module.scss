@@ -11,7 +11,6 @@
   
   .modalOpen {
     display: block;
-    
     height: 95vh;
     // z-index: 1;
     animation: fadeIn 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
@@ -43,7 +42,7 @@
   .modalInner {
     width: 100vw;
     color: var(--color, rgba(255, 255, 255, 0.577));
-    background: var(--bg, hsl(210, 2%, 19%));
+    background: var(--habit-form);
     border-radius: 1rem;
     transform: scale(0.95) translateY(10%);
   }
@@ -55,11 +54,11 @@
     padding: 0 20px;
 
     .cancel{
-      color: var(--color, rgba(255, 255, 255, 0.577));
+      color: var(--secondary-font-color);
     }
 
     .formTitle{
-      color: var(--color, rgba(255, 255, 255));
+      color: var(--font-color);
       font-weight: 400;
     }
 
@@ -75,7 +74,7 @@
 
     .title{
       font-weight: 400;
-      color: #fff;
+      color: var(--font-color);
     }
 
     .subtitle{
@@ -103,10 +102,13 @@
   .frequency{
     display: flex;
     flex-direction: column;
+    color: var(--font-color);
+
 
     .title{
       font-weight: 400;
-      color: #fff;
+      color: var(--font-color);
+
     }
     .counter{
       display: flex;
@@ -116,7 +118,7 @@
       .number{
         font-size : 24px;
         font-weight: 300;
-        color: #fff;
+        color: var(--font-color);
       }
       .counterBtn{
         height: 40px;
@@ -129,7 +131,7 @@
         border-radius: 5px;
         display: flex;
         align-items: center;
-        color: #fff;
+        color: var(--font-color);
         justify-content: center;
       }
     }
@@ -146,7 +148,7 @@
 
     .title{
       font-weight: 400;
-      color: #fff;
+      color: var(--font-color);
     }
 
     .descInput{
@@ -232,7 +234,7 @@
     border: none;
     border-radius: 10px;
     outline: none;
-    background: var(--color, rgba(107, 104, 104, 0.27));
+    background: var(--text-input);
   }
 
   .horizontalLine{

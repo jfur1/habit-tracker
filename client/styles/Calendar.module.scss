@@ -3,8 +3,8 @@
     // justify-content: center;
     // outline: 1px solid orange;
 
-    color: var(--main-color);
-    background-color: rgba(255, 255, 255, 0.171);
+    color: var(--font-color);
+    background-color: var(--calendar-bg);
     border-radius: 16px;
     padding: 0.25rem 1rem 0.25rem 1rem;
 
@@ -87,7 +87,7 @@
             font-size: clamp(18px, 20px, 22px);
 
             &.empty{
-              color: var(--secondary-font-color);
+              color: var(--muted);
             }
     
             &.today{

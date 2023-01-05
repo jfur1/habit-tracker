@@ -32,7 +32,7 @@
     height: 100px;
     color: white;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    background-color: #3e3e3e;
+    background-color: var(--card-color);
   }
 
   .container.expand { 
@@ -173,7 +173,7 @@
 }
 
 .circleBackground{
-    stroke: #ddd;
+    stroke: var(--progress-stroke);
 }
 
 .circleProgress {

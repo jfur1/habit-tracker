@@ -81,28 +81,31 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
     const Cirlces = () => {
         return (
             <svg
-            width={sqSize}
-            height={sqSize}
-            viewBox={viewBox}>
-            <circle
-                className={styles.circleBackground}
-                cx={sqSize / 2}
-                cy={sqSize / 2}
-                r={radius}
-                strokeWidth={`${strokeWidth}px`} />
+                width={sqSize}
+                height={sqSize}
+                viewBox={viewBox}
+            >
                 <circle
-                className={styles.circleProgress}
-                cx={sqSize / 2}
-                cy={sqSize / 2}
-                r={radius}
-                strokeWidth={`${strokeWidth}px`}
-                // Start progress marker at 12 O'Clock
-                transform={`rotate(-90 ${sqSize / 2} ${sqSize / 2})`}
-                style={{
-                    strokeDasharray: dashArray,
-                    strokeDashoffset: dashOffset,
-                    stroke: iconColor
-                }}/>
+                    className={styles.circleBackground}
+                    cx={sqSize / 2}
+                    cy={sqSize / 2}
+                    r={radius}
+                    strokeWidth={`${strokeWidth}px`} 
+                />
+                <circle
+                    className={styles.circleProgress}
+                    cx={sqSize / 2}
+                    cy={sqSize / 2}
+                    r={radius}
+                    strokeWidth={`${strokeWidth}px`}
+                    // Start progress marker at 12 O'Clock
+                    transform={`rotate(-90 ${sqSize / 2} ${sqSize / 2})`}
+                    style={{
+                        strokeDasharray: dashArray,
+                        strokeDashoffset: dashOffset,
+                        stroke: iconColor
+                    }}
+                />
             </svg>
         )
     }
@@ -123,7 +126,7 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
                     ? 
                     <text
                         className={styles.circleText}
-                        style={{fill: 'white'}}
+                        // style={{fill: 'white'}}
                         x="50%"
                         y="50%"
                         dy=".3em"
