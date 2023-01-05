@@ -75,6 +75,8 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
     const dashOffset = dashArray - dashArray * percent / 100;
 
     const fillColor = null;
+    let dy = (sqSize > 60) ? (sqSize / 3) : (sqSize / 2.5)
+    let dx = (sqSize > 60) ? (sqSize / 3) : (sqSize / 2.5)
 
     const Cirlces = () => {
         return (
@@ -114,7 +116,6 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
                 viewBox={viewBox}    
             >
 
-                
               {showRings ?
                 <>
                 <Cirlces/>
@@ -138,9 +139,10 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
             {showIcon || !showRings
                 ? 
                 <g
+                    className={styles.group}
                     onClick={typeof(onClick) !== 'undefined' ? () => onClick(value) : null}
                     style={{
-                        transform: `translateY(25%) translateX(25%) scale(2)`,
+                        transform: `translateY(${dy}%) translateX(${dx}%) scale(${sqSize > 60 ? 2.25 : 2})`,
                         color: iconColor
                     }}
                 >

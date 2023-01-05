@@ -61,6 +61,7 @@ const dashboard = () => {
           getEntries().then((entryRes) => {
             if(entryRes.status === 200 || entryRes.status === 201){
                 console.log('Returned the following Entries:', entryRes.data)
+
                 setEntries(entryRes.data);
             } else{
                 router.push('/login')
@@ -138,7 +139,7 @@ const dashboard = () => {
                             && entry.ymd.split('T')[0] === currentYmd
                         ))
 
-                        if(habitEntry !== 'undefined' && habitEntry !== [])
+                        if(typeof(habitEntry) !== 'undefined' && habitEntry !== [])
                             habitEntry = habitEntry[0]
 
                         return (
@@ -161,7 +162,7 @@ const dashboard = () => {
             <WeeklyRow/>
 
             {/* <div className={styles["listToggle"]}>
-                <p>Active</p>
+                <p>In Progress</p>
                 <p>Completed</p>
             </div> */}
 

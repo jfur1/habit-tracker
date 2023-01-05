@@ -126,13 +126,6 @@ const index = () => {
         <span className={styles.backBtnContainer}>
          <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
         </span>
-
-
-        <span className={styles.titleContainer}>
-          {/* <Icon index={habit?.icon.toString()} iconColor={habit?.color}/> */}
-          <h1 className={styles.title}>{habit?.title}</h1>
-        </span>
-        
         <div className={styles["menu-nav"]}>
           <div className={styles["dropdown-container"]}>
           <BsThreeDotsVertical className={styles.moreBtn} onClick={() => setShowMore(!showMore)}/>
@@ -146,35 +139,43 @@ const index = () => {
         </div>
       </div>
 
-      <span className={styles.hrLine}/>
+      <div className={styles["titleInfo"]}>
+          <div className={styles.infoCol}>
+            <h1 className={styles.title}>{habit?.title}</h1>
+            <p className={styles.description}>{habit?.description}</p>
+            {/* <p className={styles.description}>{habit?.frequency} {habit?.units}</p> */}
+            <p className={styles.schedule}>&bull; {targetDays.length} days per week</p>
 
-      <div className={styles.body}>
-        <Calendar entries={entries} habit={habit}/>
-        <div className={styles.target}>
-          {/* <p>{habit?.frequency} {habit?.units}</p> */}
-          {/* <p>Habit ID: {habit?.habit_id}</p> */}
-          {/* <p>user_id: {habit?.user_id}</p> */}
+
+          </div>
+          <div className={styles.progressCol}>
+            <Icon showRings={true} index={habit?.icon} squareSize={85} strokeWidth={5} iconColor={habit?.color}/>
+            <p className={styles["progress"]}>{0}% Complete</p>
+          </div>
+      </div>
+
+      {/* <span className={styles.hrLine}/> */}
+
+      <Calendar entries={entries} habit={habit}/>
+
+      {/* <div className={styles["infoContainer"]}>
+          <div className={styles.target}>
+            <div className={styles.targetDays}>
+              Schedule:  {targetDays?.map((day, idx) => 
+              <p className={styles.day} key={idx}>{day.substring(0,2)}</p>
+            )}
+            </div>
+          </div>
+          <div className={styles.type}>
+            Type: {habit?.type === false ? 'To Avoid' : "To Do"}
+          </div>
+          <div className={styles.startDate}>
+            Started On: {habit?.created}
+          </div>
           <p>Frequency: {habit?.frequency}</p>
           <p>Units: {habit?.units}</p>
-          <div className={styles.targetDays}>
-            Schedule:  {targetDays?.map((day, idx) => 
-            <p className={styles.day} key={idx}>{day.substring(0,2)}</p>
-          )}
-          </div>
-        </div>
-        <div className={styles.description}>
-          Description: {habit?.description}
-        </div>
-        <div className={styles.type}>
-          Type: {habit?.type === false ? 'To Avoid' : "To Do"}
-        </div>
-        <div className={styles.icon}>
-          Icon #: {habit?.icon}
-        </div>
-        <div className={styles.startDate}>
-          Started On: {habit?.created}
-        </div>
-      </div>
+      </div> */}
+
     </main>
   )
 }
