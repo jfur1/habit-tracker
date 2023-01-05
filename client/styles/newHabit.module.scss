@@ -237,6 +237,11 @@
     background: var(--text-input);
   }
 
+  .modalContent textarea::placeholder,
+  .modalContent input::placeholder {
+    color: var(--input-color);
+  }
+
   .horizontalLine{
     display: flex;
     margin: 30px 0 0;
