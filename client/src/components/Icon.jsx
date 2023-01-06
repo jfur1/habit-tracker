@@ -133,7 +133,7 @@ const Icon = ({ index, iconName, iconColor, onClick, name, value, squareSize, nu
                         textAnchor="middle"
                     >
                     {/* {percent} */}
-                    ({numerator} / {denominator})
+                    {numerator} / {denominator}
                     </text> 
                     : null}
                 </>

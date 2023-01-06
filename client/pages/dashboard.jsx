@@ -161,9 +161,12 @@ const dashboard = () => {
             <TodaysDate todaysCount={todaysCount}/>
             <WeeklyRow/>
 
-            {/* <div className={styles["listToggle"]}>
-                <p>In Progress</p>
-                <p>Completed</p>
+            {/* <div className={styles["row"]}>
+                <h2 className="subtitle">Today's Goals</h2>
+                <div className={styles["listToggle"]}>
+                    <p>In Progress</p>
+                    <p>Completed</p>
+                </div>
             </div> */}
 
             <div className={styles.listContainer}>

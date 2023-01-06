@@ -78,7 +78,7 @@ const ToDoCard = ({ habit, entry, isOpen, setIsOpen }) => {
         <div className={styles["upper"]}>
             <span className={styles.iconContainer} style={{ margin: '1rem' }}>
             {!!habit?.icon || habit?.icon === 0
-                ? <Icon showRings={true} index={habit.icon} squareSize={60} strokeWidth={4} iconColor={habit.color}/>
+                ? <Icon showRings={true} index={habit.icon} squareSize={60} strokeWidth={4} iconColor={habit.color} showStat={false} numerator={entry?.frequency} denominator={habit?.frequency}/>
                 : null
             }
             </span>

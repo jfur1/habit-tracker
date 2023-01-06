@@ -6,6 +6,12 @@
     overflow-y: auto;
 }
 
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .title{
     color: var(--font-color);
     text-align: center;
@@ -16,6 +22,12 @@
     .msg{
         font-size: 18px;
     }
+}
+
+.subtitle{
+    color: var(--font-color);
+    font-size: 16px;
+    margin: 0;
 }
 
 .weeklyRow{
