@@ -86,7 +86,6 @@ const ToDoCard = ({ habit, entry, isOpen, setIsOpen }) => {
                 <h1 className={styles.title}>{habit.title}</h1>
                 <p className={styles.desc}>{habit.description}</p>
             </div>
-
             <span 
                 className={styles["close-btn"] + ' ' + (isOpen === habit.habit_id ? styles['open'] : '')}
                 onClick={() => handleShowToggle(habit.habit_id)}
@@ -114,17 +113,19 @@ const ToDoCard = ({ habit, entry, isOpen, setIsOpen }) => {
             className={styles["submit"]}
             onClick={handleSubmit}
             style={numerator > 0 
-              ? { color: 'white', 'backgroundColor': habit.color } 
+              ? { color: 'white', 'backgroundColor': habit.color }
               : 
-              { 
+              {
                 color: 'rgb(90, 90, 90)',
                 'backgroundColor': 'rgb(133, 133, 133)'
               }
             }
           >
-            {numerator === habit.frequency ? "Mark Completed" : "Save Progress"}
+            {numerator === habit.frequency 
+              ? "Mark Completed" 
+              : "Save Progress"
+            }
           </button>
-          
         </div>
       </div>
     )
