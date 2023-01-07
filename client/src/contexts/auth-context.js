@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { useRouter } from "next/router";
 import LoadingScreen from '../../pages/loading.jsx'
 
 const AuthContext = React.createContext({});
@@ -7,7 +6,6 @@ const AuthContext = React.createContext({});
 const { Provider } = AuthContext;
 
 export const AuthProvider = ({ children }) => {
-    const router = useRouter();
     const [user, setUser] = useState(null)
     const [isLoading, setLoading] = useState(true)
 

@@ -33,14 +33,19 @@ const habits = () => {
     }
 
     if(user){
-      console.log("Received user from context: ", user)
+      // console.log("Received user from context: ", user)
+      
       getData().then((response) => {
-        if(response.status === 200){
+        if(response.status == 200){
           console.log('Returned the following habits:', response)
             setHabits(response.data);
             setUserData(response.data);
+        } else{ 
+          console.log('Invalid token. Login..')
+          router.replace('/login')
         }
       })
+
     }
 
   }, [user])
@@ -91,3 +96,36 @@ const habits = () => {
 }
 
 export default habits
+
+// export async function getServerSideProps(context) {
+//     // const { isUserAuthenticated, isLoading, user } = useAuth();
+//     // const headers = {
+//     //         "Authorization": "Bearer " + user.token,
+//     //         "Content-Type": 'application/json',
+//     //         "id": user.user_id
+//     //       }
+
+//   let res;
+//     try {
+//         // your isAuthenticated check
+//         const res = await Axios.get(process.env.API_URL + 'habits')
+//         const data = await res.json()
+//         return data;
+//     } catch (err) {
+//         console.error(err);
+//         context.res.writeHead(307, {
+//             Location: '/login'
+//         })
+//         context.res.end();
+//         return {
+//           redirect: {
+//             destination: '/login',
+//             permanent: false,
+//           },
+//         }
+//     }
+
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   }
+// }

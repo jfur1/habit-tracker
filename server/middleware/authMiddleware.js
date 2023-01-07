@@ -16,7 +16,7 @@ const protect = asyncHandler(async (req, res, next) => {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-      if(decoded){
+      if(!!decoded){
         // Get user from the token
         const res = await connectionPool.query(`
           SELECT * 
@@ -24,24 +24,18 @@ const protect = asyncHandler(async (req, res, next) => {
           WHERE user_id = ?
         `, [decoded.id]);
 
-        if(res)
-          next()
-        else{
-          console.log(error)
-          res.status(401)
-          throw new Error('Error! Please try again.')
-        }
+        next()
       }
     } catch (error) {
       console.log(error)
-      res.status(401)
-      throw new Error('Not authorized')
+      res.status(307).json({msg:'Not Authorized.'})
+      // throw new Error('Not authorized')
     }
   }
 
   if (!token) {
-    res.status(401)
-    throw new Error('Not authorized, no token')
+    res.status(401).json({msg:'Not Authorized. No token'})
+    // throw new Error('Not authorized, no token')
   }
 })
 
