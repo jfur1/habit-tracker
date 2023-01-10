@@ -7,17 +7,17 @@ const Dropdown = () => {
         setSelectedValue(event.target.value);
     }
     return (
-        <div>
+        <div className={styles['custom-select']}>
             <select 
                 className={styles.select}
                 value={selectedValue} 
                 onChange={handleChange}
             >
-            <option value="Orange">Orange</option>
-            <option value="Pineapple">Pineapple</option>
-            <option value="Cherry">Cherry</option>
-            <option value="Banana">Banana</option>
-            <option value="Pear">Pear</option>
+                <option value="Orange">Orange</option>
+                <option value="Pineapple">Pineapple</option>
+                <option value="Cherry">Cherry</option>
+                <option value="Banana">Banana</option>
+                <option value="Pear">Pear</option>
             </select>
             <p className={styles.msg}>You selected {selectedValue}</p>
         </div>      
