@@ -1,10 +1,12 @@
 import React from 'react'
+import styles from '../styles/Loading.module.scss'
 
 const loading = () => {
   return (
-    <div>
+    <>
         <h1>Loading...</h1>
-    </div>
+        <div className={styles["loader"]}></div>
+    </>
   )
 }
 
