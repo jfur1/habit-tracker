@@ -5,7 +5,7 @@ import { AuthContext, useAuth } from '../../../src/contexts/auth-context.js'
 import { DataContext, useDataContext } from '../../../src/contexts/data-context.js'
 import LoadingScreen from '../../loading.jsx'
 import styles from '../../../styles/HabitOverview.module.scss'
-import { IoIosArrowBack } from 'react-icons/io'
+import { IoIosArrowBack, IoIosRepeat } from 'react-icons/io'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import Icon from '../../../src/components/Icon.jsx'
 import Calendar from '../../../src/components/Calendar.jsx'
@@ -144,7 +144,10 @@ const index = () => {
             <h1 className={styles.title}>{habit?.title}</h1>
             <p className={styles.description}>{habit?.description}</p>
             {/* <p className={styles.description}>{habit?.frequency} {habit?.units}</p> */}
-            <p className={styles.schedule}>&bull; {targetDays.length} days per week</p>
+            <span className={styles.schedule}>
+              <IoIosRepeat className={styles.repeatIcon} style={{ transform: 'scale(1.25)' }}/> 
+               {targetDays.length} days per week
+            </span>
 
 
           </div>

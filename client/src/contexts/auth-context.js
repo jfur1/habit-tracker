@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import LoadingScreen from '../../pages/loading.jsx'
 
-const AuthContext = React.createContext({});
+const AuthContext = React.createContext({
+    user: null,
+    setUser: () => {},
+    isAuthenticated : false,
+    isLoading: false,
+});
 
 const { Provider } = AuthContext;
 
@@ -32,6 +37,7 @@ export const AuthProvider = ({ children }) => {
             cookie = JSON.parse(localStorage.getItem('user'));
         setLoading(false)
 
+        console.log("isUserAuthenticated? :", (cookie || user) ? true : false)
         // Check if token exists in local storage or the current state
         if(cookie || user)
             return true;

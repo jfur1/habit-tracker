@@ -23,7 +23,6 @@ const habits = () => {
       const headers = {
         "Authorization": "Bearer " + user.token,
         "Content-Type": 'application/json',
-        "id": user.user_id
       }
       const res = await Axios.get(process.env.API_URL + `habits`, {
         headers: headers

@@ -16,14 +16,16 @@ const protect = asyncHandler(async (req, res, next) => {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-      if(!!decoded){
+      if(decoded){
         // Get user from the token
-        const res = await connectionPool.query(`
-          SELECT * 
+
+        [req.user] = await connectionPool.query(`
+          SELECT user_id, first_name, last_name, email, created 
           FROM users
           WHERE user_id = ?
         `, [decoded.id]);
 
+        console.log('Server side middleware setting req.user...');
         next()
       }
     } catch (error) {
