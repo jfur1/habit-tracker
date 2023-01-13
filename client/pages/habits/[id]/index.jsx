@@ -33,7 +33,7 @@ const index = () => {
       // Populate state
       setHabit(habitRes.data[0]);
       setTargetDays(habitRes.data[0].schedule.split(','));
-      setEntries(entries)
+      setEntries(entriesRes.data)
     }
     // Wait for user data & habitID before making request
     if(user && habitID){
