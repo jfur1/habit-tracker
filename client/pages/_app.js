@@ -8,9 +8,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <DarkModeProvider>
       <AuthProvider>
-        <DataProvider>
-          <Component {...pageProps} />
-        </DataProvider>
+          <DataProvider>
+            <Component {...pageProps} />
+          </DataProvider>
       </AuthProvider>
     </DarkModeProvider>
   )

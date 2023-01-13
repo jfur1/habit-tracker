@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Axios from 'axios'
-import { AuthContext, useAuth } from '../../src/contexts/auth-context.js'
+import { useAuth } from '../../src/contexts/auth-context.js'
 import { DataContext, useDataContext } from '../../src/contexts/data-context.js'
 import NavBar from '../../src/components/NavBar.jsx'
 import styles from '../../styles/Habits.module.scss'
@@ -18,35 +18,26 @@ const habits = () => {
   
   useEffect(() => {
     // Get all existing habits once we receive user from the context
-
     const getData = async () => {
       const headers = {
         "Authorization": "Bearer " + user.token,
         "Content-Type": 'application/json',
+        "id": user.user_id
       }
-      const res = await Axios.get(process.env.API_URL + `habits`, {
-        headers: headers
-      });
-
-      return res;
+      try {
+        const res = await Axios.get(process.env.API_URL + `habits`, {headers});
+        setHabits(res.data);
+        return;
+      } catch (error) {
+        console.log("Error: ", error)
+        router.push('/login')
+      }
     }
 
     if(user){
       // console.log("Received user from context: ", user)
-      
-      getData().then((response) => {
-        if(response.status == 200){
-          console.log('Returned the following habits:', response)
-            setHabits(response.data);
-            setUserData(response.data);
-        } else{ 
-          console.log('Invalid token. Login..')
-          router.replace('/login')
-        }
-      })
-
+      getData()
     }
-
   }, [user])
 
   const ROUTE_POST_ID = "habits/[id]";
@@ -94,37 +85,20 @@ const habits = () => {
   )
 }
 
-export default habits
+// // This gets called on every request
+// export async function getServerSideProps(ctx) {
+//   const { user } = useAuth();
 
-// export async function getServerSideProps(context) {
-//     // const { isUserAuthenticated, isLoading, user } = useAuth();
-//     // const headers = {
-//     //         "Authorization": "Bearer " + user.token,
-//     //         "Content-Type": 'application/json',
-//     //         "id": user.user_id
-//     //       }
-
-//   let res;
-//     try {
-//         // your isAuthenticated check
-//         const res = await Axios.get(process.env.API_URL + 'habits')
-//         const data = await res.json()
-//         return data;
-//     } catch (err) {
-//         console.error(err);
-//         context.res.writeHead(307, {
-//             Location: '/login'
-//         })
-//         context.res.end();
-//         return {
-//           redirect: {
-//             destination: '/login',
-//             permanent: false,
-//           },
-//         }
-//     }
-
-//   return {
-//     props: {}, // will be passed to the page component as props
+//   // Fetch data from external API
+//   const headers = {
+//     "Authorization": "Bearer " + user.token,
+//     "Content-Type": 'application/json',
 //   }
+//   const res = await Axios.get(process.env.API_URL + `habits`, {});
+
+//   // Pass data to the page via props
+//   return { props: { data } }
 // }
+
+
+export default habits

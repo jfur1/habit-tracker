@@ -11,7 +11,7 @@ import CircleSlider from '../src/components/CircleSlider.jsx'
 
 const dashboard = () => {
     const router = useRouter();
-    const { isUserAuthenticated, isLoading, user } = useAuth();
+    const { isUserAuthenticated, isLoading, user, setUser } = useAuth();
     const { userDataLoading, setUserData, userData } = useDataContext();
 
     const [isOpen, setIsOpen] = useState(null);
@@ -19,54 +19,51 @@ const dashboard = () => {
     const [habits, setHabits] = useState(null);
     const [numerator, setNumerator] = useState(0);
     const [todaysCount, setTodaysCount] = useState(null);
+
+    const logout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+        router.push('/login');
+    }
+
     useEffect(() => {
         // Get all existing habits once we receive user from the context
-    
         const getHabits = async () => {
-          const headers = {
-            "Authorization": "Bearer " + user.token,
-            "Content-Type": 'application/json',
-            "id": user.user_id
-          }
-          const res = await Axios.get(process.env.API_URL + `habits`, {
-            headers: headers
-          });
-    
-          return res;
+            const headers = {
+                "Authorization": "Bearer " + user.token,
+                "Content-Type": 'application/json',
+                "id": user.user_id
+            }
+            try {
+                const res = await Axios.get(process.env.API_URL + `habits`, {headers});
+                setHabits(res.data)
+                return;
+            } catch (error) {
+                console.log(error);
+                router.push('/login')
+            }
         }
 
         const getEntries = async () => {
             const headers = {
-              "Authorization": "Bearer " + user.token,
-              "Content-Type": 'application/json',
-              "id": user.user_id
+                "Authorization": "Bearer " + user.token,
+                "Content-Type": 'application/json',
+                "id": user.user_id
             }
-            const res = await Axios.get(process.env.API_URL + `entries`, {
-              headers: headers
-            });
-      
-            return res;
+            try {
+                const res = await Axios.get(process.env.API_URL + `entries`, {headers});
+                setEntries(res.data)
+                return;
+            } catch (error) {
+                console.log(error);
+                router.push('/login')
+            }
         }
     
         if(user){
           console.log("Received user from context: ", user)
-          getHabits().then((response) => {
-            if(response.status === 200){
-                console.log('Returned the following habits:', response.data)
-                setHabits(response.data);
-            } else{
-                router.push('/login')
-            }
-          })
-          getEntries().then((entryRes) => {
-            if(entryRes.status === 200 || entryRes.status === 201){
-                console.log('Returned the following Entries:', entryRes.data)
-
-                setEntries(entryRes.data);
-            } else{
-                router.push('/login')
-            }
-          })
+          getHabits()
+          getEntries()
         }
 
       }, [user]);

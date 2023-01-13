@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createContext } from "react";
 import LoadingScreen from '../../pages/loading.jsx'
 
 const AuthContext = React.createContext({
-    user: null,
+    user: {},
     setUser: () => {},
     isAuthenticated : false,
     isLoading: false,

@@ -11,7 +11,6 @@ import Icon from '../../../src/components/Icon.jsx'
 import Calendar from '../../../src/components/Calendar.jsx'
 import UpdateHabit from '../../updateHabit.jsx'
 
-
 const index = () => {
   const router = useRouter();
   const habitID = router.query.id;
@@ -32,10 +31,17 @@ const index = () => {
         "Content-Type": 'application/json',
         "id": user.user_id
       };
-      const res = await Axios.get(process.env.API_URL + 'habits/' + habitID, {
-        headers: headers
-      })
-      return res;
+      try {
+        const res = await Axios.get(process.env.API_URL + 'habits/' + habitID, {
+          headers: headers
+        })
+        setHabit(res.data[0]);
+        setTargetDays(res.data[0].schedule.split(','));
+        return;
+      } catch (error) {
+        console.log("Error: ", error)
+        router.push('/login')
+      }
     }
     const getEntries = async () => {
       const headers = {
@@ -43,27 +49,22 @@ const index = () => {
         "Content-Type": 'application/json',
         "id": user.user_id
       }
-      const res = await Axios.get(process.env.API_URL + `entries/` + habitID, {
-        headers: headers
-      });
-      return res;
+      try {
+        const res = await Axios.get(process.env.API_URL + `entries/` + habitID, {
+          headers: headers
+        });
+        setEntries(res.data)
+        return;
+      } catch (error) {
+        console.log("Error: ", error)
+        router.push('/login')
+      }
     }
 
     if(user){
       console.log("Received user from context: ", user)
-      getData().then((response) => {
-        if(response.status === 200){
-          console.log('Returned the following habits:', response.data[0])
-              setHabit(response.data[0]);
-              setTargetDays(response.data[0].schedule.split(','));
-        }
-      })
-      getEntries().then((entryRes) => {
-        if(entryRes.status === 200 || entryRes.status === 201){
-            console.log('Returned the following entries:', entryRes.data)
-            setEntries(entryRes.data);
-        }
-      })
+      getData()
+      getEntries()
       setUserDataLoading(false)
     }
 

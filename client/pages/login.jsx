@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Axios from 'axios'
 import { useRouter } from 'next/router'
@@ -13,7 +13,7 @@ const login = () => {
         email: '',
         password: '',
     });
-    const { email, password } = formData
+    const { email, password } = formData;
 
     const onChange = (e) => {
         setFormData((prevState) => ({

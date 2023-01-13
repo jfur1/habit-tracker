@@ -7,10 +7,8 @@ import asyncHandler from 'express-async-handler'
 export const getHabits = asyncHandler(async (req, res) => {
     // This syntax returns the first element from the array of results and stores it in a new array called 'rows'.
 
-    const user_id = req.user[0]?.user_id;
+    const user_id = req.headers.id;
     
-    console.log('req.user:', req.user[0]?.user_id)
-
     console.log('id: ', user_id)
 
     // PREPARED STATEMENT SYNTAX
