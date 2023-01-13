@@ -4,71 +4,115 @@ import Axios from 'axios';
 import LoadingScreen from '../../pages/loading.jsx'
 import { AuthContext, useAuth } from './auth-context.js'
 
-const DataContext = React.createContext({});
+const DataContext = React.createContext({
+    ctxHabits: [],
+    ctxEntries: [],
+    userDataLoading: false,
+    getHabit: () => {},
+    getEntriesForHabit: () => {}
+});
 
 const { Provider } = DataContext;
 
 export const DataProvider = ({ children }) => {
-    const [userData, setUserData] = useState(null)
-    const [entries, setEntries] = useState(null)
+    const [ctxHabits, setHabits] = useState(null)
+    const [ctxEntries, setEntries] = useState(null)
     const [userDataLoading, setUserDataLoading] = useState(true)
     const { isUserAuthenticated, isLoading, user } = useAuth();
 
     useEffect(() => {
-        const getHabits = async () => {
+        const getHabits = async () => {     // Fetch data from external API
             const headers = {
               "Authorization": "Bearer " + user.token,
-              "Content-Type": 'application/json'
+              "Content-Type": 'application/json',
+              "id": user.user_id
+            };
+            try {
+                const res = await Axios.get(process.env.API_URL + `habits`, {headers});
+                setHabits(res.data);
+                return;
+            } catch (error) {
+                console.log("Error: ", error)
+                router.push('/login')
             }
-            const res = await Axios.get(process.env.API_URL + `habits/all/` + user.user_id, {
-              headers: headers
-            });
-            
-            setUserDataLoading(false);
-
-            return res;
-        }
-        const getEntries = async () => {
+          }
+          const getEntries = async () => {
             const headers = {
               "Authorization": "Bearer " + user.token,
               "Content-Type": 'application/json',
               "id": user.user_id
             }
-            const res = await Axios.get(process.env.API_URL + `entries`, {
-              headers: headers
-            });
-      
-            return res;
-        }
+            try {
+                const res = await Axios.get(process.env.API_URL + `entries`, {headers});
+                setEntries(res.data);
+                return;
+            } catch (error) {
+                console.log("Error: ", error)
+                router.push('/login')
+            }
+          }
 
         if(user){
-            console.log("Received user from context: ", user)
-            getHabits().then((response) => {
-                if(response.status === 200){
-                    console.log('Returned the following habits:', response.data)
-                    setUserData(response.data);
-                }
-            })
-
-            getEntries().then((entryRes) => {
-                if(entryRes.status === 200 || entryRes.status === 201){
-                    console.log('Returned the following Entries:', entryRes.data)
-                    setEntries(entryRes.data);
-                }
-            })
+            getHabits()
+            getEntries()
             setUserDataLoading(false);
         }
-    }, [])
+    }, [user])
+
+    const getHabit = async ({ user, id }) => {
+        const headers = {
+            "Authorization": "Bearer " + user.token,
+            "Content-Type": 'application/json',
+            "id": user.user_id
+          }
+        try {
+            const res = await Axios.get(process.env.API_URL + 'habits/' + id, {headers})
+            return res;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getEntriesForHabit = async ({ user, id }) => {
+        const headers = {
+            "Authorization": "Bearer " + user.token,
+            "Content-Type": 'application/json',
+            "id": user.user_id
+          }
+        try {
+            const res = await Axios.get(process.env.API_URL + 'entries/' + id, {headers})
+            return res;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const deleteHabit = async() => {
+        const headers = {
+          "Authorization": "Bearer " + user.token,
+          "Content-Type": 'application/json',
+          "id": user.user_id
+        };
+        try {
+            const res = await Axios.delete(process.env.API_URL + 'habits/' + habitID, {headers})
+            router.push('/habits');
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Provider
             value={{
-                userData,
-                setUserData,
-                entries,
+                ctxHabits,
+                setHabits,
+                ctxEntries,
                 setEntries,
                 userDataLoading,
-                setUserDataLoading
+                setUserDataLoading,
+                getHabit,
+                getEntriesForHabit,
+                deleteHabit
             }}
         >
             {children}

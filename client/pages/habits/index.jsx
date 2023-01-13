@@ -14,31 +14,12 @@ const habits = () => {
   const router = useRouter();
   const [habits, setHabits] = useState(null);
   const { isUserAuthenticated, isLoading, user } = useAuth();
-  const { userDataLoading, setUserData, userData } = useDataContext();
+  const { ctxHabits, ctxEntries } = useDataContext();
   
   useEffect(() => {
     // Get all existing habits once we receive user from the context
-    const getData = async () => {
-      const headers = {
-        "Authorization": "Bearer " + user.token,
-        "Content-Type": 'application/json',
-        "id": user.user_id
-      }
-      try {
-        const res = await Axios.get(process.env.API_URL + `habits`, {headers});
-        setHabits(res.data);
-        return;
-      } catch (error) {
-        console.log("Error: ", error)
-        router.push('/login')
-      }
-    }
-
-    if(user){
-      // console.log("Received user from context: ", user)
-      getData()
-    }
-  }, [user])
+    setHabits(ctxHabits)
+  }, [ctxHabits])
 
   const ROUTE_POST_ID = "habits/[id]";
 
@@ -84,21 +65,5 @@ const habits = () => {
     </>
   )
 }
-
-// // This gets called on every request
-// export async function getServerSideProps(ctx) {
-//   const { user } = useAuth();
-
-//   // Fetch data from external API
-//   const headers = {
-//     "Authorization": "Bearer " + user.token,
-//     "Content-Type": 'application/json',
-//   }
-//   const res = await Axios.get(process.env.API_URL + `habits`, {});
-
-//   // Pass data to the page via props
-//   return { props: { data } }
-// }
-
 
 export default habits

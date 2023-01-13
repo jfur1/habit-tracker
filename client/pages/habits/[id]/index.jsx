@@ -15,7 +15,8 @@ const index = () => {
   const router = useRouter();
   const habitID = router.query.id;
   const { isUserAuthenticated, isLoading, user } = useAuth();
-  const { userDataLoading, userData, setUserData, setUserDataLoading } = useDataContext();
+  const { ctxHabits, ctxEntries, userDataLoading, userData, getHabit, getEntriesForHabit, deleteHabit } = useDataContext();
+
   const [habit, setHabit] = useState(null);
   const [entries, setEntries] = useState(null)
   const [targetDays, setTargetDays] = useState([])
@@ -25,50 +26,20 @@ const index = () => {
 
   // Here, we need to get habit with the given ID, from the context
   useEffect(() => {
-    const getData = async() => {     // Fetch data from external API
-      const headers = {
-        "Authorization": "Bearer " + user.token,
-        "Content-Type": 'application/json',
-        "id": user.user_id
-      };
-      try {
-        const res = await Axios.get(process.env.API_URL + 'habits/' + habitID, {
-          headers: headers
-        })
-        setHabit(res.data[0]);
-        setTargetDays(res.data[0].schedule.split(','));
-        return;
-      } catch (error) {
-        console.log("Error: ", error)
-        router.push('/login')
-      }
+    // Use async fetches from our context
+    const getData = async() => {
+      const habitRes = await getHabit({ id: habitID, user });
+      const entriesRes = await getEntriesForHabit({ id: habitID, user });
+      // Populate state
+      setHabit(habitRes.data[0]);
+      setTargetDays(habitRes.data[0].schedule.split(','));
+      setEntries(entries)
     }
-    const getEntries = async () => {
-      const headers = {
-        "Authorization": "Bearer " + user.token,
-        "Content-Type": 'application/json',
-        "id": user.user_id
-      }
-      try {
-        const res = await Axios.get(process.env.API_URL + `entries/` + habitID, {
-          headers: headers
-        });
-        setEntries(res.data)
-        return;
-      } catch (error) {
-        console.log("Error: ", error)
-        router.push('/login')
-      }
+    // Wait for user data & habitID before making request
+    if(user && habitID){
+      getData();
     }
-
-    if(user){
-      console.log("Received user from context: ", user)
-      getData()
-      getEntries()
-      setUserDataLoading(false)
-    }
-
-  }, [habitID])
+  }, [user, habitID]) // Runs whenever user changes or habitID changes
 
   const goBack = () => {
     router.push('/habits')
@@ -76,21 +47,6 @@ const index = () => {
 
   const updateHabit = () => {
     setShowNewHabitForm(true);
-  }
-  const deleteHabit = async() => {
-      const headers = {
-        "Authorization": "Bearer " + user.token,
-        "Content-Type": 'application/json',
-        "id": user.user_id
-      };
-      const res = await Axios.delete(process.env.API_URL + 'habits/' + habitID, {
-        headers: headers
-      })
-      
-      if(res.status === 204){
-        // Navigate to habits page upon successful delete
-        router.push('/habits');
-      }
   }
 
   const ConfirmDeleteModal = () => {
@@ -108,7 +64,6 @@ const index = () => {
       </div>
     )
   }
-
 
   if(isLoading || userDataLoading )
     return <LoadingScreen/>
