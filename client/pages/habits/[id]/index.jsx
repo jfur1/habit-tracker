@@ -41,6 +41,9 @@ const index = () => {
     }
   }, [user, habitID]) // Runs whenever user changes or habitID changes
 
+  if(isLoading || userDataLoading)
+    return <LoadingScreen/>
+
   const goBack = () => {
     router.push('/habits')
   }

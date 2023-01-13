@@ -9,12 +9,13 @@ import styles from '../../styles/Habits.module.scss'
 import Link from "next/link";
 import { ICONS } from '../../src/components/Icon.jsx'
 import Icon from '../../src/components/Icon.jsx'
+import LoadingScreen from '../loading.jsx'
 
 const habits = () => {
   const router = useRouter();
   const [habits, setHabits] = useState(null);
   const { isUserAuthenticated, isLoading, user } = useAuth();
-  const { ctxHabits, ctxEntries } = useDataContext();
+  const { ctxHabits, ctxEntries, userDataLoading } = useDataContext();
   
   useEffect(() => {
     // Get all existing habits once we receive user from the context
@@ -23,8 +24,8 @@ const habits = () => {
 
   const ROUTE_POST_ID = "habits/[id]";
 
-  if(isLoading)
-    return <h1>Loading...</h1>
+  if(isLoading || userDataLoading)
+    return <LoadingScreen/>
   
   return (
     <>

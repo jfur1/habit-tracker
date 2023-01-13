@@ -7,7 +7,7 @@ import { AuthContext, useAuth } from './auth-context.js'
 const DataContext = React.createContext({
     ctxHabits: [],
     ctxEntries: [],
-    userDataLoading: false,
+    userDataLoading: true,
     getHabit: () => {},
     getEntriesForHabit: () => {}
 });
@@ -87,14 +87,14 @@ export const DataProvider = ({ children }) => {
         }
     }
 
-    const deleteHabit = async() => {
+    const deleteHabit = async({ user, id }) => {
         const headers = {
           "Authorization": "Bearer " + user.token,
           "Content-Type": 'application/json',
           "id": user.user_id
         };
         try {
-            const res = await Axios.delete(process.env.API_URL + 'habits/' + habitID, {headers})
+            const res = await Axios.delete(process.env.API_URL + 'habits/' + id, {headers})
             router.push('/habits');
         } catch (error) {
             console.log(error)
