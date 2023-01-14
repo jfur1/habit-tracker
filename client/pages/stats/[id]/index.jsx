@@ -7,6 +7,8 @@ import { AuthContext, useAuth } from '../../../src/contexts/auth-context.js'
 import { DataContext, useDataContext } from '../../../src/contexts/data-context.js'
 import Calendar from '../../../src/components/Calendar.jsx'
 import Graph from '../../../src/components/Graph.jsx'
+import BarChart from '../../../src/components/BarChart.jsx'
+import Icon from '../../../src/components/Icon.jsx'
 
 const index = () => {
     const router = useRouter();
@@ -72,17 +74,63 @@ const index = () => {
             
             <div className={styles.top}>
                 <span className={styles.backBtnContainer}>
-                <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
+                    <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
                 </span>
-                <div className={styles["menu-nav"]}>
-                    {habit?.title}
+            </div>
+
+            <div className={styles["details"]}>
+                <div className={styles.infoCol}>
+                    <h1 className={styles["pageTitle"]}>{habit?.title}</h1>
+                    <p className={styles["description"]}>{habit?.description}</p>
+                    <span className={styles.schedule}>
+                        <IoIosRepeat className={styles.repeatIcon} style={{ transform: 'scale(1.25)' }}/> 
+                        {targetDays.length} days per week
+                    </span>
+                </div>
+
+                <div className={styles.progressCol}>
+                    <Icon showRings={true} index={habit?.icon} squareSize={80} strokeWidth={4} iconColor={habit?.color} />
+                    <p className={styles["progress"]}>{0}% Complete</p>
+                </div>
+            </div>
+            
+            <hr className={styles["line"]}/>
+            
+            <h2 className={styles["graphTitle"]}>{`Completion History`}</h2>
+            <div className={styles["graphContainer"]}>
+                <TimeframePicker timeframe={timeframe}/>
+                <Graph entries={entries} habit={habit} timeframe={timeframe}/>
+            </div>
+
+            <hr className={styles["line"]}/>
+
+            <div className={styles["statsRow"]}>
+                <div className={styles["stat"]}>
+                    <p className={styles["name"]}>{`Completed`}</p>
+                    <p className={styles["value"]}>{`235`} {habit?.units}</p>
+                </div>
+                <div className={styles["stat"]}>
+                    <p className={styles["name"]}>{`Streak`}</p>
+                    <p className={styles["value"]}>{`8 Days`}</p>
+                </div>
+                <div className={styles["stat"]}>
+                    <p className={styles["name"]}>{`Best`}</p>
+                    <p className={styles["value"]}>{`11 Days`}</p>
                 </div>
             </div>
 
-            <TimeframePicker timeframe={timeframe}/>
+            <hr className={styles["line"]}/>
 
-            <div className={styles["body"]}>
-                <Graph entries={entries} habit={habit} timeframe={timeframe}/>
+            <div className={styles["cardStats"]}>
+                <BarChart entries={entries} habit={habit}/>
+                <div className={styles["card"]}>
+
+                </div>
+            </div>
+            <hr className={styles["line"]}/>
+
+            <div className={styles["calendarContainer"]}>
+                <Calendar entries={entries} habit={habit}/>
             </div>
 
         </main>

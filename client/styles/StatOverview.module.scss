@@ -14,6 +14,26 @@ main.container{
     transform: scale(1.75);
 }
 
+.pageTitle{
+	font-weight: 300;
+	font-size: clamp(28px, 30px, 34px);
+	margin: 0 0 0.25rem 0;
+	// text-align: center;
+}
+
+.schedule{
+    display: inline-flex;
+    align-items: center;
+    font-weight: 300;
+    font-size: 15px;
+    margin: 0;
+    color: var(--secondary-font-color);
+
+    .repeatIcon{
+        margin: 0 0.25rem 0 0;
+    }
+}
+
 .top{
     display: flex;
     align-items: center;
@@ -21,24 +41,94 @@ main.container{
     padding: 0.25rem 1rem 0;
     color: var(--font-color);
 
-    .pageTitle{
-        font-weight: 400;
-        margin: 0.5em;
-        font-size: clamp(30px, 32px, 36px);
-        text-align: center;
-    }
-
     .backBtnContainer{
         display: flex;
     }
 }
 
+hr.line{
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid var(--secondary-color);
+	margin: 1em 0.25em;
+	padding: 0;
+}
+
+.details{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+
+	.infoCol{
+		margin: 0.25em 0.5em;
+	}
+
+	.progressCol{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.progress{
+			font-size: medium;
+			color: var(--secondary-font-color);
+			margin: 0;
+			padding: 0.6rem;
+		}
+	}
+
+	.description{
+		color: var(--secondary-font-color);
+		font-size: medium;
+		font-weight: 300;
+	}
+}
+
+.graphTitle{
+	font-size: x-large;
+	font-weight: 400;
+	color: var(--secondary-font-color);
+	margin: 0;
+	padding: 0 0.8rem;
+}
+
+.graphContainer{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.statsRow{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	place-items: center;
+	
+	.stat{
+		// display: flex;
+		// flex-direction: column;
+		// align-items: center;
+		// justify-content: center;
+		.name{
+			color: var(--secondary-font-color);
+			margin: 0;
+		}
+		.value{
+			margin: 0.5rem 0 0 0;
+		}
+	}
+}
+
+.calendarContainer  {
+	transform: scale(0.95);	
+}
 
 .tab-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	max-width: 95vw;
 }
+
 .tabs {
 	display: flex;
 	position: relative;
@@ -111,13 +201,6 @@ input[id="radio-3"] {
 	z-index: 1;
 	border-radius: 99px; // just a high number to create pill effect
 	transition: 0.25s ease-out;
-}
-
-.body{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 }
 
 @media (max-width: 700px) {

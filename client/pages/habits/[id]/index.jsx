@@ -107,8 +107,6 @@ const index = () => {
               <IoIosRepeat className={styles.repeatIcon} style={{ transform: 'scale(1.25)' }}/> 
                {targetDays.length} days per week
             </span>
-
-
           </div>
           <div className={styles.progressCol}>
             <Icon showRings={true} index={habit?.icon} squareSize={85} strokeWidth={5} iconColor={habit?.color}/>
