@@ -29,13 +29,15 @@ const Graph = ({ entries, habit, timeframe }) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
     entries?.forEach((entry) => {
-      tmpEntries[entry.ymd.split('T')[0]] = entry.frequency
+      tmpEntries[entry.ymd.split('T')[0].replace(/-/g, '\/')] = entry.frequency
     })
     console.log('tmpEntries:', tmpEntries)
 
     // Past 7 days
     if(timeframe === 1){
       const dow = today.getDay();
+      labels.push(days[dow]);
+
       var i = (dow - 1 < 0) ? 6 : dow - 1;
       var dateOffset = (24*60*60*1000) * 7; // 7 days
       var j = 6
@@ -49,7 +51,8 @@ const Graph = ({ entries, habit, timeframe }) => {
         i = (i - 1 < 0) ? 6 : i - 1;
         j--;
       }
-      labels.push(days[dow]);
+      // labels.push(days[dow]);
+      labels= labels.reverse()
       var dateString = formatDate(today)
       dates.push(dateString)
     } 
@@ -118,7 +121,7 @@ const Graph = ({ entries, habit, timeframe }) => {
     if (day.length < 2) 
         day = '0' + day;
 
-    return [year, month, day].join('-');
+    return [year, month, day].join('/');
   }
 
   ChartJS.register(

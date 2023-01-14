@@ -14,13 +14,11 @@ import styles from '../../styles/BarChart.module.scss'
 const BarChart = ({ entries, habit }) => {
 
   const [completed, setCompleted] = useState([]);
-  const [incomplete, setIncomplete] = useState([]);
-  const [targetDays, setTargetDays] = useState([])
+  const [incompleted, setIncompleted] = useState([]);
 
   useEffect(() => {
     getValues(habit);
-    setTargetDays(habit?.schedule.split(','));
-  }, [habit])
+  }, [habit, entries])
 
   function formatDate(date) {
     var d = new Date(date),
@@ -32,23 +30,27 @@ const BarChart = ({ entries, habit }) => {
         month = '0' + month;
     if (day.length < 2) 
         day = '0' + day;
-
-    return [year, month, day].join('-');
+    // MUST BE SLASH
+    return [year, month, day].join('/');
   }
 
+  // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
   const getValues = (habit) => {
+    if(typeof(habit) === undefined || !habit)
+      return;
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    var targetDays = habit.schedule.split(',')
     var tmpEntries = {}, dates = [], today = new Date()
     var complete = [0, 0, 0, 0, 0, 0, 0], incomplete = [0, 0, 0, 0, 0, 0, 0]
     entries?.forEach((entry) => {
-      tmpEntries[entry.ymd.split('T')[0]] = {
+      tmpEntries[entry.ymd.split('T')[0].replace(/-/g, '\/')] = {
         nCompleted: entry.frequency,
         nIncomplete: habit.frequency - entry.frequency,
         nTarget: habit.frequency,
       }
     })
     console.log('tmpEntries:', tmpEntries)
-    const startDate = entries ?  entries[0]?.ymd : today
+    const startDate = entries[0]?.ymd 
     console.log('First entry for the selected goal:', formatDate(startDate))
     // To set two dates to two variables
     var date1 = new Date(startDate);
@@ -65,25 +67,30 @@ const BarChart = ({ entries, habit }) => {
       labels.push(dateString)
       j--;
     }
+    console.log("dates:", dates)
+
     dates.forEach((date) => {
       var dowIdx = new Date(date).getDay();
+      // console.log('date:', date)
       var dayName = days[dowIdx]
+      // console.log('dayName:', dayName)
       if(!tmpEntries.hasOwnProperty(date)){
         // No entry for this date... Check to see if habit occurs on current DOW
-        console.log(targetDays)
-        if(targetDays?.indexOf(dayName) >= 0){
+        if(targetDays.indexOf(dayName) >= 0){
           incomplete[dowIdx] = incomplete[dowIdx] - habit?.frequency;
         }
       }
       else{
-        complete[dowIdx] = complete[dowIdx] + tmpEntries[date].nCompleted;
-        incomplete[dowIdx] = incomplete[dowIdx] - tmpEntries[date].nIncomplete;
+        if(targetDays.indexOf(dayName) >= 0){
+          complete[dowIdx] = complete[dowIdx] + tmpEntries[date].nCompleted;
+          incomplete[dowIdx] = incomplete[dowIdx] - tmpEntries[date].nIncomplete;
+        }
       }
     })
     console.log("complete:", complete)
     console.log("incomplete:", incomplete)
     setCompleted(complete)
-    setIncomplete(incomplete)
+    setIncompleted(incomplete)
   }
 
   ChartJS.register(
@@ -125,7 +132,7 @@ const BarChart = ({ entries, habit }) => {
       },
       {
         label: 'Incomplete',
-        data: incomplete,
+        data: incompleted,
         backgroundColor: 'rgb(255, 99, 132)',
       },
     ],
