@@ -22,6 +22,10 @@ const index = () => {
     const [entries, setEntries] = useState(null)
     const [timeframe, setTimeframe] = useState(1)
     const [targetDays, setTargetDays] = useState([])
+    const [bestStreak, setBestStreak] = useState(0);
+    const [currentStreak, setCurrentStreak] = useState(0);
+    const [totalCompleted, setTotalCompleted] = useState(0);
+    const [total, setTotal] = useState(0);
     // Here, we need to get habit with the given ID, from the context
     useEffect(() => {
         // Use async fetches from our context
@@ -94,8 +98,8 @@ const index = () => {
                 </div>
 
                 <div className={styles.progressCol}>
-                    <Icon showRings={true} index={habit?.icon} squareSize={80} strokeWidth={4} iconColor={habit?.color} />
-                    <p className={styles["progress"]}>{0}% Complete</p>
+                    <Icon showRings={true} index={habit?.icon} squareSize={80} strokeWidth={4} iconColor={habit?.color} showStat={false} numerator={totalCompleted} denominator={total}/>
+                    <p className={styles["progress"]}>{totalCompleted} / {total} {habit?.units} Completed</p>
                 </div>
             </div>
             
@@ -109,9 +113,24 @@ const index = () => {
 
             <hr className={styles["line"]}/>
 
+            <div className={styles["statsRow"]}>
+                <div className={styles["stat"]}>
+                    <p className={styles["name"]}>{`Completed`}</p>
+                    <p className={styles["value"]}>{totalCompleted} {habit?.units}</p>
+                </div>
+                <div className={styles["stat"]}>
+                    <p className={styles["name"]}>{`Streak`}</p>
+                    <p className={styles["value"]}>{`${currentStreak} Days`}</p>
+                </div>
+                <div className={styles["stat"]}>
+                    <p className={styles["name"]}>{`Best`}</p>
+                    <p className={styles["value"]}>{`${bestStreak} Days`}</p>
+                </div>
+            </div>
+            <hr className={styles["line"]}/>
 
             <div className={styles["cardStats"]}>
-                <BarChart entries={entries} habit={habit} />
+                <BarChart entries={entries} habit={habit} setBestStreak={setBestStreak} setCurrentStreak={setCurrentStreak} setTotalCompleted={setTotalCompleted} setTotal={setTotal}/>
                 <div className={styles["card"]}>
 
                 </div>

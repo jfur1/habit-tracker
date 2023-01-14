@@ -120,7 +120,7 @@ const Calendar = ({ entries, habit }) => {
         console.log('nTarget for this date: ', habit.frequency)
         
         // Case 2: Semi-Complete (tmpEntry[0].frequency > 0 && tmpEntry[0].frequency < habit.frequency)
-        if(tmpEntry[0].frequency > 0 && tmpEntry[0].frequency < habit.frequency){
+        if(tmpEntry[0].frequency >= 0 && tmpEntry[0].frequency < habit.frequency){
           cellStyle.outline = '1px solid' + habit.color
         }
 
