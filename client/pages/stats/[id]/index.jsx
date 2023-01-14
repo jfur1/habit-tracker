@@ -81,7 +81,9 @@ const index = () => {
 
             <TimeframePicker timeframe={timeframe}/>
 
-            <Graph entries={entries} habit={habit} timeframe={timeframe}/>
+            <div className={styles["body"]}>
+                <Graph entries={entries} habit={habit} timeframe={timeframe}/>
+            </div>
 
         </main>
     )

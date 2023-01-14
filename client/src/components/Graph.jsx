@@ -134,6 +134,7 @@ const Graph = ({ entries, habit, timeframe }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio:false,
     scales: {
       y: {
           beginAtZero: true
@@ -144,7 +145,7 @@ const Graph = ({ entries, habit, timeframe }) => {
         position: 'top' ,
       },
       title: {
-        display: true,
+        display: false,
         text: 'Chart.js Line Chart',
       },
     },
@@ -158,14 +159,23 @@ const Graph = ({ entries, habit, timeframe }) => {
         lineTension: 0.5,
         label: 'Goal Completion',
         data: values,
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.25)',
+        borderColor: habit?.color,
+        // backgroundColor: 'rgba(53, 162, 235, 0.25)',
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+          gradient.addColorStop(0, habit?.color ? habit?.color + '11' : '#111');
+          gradient.addColorStop(1, habit?.color ? habit?.color + '99' : '#111');
+          return gradient;
+        },
       },
     ],
   };
 
   return (
-    <Line options={options} data={data} />
+    <div className={styles["container"]}>
+      <Line options={options} data={data} />
+    </div>
   )
 }
 
