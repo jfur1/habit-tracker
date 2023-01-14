@@ -1,0 +1,121 @@
+main.container{
+    margin: 0;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.backBtn{
+    transform: scale(2);
+}
+
+.moreBtn{
+    transform: scale(1.75);
+}
+
+.top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 1rem 0;
+    color: var(--font-color);
+
+    .pageTitle{
+        font-weight: 400;
+        margin: 0.5em;
+        font-size: clamp(30px, 32px, 36px);
+        text-align: center;
+    }
+
+    .backBtnContainer{
+        display: flex;
+    }
+}
+
+
+.tab-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.tabs {
+	display: flex;
+	position: relative;
+	background-color: var(--app-bg);
+	box-shadow: 0 0 1px 0 rgba(#185ee0, 0.15), 0 6px 12px 0 rgba(#185ee0, 0.15);
+	padding: 0.75rem;
+	border-radius: 99px; // just a high number to create pill effect
+	* {
+		z-index: 2;
+	}
+}
+
+input.radio {
+	display: none;
+}
+
+.tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 54px;
+	width: 200px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	border-radius: 99px; // just a high number to create pill effect
+	cursor: pointer;
+	transition: color 0.15s ease-in;
+	color: var(--secondary-font-color);
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+input.radio {
+	&:checked {
+		& + label {
+			color: var(--font-color);
+		}
+	}
+}
+
+input[id="radio-1"] {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(0);
+		}
+	}
+}
+
+input[id="radio-2"] {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(100%);
+		}
+	}
+}
+
+input[id="radio-3"] {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(200%);
+		}
+	}
+}
+
+.glider {
+	position: absolute;
+	display: flex;
+	height: 54px;
+	width: 200px;
+	background-color: var(--secondary-color);
+	z-index: 1;
+	border-radius: 99px; // just a high number to create pill effect
+	transition: 0.25s ease-out;
+}
+
+@media (max-width: 700px) {
+	.tabs {
+		transform: scale(0.55);
+	}
+}
+

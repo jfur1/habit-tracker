@@ -26,6 +26,7 @@ const dashboard = () => {
         router.push('/login');
     }
 
+    // TODO: Remove local hooks and just use context values
     useEffect(() => {
         setEntries(ctxEntries);
         setHabits(ctxHabits);

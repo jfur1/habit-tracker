@@ -34,8 +34,6 @@ const habits = () => {
         <ul className={styles.habits}>
           {habits
           ? habits.map((habit, idx) => {
-
-
               return (
                 <Link
                   key={'link-' + idx}
