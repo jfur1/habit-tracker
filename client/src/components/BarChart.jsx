@@ -12,9 +12,11 @@ import { Bar } from 'react-chartjs-2';
 import styles from '../../styles/BarChart.module.scss'
 
 const BarChart = ({ entries, habit }) => {
-
   const [completed, setCompleted] = useState([]);
   const [incompleted, setIncompleted] = useState([]);
+  const [bestStreak, setBestStreak] = useState(0);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [totalCompleted, setTotalCompleted] = useState(0);
 
   useEffect(() => {
     getValues(habit);
@@ -36,12 +38,14 @@ const BarChart = ({ entries, habit }) => {
 
   // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
   const getValues = (habit) => {
-    if(typeof(habit) === undefined || !habit)
+    if(typeof(habit) === 'undefined' || !habit)
       return;
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     var targetDays = habit.schedule.split(',')
     var tmpEntries = {}, dates = [], today = new Date()
     var complete = [0, 0, 0, 0, 0, 0, 0], incomplete = [0, 0, 0, 0, 0, 0, 0]
+    var maxStreak = 0, currentStreak = 0, nTotal = 0, streak = 0
+
     entries?.forEach((entry) => {
       tmpEntries[entry.ymd.split('T')[0].replace(/-/g, '\/')] = {
         nCompleted: entry.frequency,
@@ -74,21 +78,32 @@ const BarChart = ({ entries, habit }) => {
       // console.log('date:', date)
       var dayName = days[dowIdx]
       // console.log('dayName:', dayName)
-      if(!tmpEntries.hasOwnProperty(date)){
+      if(!tmpEntries.hasOwnProperty(date) || tmpEntries[date].nCompleted === 0){
         // No entry for this date... Check to see if habit occurs on current DOW
         if(targetDays.indexOf(dayName) >= 0){
           incomplete[dowIdx] = incomplete[dowIdx] - habit?.frequency;
+          maxStreak = Math.max(maxStreak, streak)
+          streak = 0;
         }
       }
       else{
         if(targetDays.indexOf(dayName) >= 0){
           complete[dowIdx] = complete[dowIdx] + tmpEntries[date].nCompleted;
           incomplete[dowIdx] = incomplete[dowIdx] - tmpEntries[date].nIncomplete;
-        }
+          nTotal = nTotal + tmpEntries[date].nCompleted
+          streak = streak + 1
+        } 
       }
     })
+
     console.log("complete:", complete)
     console.log("incomplete:", incomplete)
+    console.log("streak:", streak)
+    console.log("bestStreak:", maxStreak)
+    console.log("nTotal:", nTotal)
+    setTotalCompleted(nTotal)
+    setCurrentStreak(streak)
+    setBestStreak(Math.max(maxStreak, streak))
     setCompleted(complete)
     setIncompleted(incomplete)
   }
@@ -107,6 +122,9 @@ const BarChart = ({ entries, habit }) => {
       title: {
         display: true,
         text: 'Completion Frequency by Day',
+      },
+      legend: {
+        position: 'top' ,
       },
     },
     responsive: true,
@@ -139,7 +157,24 @@ const BarChart = ({ entries, habit }) => {
   };
   
   return (
+    <>
+      <div className={styles["statsRow"]}>
+        <div className={styles["stat"]}>
+            <p className={styles["name"]}>{`Completed`}</p>
+            <p className={styles["value"]}>{totalCompleted} {habit?.units}</p>
+        </div>
+        <div className={styles["stat"]}>
+            <p className={styles["name"]}>{`Streak`}</p>
+            <p className={styles["value"]}>{`${currentStreak} Days`}</p>
+        </div>
+        <div className={styles["stat"]}>
+            <p className={styles["name"]}>{`Best`}</p>
+            <p className={styles["value"]}>{`${bestStreak} Days`}</p>
+        </div>
+    </div>
+    <hr className={styles["line"]}/>
     <Bar options={options} data={data} />
+    </>
   )
 }
 

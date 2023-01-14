@@ -9,6 +9,7 @@ import Calendar from '../../../src/components/Calendar.jsx'
 import Graph from '../../../src/components/Graph.jsx'
 import BarChart from '../../../src/components/BarChart.jsx'
 import Icon from '../../../src/components/Icon.jsx'
+import LoadingScreen from '../../loading.jsx'
 
 const index = () => {
     const router = useRouter();
@@ -21,7 +22,6 @@ const index = () => {
     const [entries, setEntries] = useState(null)
     const [timeframe, setTimeframe] = useState(1)
     const [targetDays, setTargetDays] = useState([])
-
     // Here, we need to get habit with the given ID, from the context
     useEffect(() => {
         // Use async fetches from our context
@@ -69,6 +69,10 @@ const index = () => {
         )
     }
 
+    // Need this to avoid hydration errors
+    if(isLoading || userDataLoading )
+        return <LoadingScreen/>
+
     return (
         <main className={styles.container}>
             
@@ -82,6 +86,7 @@ const index = () => {
                 <div className={styles.infoCol}>
                     <h1 className={styles["pageTitle"]}>{habit?.title}</h1>
                     <p className={styles["description"]}>{habit?.description}</p>
+                    <p className={styles["target"]}>Target: {habit?.frequency} {habit?.units}</p>
                     <span className={styles.schedule}>
                         <IoIosRepeat className={styles.repeatIcon} style={{ transform: 'scale(1.25)' }}/> 
                         {targetDays.length} days per week
@@ -104,25 +109,9 @@ const index = () => {
 
             <hr className={styles["line"]}/>
 
-            <div className={styles["statsRow"]}>
-                <div className={styles["stat"]}>
-                    <p className={styles["name"]}>{`Completed`}</p>
-                    <p className={styles["value"]}>{`235`} {habit?.units}</p>
-                </div>
-                <div className={styles["stat"]}>
-                    <p className={styles["name"]}>{`Streak`}</p>
-                    <p className={styles["value"]}>{`8 Days`}</p>
-                </div>
-                <div className={styles["stat"]}>
-                    <p className={styles["name"]}>{`Best`}</p>
-                    <p className={styles["value"]}>{`11 Days`}</p>
-                </div>
-            </div>
-
-            <hr className={styles["line"]}/>
 
             <div className={styles["cardStats"]}>
-                <BarChart entries={entries} habit={habit}/>
+                <BarChart entries={entries} habit={habit} />
                 <div className={styles["card"]}>
 
                 </div>
