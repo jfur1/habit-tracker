@@ -83,6 +83,22 @@ const Calendar = ({ entries, habit }) => {
     )
   }
 
+  // Takes hex value and a desired opacity, and returns rgba value as a string
+  const hexToRgbA = (hex, opacity) => {
+      var opacitySuffix = `, ${opacity})`
+      var c;
+      if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+          c= hex.substring(1).split('');
+          if(c.length== 3){
+              c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+          }
+          c= '0x'+c.join('');
+          return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+opacitySuffix;
+      }
+      throw new Error('Bad Hex');
+  }
+
+
   const CalendarDays = ({ month, year }) => {
     let firstDay = (new Date(year, month)).getDay();
     let largestPrevBlankDate = daysInPrevMonth(month, year);
@@ -102,6 +118,9 @@ const Calendar = ({ entries, habit }) => {
     let nDaysInMonth = daysInMonth(month, year)
     let tmpEntry, tmpDate, dateString, shortDayName
     var cellStyle = {}
+    const startYMD = !!entries ? entries[0]?.ymd.split('T')[0].replace(/-/g, '\/') : firstDay
+    var startDate = new Date(startYMD);
+    console.log("startDate:",startDate)
 
     for (let d = 1; d <= nDaysInMonth; d++) {
       // Get entry for this day
@@ -111,7 +130,7 @@ const Calendar = ({ entries, habit }) => {
       tmpEntry = getEntryForDate(tmpDate)
       cellStyle = {
         background: '',
-        outline: ''
+        outline: '',
       };
       
       if(tmpEntry?.length > 0){
@@ -122,6 +141,12 @@ const Calendar = ({ entries, habit }) => {
         // Case 2: Semi-Complete (tmpEntry[0].frequency > 0 && tmpEntry[0].frequency < habit.frequency)
         if(tmpEntry[0].frequency >= 0 && tmpEntry[0].frequency < habit.frequency){
           cellStyle.outline = '1px solid' + habit.color
+          var opacityPercent = (tmpEntry[0].frequency / habit.frequency).toString()
+          // console.log('opacity:', opacityPercent)
+          var rgba = hexToRgbA(habit.color, opacityPercent)
+          // console.log("RGBA VALUE: ", rgba)
+          cellStyle.backgroundColor = rgba
+
         }
 
         // Case 3: Complete (tmpEntry[0].frequency === habit.frequency)
@@ -131,11 +156,10 @@ const Calendar = ({ entries, habit }) => {
         console.log(cellStyle)
       } 
       // Blanks -- must occur in same month and only according to habit.schedule
-      else if(tmpDate.getTime() <= today.getTime() && habit?.schedule.indexOf(shortDayName) >= 0) {
+      else if(tmpDate.getTime() <= today.getTime() && tmpDate.getTime() >= startDate.getTime() && habit?.schedule.indexOf(shortDayName) >= 0) {
         // Case 1: Incomplete (tmpEntry[0].frequency === 0) && ymd less than today
         cellStyle.outline = '1px solid' + habit?.color
       }
-
       weeklyRows.push(
         <td
           key={'calendar-day-'+d} 
