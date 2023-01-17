@@ -22,12 +22,13 @@ const settings = () => {
   return (
     <>
     <div className={styles.container}>settings
-    </div>
+
 
     <button onClick={handleClick}>Toggle Dark Mode</button>
 
     <button onClick={logout}>Sign Out</button>
     <NavBar currentIdx={4}/>
+    </div>
       </>
   )
 }
