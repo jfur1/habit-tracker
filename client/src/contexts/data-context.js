@@ -15,6 +15,7 @@ const DataContext = React.createContext({
 const { Provider } = DataContext;
 
 export const DataProvider = ({ children }) => {
+    const router = useRouter();
     const [ctxHabits, setHabits] = useState(null)
     const [ctxEntries, setEntries] = useState(null)
     const [userDataLoading, setUserDataLoading] = useState(true)

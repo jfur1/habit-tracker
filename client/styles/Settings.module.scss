@@ -1,7 +1,182 @@
 .container{
     display: flex;
     flex-direction: column;
+    margin: 0.5em;
+    padding: 1em;
+}
+
+.top{
+    display: flex;
     align-items: center;
-    margin: 0;
-    padding: 0;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    .title{
+        font-size: xx-large;
+        font-weight: 300;
+        text-align: center;
+    }
+}
+
+.backBtnContainer{
+    position: absolute;
+    left: 0;
+    margin-left: 2.75em;
+    transform: scale(1.75);
+}
+
+.list{
+    .item{
+        // border: 1px solid red;
+        border-bottom: 1px solid var(--secondary-color);
+        display: grid;
+        grid-template-columns: 1fr 3fr 0.3fr;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        
+        &:nth-child(1){
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        &:nth-child(6){
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .label{
+            font-size: large;
+        }
+
+        .icon{
+            transform: translate3d(2rem, 0, 0) scale(1.75);
+        }
+
+        .rarr{
+            transform: translate3d(-1rem, 0, 0) scale(1.25);
+        }
+
+    }
+    
+}
+
+// Account
+
+.account{
+
+    input{
+        height: 3em;
+    }
+    
+    &.row{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: baseline;
+        grid-gap: 10px;
+        margin-bottom: 1rem;
+
+        .inputCol{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            
+        }
+    }
+}
+
+.change_pwd{
+    margin: 2rem 1rem 1rem;
+    text-decoration: underline;
+    color: rgb(134, 202, 217);
+}
+
+
+.account_save{
+    margin: 1rem;
+    padding: 0.5rem 0.2rem;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: rgb(106, 180, 106);
+}
+
+// Appearance
+
+.appearance{
+
+}
+
+// About
+
+.about{
+    .version{
+
+    }
+
+    .author{
+        font-size: large;
+    }
+
+    .feedback{
+        margin-bottom: 4px;
+    }
+    .feedback_link{
+        color: rgb(47, 118, 232);
+        text-decoration: underline;
+        margin-top: 0;
+    }
+
+    .copyright{
+        .title{
+            font-size: large;
+            font-weight: 400;
+        }
+
+    }
+}
+
+
+// Help
+
+.help{
+
+    .faq{
+        .title{
+            font-size: larger;
+            font-weight: 400;
+            margin-left: 0.5em;
+        }
+
+        .question{
+            font-size: large;
+            font-weight: 400;
+            margin-left: 1em;
+        }
+
+        .answer{
+            font-size: medium;
+            font-weight: 400;
+            color: var(--secondary-font-color);
+            margin-left: 1em;
+        }
+    }
+
+
+    .support{
+        .title{
+            font-size: larger;
+            font-weight: 400;
+            margin-left: 0.5em;
+        }
+        .subtitle{
+            margin-left: 0.5em;
+            font-size: medium;
+            font-weight: 300;
+            margin-left: 1em;
+        }
+        .email{
+            text-decoration: underline;
+            color:rgb(47, 118, 232);
+            margin-left: 1em;
+        }
+    }
 }

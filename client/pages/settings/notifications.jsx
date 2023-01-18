@@ -1,0 +1,22 @@
+import React from 'react'
+import { useRouter } from 'next/router'
+import styles from '../../styles/Settings.module.scss'
+
+const notifications = () => {
+  const router = useRouter();
+  const goBack = () => {
+    router.push('/settings')
+  }
+  return (
+    <div className={styles["container"]}>
+      <div className={styles["top"]}>
+          <span className={styles.backBtnContainer}>
+              <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
+          </span>
+          <h1 className={styles["title"]}>Notifications</h1>
+      </div>
+    </div>
+  )
+}
+
+export default notifications
