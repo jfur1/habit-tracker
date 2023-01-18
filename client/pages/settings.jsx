@@ -23,9 +23,15 @@ const settings = () => {
     <>
     <div className={styles.container}>settings
 
-    <div className={styles["first_name"]}></div>
-    <div className={styles["last_name"]}></div>
+    <div className="row">
+      <div className={styles["first_name"]}></div>
+      <div className={styles["last_name"]}></div>
+    </div>
     <div className={styles["email"]}></div>
+
+
+    <button onClick={() => {}}>Change Password</button>
+    
     <button onClick={handleClick}>Toggle Dark Mode</button>
 
     <button onClick={logout}>Sign Out</button>
