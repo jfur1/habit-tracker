@@ -15,6 +15,7 @@
         font-size: xx-large;
         font-weight: 300;
         text-align: center;
+        color: var(--font-color);
     }
 }
 
@@ -23,9 +24,12 @@
     left: 0;
     margin-left: 2.75em;
     transform: scale(1.75);
+    color: var(--font-color);
 }
 
 .list{
+    color: var(--font-color);
+
     .item{
         // border: 1px solid red;
         border-bottom: 1px solid var(--secondary-color);
@@ -66,6 +70,13 @@
 
     input{
         height: 3em;
+        border: none;
+        border-radius: 5px;
+        padding-left: 1em;
+    }
+
+    .email_label{
+        color: var(--font-color);
     }
     
     &.row{
@@ -79,7 +90,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            
+            color: var(--font-color);
         }
     }
 }
@@ -87,7 +98,7 @@
 .change_pwd{
     margin: 2rem 1rem 1rem;
     text-decoration: underline;
-    color: rgb(134, 202, 217);
+    color: rgb(75, 164, 224);
 }
 
 
@@ -108,8 +119,9 @@
 // About
 
 .about{
+    color: var(--font-color);
     .version{
-
+        margin-bottom: 0;
     }
 
     .author{
@@ -127,8 +139,13 @@
 
     .copyright{
         .title{
+            color: var(--font-color);
             font-size: large;
             font-weight: 400;
+        }
+
+        .desc{
+            color: var(--secondary-font-color);
         }
 
     }
@@ -141,12 +158,14 @@
 
     .faq{
         .title{
+            color: var(--font-color);
             font-size: larger;
             font-weight: 400;
             margin-left: 0.5em;
         }
 
         .question{
+            color: var(--font-color);
             font-size: large;
             font-weight: 400;
             margin-left: 1em;
@@ -163,11 +182,13 @@
 
     .support{
         .title{
+            color: var(--font-color);
             font-size: larger;
             font-weight: 400;
             margin-left: 0.5em;
         }
         .subtitle{
+            color: var(--secondary-font-color);
             margin-left: 0.5em;
             font-size: medium;
             font-weight: 300;

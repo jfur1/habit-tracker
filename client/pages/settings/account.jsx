@@ -63,7 +63,7 @@ const account = () => {
         </div>
       </div>
 
-      <label htmlFor="html">Email</label>
+      <label htmlFor="html" className={styles["email_label"]}>Email</label>
       <input type="text" name="email" className={styles["email"]} onChange={onChange} value={email}/>
 
       <div className={styles["account"] + ' ' + styles["row"]}>
