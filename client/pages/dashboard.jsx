@@ -20,17 +20,11 @@ const dashboard = () => {
     const [numerator, setNumerator] = useState(0);
     const [todaysCount, setTodaysCount] = useState(null);
 
-    const logout = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-        router.push('/login');
-    }
-
     // TODO: Remove local hooks and just use context values
     useEffect(() => {
         setEntries(ctxEntries);
         setHabits(ctxHabits);
-    }, [ctxHabits, ctxEntries]);
+    }, [ctxEntries, ctxHabits]);
 
     const TodaysDate = ( ) => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', "Oct", 'Nov', 'Dec'];
@@ -113,7 +107,7 @@ const dashboard = () => {
     }
 
 
-    if(isLoading )
+    if(isLoading || userDataLoading)
         return <LoadingScreen/>
     
     return (

@@ -201,3 +201,15 @@
         }
     }
 }
+
+.change_password{
+    .inputCol{
+        color: var(--font-color);
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 3rem;
+    }
+    .submit{
+        text-align: center;
+    }
+}

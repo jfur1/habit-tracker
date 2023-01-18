@@ -6,23 +6,43 @@ import Axios from 'axios'
 import { useRouter } from 'next/router'
 // import { AuthContext } from '../src/context/auth-context.js'
 import styles from '../styles/Home.module.scss'
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import {AuthContext, useAuth} from '../src/contexts/auth-context.js'
+import LoadingScreen from './loading.jsx'
 
 export default function Home() {
   const router = useRouter()
-    // const authContext = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isUserAuthenticated, isLoading, setUser, userLogin, setLoading } = useAuth();
 
-    const logout = () => {
-      localStorage.removeItem('user');
-      setIsLoggedIn(false);
-      return;
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const { email, password } = formData;
+
+  const onChange = (e) => {
+      setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+      }))
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    const userData = { email, password }
+
+    if (!email || !password) {
+        alert('Please fill all required fields.');
+    } else {
+        await userLogin(userData);
     }
+  }
 
-  //   useEffect(() => {
-  //     console.log('Auth Status:', authContext.isUserAuthenticated())
-
-  //     setIsLoggedIn(authContext.isUserAuthenticated())
-  // }, [])
+  const registerUser = () => {
+    router.push('/register')
+  }
 
 
   return (
@@ -33,52 +53,44 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Habit Tracker
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          On average, it takes 66 days to form a new habit. We can help you do it in less.
         </p>
 
-        {isLoggedIn
-         ? <button onClick={logout}>Sign Out</button>
-         :  <Link href='/login'>Sign In</Link>
-        }
+          <div className={styles['login-box']}>
+              <form>
+                  <div className={styles['input-box']}>
+                      <input type="email" name="email" id='email' value={email} onChange={onChange} required/>
+                      <label>Email</label>
+                  </div>
+                  <div className={styles['input-box']}>
+                      <input type="password" name="password" id='password' value={password} onChange={onChange} required/>
+                      <label>Password</label>
+                  </div>
+                  <a href="" onClick={onSubmit} className={styles['submit']}>
+                      Submit
+                  </a>
+              </form>
+              <div className={styles["center"]}>
+                <Link className={styles['forgot']} href="/password">
+                  Forgot password?
+                </Link>
+              </div>
+          </div>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <div className={styles["seperator"]}>
+            <span className={styles['or']}>or</span>
+          </div>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+          <Link className={styles["register"]} href={'/register'}>
+            Create new account
+          </Link>
       </main>
 
       <footer className={styles.footer}>

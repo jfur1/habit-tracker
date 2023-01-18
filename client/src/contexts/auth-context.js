@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
+import { useRouter } from "next/router";
 import LoadingScreen from '../../pages/loading.jsx'
+import Axios from 'axios';
 
 const AuthContext = React.createContext({
     user: {},
@@ -11,6 +13,7 @@ const AuthContext = React.createContext({
 const { Provider } = AuthContext;
 
 export const AuthProvider = ({ children }) => {
+    const router = useRouter();
     const [user, setUser] = useState(null)
     const [isLoading, setLoading] = useState(true)
 
@@ -45,14 +48,43 @@ export const AuthProvider = ({ children }) => {
             return false;
     }
 
+    const userLogin = async (userData) => {
+        setLoading(true);
+        try {
+            const res = await Axios.post(process.env.API_URL + 'login', userData);
+            // console.log("RES:", res)
+            const user = {
+                user_id: res.data.user_id,
+                email: res.data.email,
+                token: res.data.token
+            }
+            localStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
+            setLoading(false);
+            router.push('/dashboard');
+        } catch (error) {
+            console.log(error);
+            alert('Incorrect username/password combination!');
+            setLoading(false);
+        }
+    }
+
+    const userLogout = async () => {
+        localStorage.removeItem('user');
+        setUser(null);
+        return;
+    }
 
     return (
         <Provider
             value={{
                 user,
                 isLoading,
+                setLoading,
                 setUser,
                 isUserAuthenticated,
+                userLogin,
+                userLogout
             }}
         >
             {children}

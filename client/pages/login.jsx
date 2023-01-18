@@ -7,7 +7,7 @@ import {AuthContext, useAuth} from '../src/contexts/auth-context.js'
 
 const login = () => {
     const router = useRouter()
-    const { isUserAuthenticated, loading, setUser } = useAuth();
+    const { isUserAuthenticated, loading, setUser, userLogin } = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -25,39 +25,13 @@ const login = () => {
     const onSubmit = async (e) => {
         e.preventDefault()
 
-        const postData = async() => {
-            const userData = {
-                email,
-                password,
-              }
-              const res = await Axios.post(process.env.API_URL + 'login', userData);
-    
-              return res;
-        }
+        const userData = { email, password }
 
         if (!email || !password) {
             alert('Please fill all required fields.');
+        } else {
+            await userLogin(userData);
         }
-        else {
-            postData().then((response) => {
-                console.log(response);
-
-                if(response.status === 200){
-                    const userData = {
-                        user_id: response.data.user_id,
-                        email: response.data.email,
-                        token: response.data.token
-                    }
-                    localStorage.setItem('user', JSON.stringify(userData));
-
-                    setUser(userData);
-                    router.push('/dashboard');
-                } else { // Failed login attempt
-                    alert('Incorrect username/password combination!');
-                }
-            })
-        }
-
       }
 
     return (
