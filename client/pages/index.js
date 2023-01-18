@@ -78,7 +78,7 @@ export default function Home() {
                   </a>
               </form>
               <div className={styles["center"]}>
-                <Link className={styles['forgot']} href="/password">
+                <Link className={styles['forgot']} href="/forgot">
                   Forgot password?
                 </Link>
               </div>

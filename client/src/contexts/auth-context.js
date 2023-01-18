@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         let cookie
         if (typeof window !== 'undefined')
             cookie = JSON.parse(localStorage.getItem('user'));
-        setLoading(false)
+        setLoading(false);
 
         console.log("isUserAuthenticated? :", (cookie || user) ? true : false)
         // Check if token exists in local storage or the current state

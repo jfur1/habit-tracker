@@ -105,8 +105,7 @@ const dashboard = () => {
             </div>
         )
     }
-
-
+    
     if(isLoading || userDataLoading)
         return <LoadingScreen/>
     
