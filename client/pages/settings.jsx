@@ -23,9 +23,9 @@ const settings = () => {
     <>
     <div className={styles.container}>settings
 
-    <div className="firstname"></div>
-    <div className="lastname"></div>
-    <div className="email"></div>
+    <div className={styles["first_name"]}></div>
+    <div className={styles["last_name"]}></div>
+    <div className={styles["email"]}></div>
     <button onClick={handleClick}>Toggle Dark Mode</button>
 
     <button onClick={logout}>Sign Out</button>
