@@ -1,10 +1,35 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styles from '../styles/Settings.module.scss'
-
+import LoadingScreen from '../pages/loading.jsx'
+import { AuthContext, useAuth } from '../src/contexts/auth-context.js'
 
 const forgot = () => {
     const [email, setEmail] = useState('')
+    const [errors, setErrors] = useState(null)
+    const { forgotPassword, isLoading } = useAuth();
+
+    if(isLoading)
+        return <LoadingScreen/>
+
+
+    const onSubmit = async(e) => {
+        e.preventDefault();
+        var errs = new Map();
+        console.log(email)
+        if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) === false){
+            errs.set('invalid', 'Please enter a valid email address.');
+            console.log('err')
+            setErrors(errs);
+            return;
+        }
+
+        const res = await forgotPassword(email);
+        console.log('Client side res: ', res);
+        if(res){
+            console.log('success!')
+        }
+    }
 
     return (
         <div className={styles["forgot_password"] + ' ' + styles["container"]}>
@@ -24,7 +49,7 @@ const forgot = () => {
             </div>
             
             <div className={styles["submitContainer"]}>
-                <button className={styles["submit"]}>
+                <button className={styles["submit"]} onClick={onSubmit}>
                     Send Instructions
                 </button>
             </div>

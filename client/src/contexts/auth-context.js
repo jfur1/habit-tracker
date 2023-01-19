@@ -119,6 +119,45 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const forgotPassword = async (email) => {
+        try {
+            const res = await Axios.post(process.env.API_URL + 'forgot', {email});
+            console.log("forgot RES:", res)
+            setLoading(false);
+            return res.data;
+        } catch (error) {
+            console.log(error);
+            alert('Could not set new password. Please try again!');
+            setLoading(false);
+        }
+    }
+
+    const validateResetToken = async (data) => {
+        try {
+            const res = await Axios.get(process.env.API_URL + 'reset/' + data.id + "/" + data.token);
+            // console.log("resetPassword RES:", res)
+            setLoading(false);
+            return res
+        } catch (error) {
+            // console.log(error);
+            setLoading(false);
+            return { status: 400, msg: 'Could not validate token. Please request a new reset link!' }
+        }
+    }
+
+    const resetPassword = async (data) => {
+        try {
+            const res = await Axios.post(process.env.API_URL + 'reset/' + data.id + "/" + data.token, { password: data.password });
+            console.log("resetPassword RES:", res)
+            setLoading(false);
+            return res
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+            return { status: 400, msg: 'Server error while resetting password. Please try again!' }
+        }
+    }
+
     const userLogout = async () => {
         localStorage.removeItem('user');
         setUser(null);
@@ -134,6 +173,9 @@ export const AuthProvider = ({ children }) => {
                 setUser,
                 updateUser,
                 updatePassword,
+                forgotPassword,
+                validateResetToken,
+                resetPassword,
                 isUserAuthenticated,
                 userLogin,
                 userLogout

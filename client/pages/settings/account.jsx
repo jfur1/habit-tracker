@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import styles from '../../styles/Settings.module.scss'
 import { AuthContext, useAuth } from '../../src/contexts/auth-context.js'
 
@@ -77,9 +78,9 @@ const account = () => {
       <input type="text" name="email" className={styles["email"]} onChange={onChange} value={email}/>
 
       <div className={styles["account"] + ' ' + styles["row"]}>
-        <a className={styles['change_pwd']} href="/password">
+        <Link className={styles['change_pwd']} href="/settings/protectedReset">
           Change Password
-        </a>
+        </Link>
 
         <button className={styles["account_save"]} onClick={handleSave}>
           Save Changes

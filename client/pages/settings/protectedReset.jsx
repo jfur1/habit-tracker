@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import styles from '../styles/Settings.module.scss'
-import { AuthContext, useAuth } from '../src/contexts/auth-context.js'
+import styles from '../../styles/Settings.module.scss'
+import { AuthContext, useAuth } from '../../src/contexts/auth-context.js'
 
-const password = () => {
+const protectedReset = () => {
     const { isUserAuthenticated, loading, setUser, user, userLogin, updatePassword } = useAuth();
     const router = useRouter();
 
@@ -112,4 +112,4 @@ const password = () => {
     )
 }
 
-export default password
+export default protectedReset

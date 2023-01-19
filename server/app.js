@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({"Access-Control-Allow-Origin": "http://localhost:3000"}))
 
+// For email templates
+app.set('view engine', 'ejs');
 
 // Base routes
 app.use('/api/habits', habitRoutes);
