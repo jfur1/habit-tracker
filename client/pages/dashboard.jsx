@@ -19,6 +19,7 @@ const dashboard = () => {
     const [habits, setHabits] = useState(null);
     const [numerator, setNumerator] = useState(0);
     const [todaysCount, setTodaysCount] = useState(null);
+    const [activeToggle, setActiveToggle] = useState(1);
 
     // TODO: Remove local hooks and just use context values
     useEffect(() => {
@@ -35,7 +36,11 @@ const dashboard = () => {
                 <h1 className={styles.date}>
                     {months[today.getMonth()]} {today.getDate()}
                 </h1>
-                <p className={styles.msg}>Lorem Ipsum</p>
+                <p className={styles.msg}>
+                    {user?.first_name !== '' 
+                        ? "Welcome back " + user.first_name + "!" 
+                        : 'Carpe Diem!'}
+                </p>
             </div>
         )
     }
@@ -115,11 +120,10 @@ const dashboard = () => {
             <TodaysDate todaysCount={todaysCount}/>
             <WeeklyRow/>
 
-            {/* <div className={styles["row"]}>
-                <h2 className="subtitle">Today's Goals</h2>
+            {/* <div className={styles["col"]}>
                 <div className={styles["listToggle"]}>
-                    <p>In Progress</p>
-                    <p>Completed</p>
+                    <p onClick={() => setActiveToggle(1)} className={styles["inProgress"] + ' ' + (activeToggle === 1 ? styles['active'] : '')}>In Progress</p>
+                    <p onClick={() => setActiveToggle(2)} className={styles["completed"] + ' ' + (activeToggle === 2 ? styles['active'] : '')}>Completed</p>
                 </div>
             </div> */}
 
