@@ -8,6 +8,7 @@ const password = () => {
     const { isUserAuthenticated, loading, setUser, user, userLogin, updatePassword } = useAuth();
     const router = useRouter();
 
+    const [formErrors, setFormErrors] = useState({})
     const [wasUpdated, setWasUpdated] = useState(false)
     const [formData, setFormData] = useState({
         old_password: '',
@@ -32,6 +33,10 @@ const password = () => {
         if(password !== password2)
             errors.set('match', 'Passwords do not match!')
         
+        if(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password) === false
+        || /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password2) === false)
+            errors.set('regex', 'Password must be at least 8 characters, and contain at least one letter and one number.')
+        
         return errors
     }
 
@@ -45,20 +50,31 @@ const password = () => {
         }
         if(errs.size > 0){
             console.log(errs);
-            alert(errs)
+            setFormErrors(errs);
             return;
         } else {
             const res = await updatePassword(userData);
             if(res){
+                setFormErrors({});
                 setWasUpdated(true);
             }
-            // router.reload(window.location.pathname);
-            // TODO: Need front-end confirmation on pwd change
         }
     }
 
     const SuccessBanner = () => {
         return <p className="success">Updated password successfully.</p>
+    }
+
+
+    const ErrorsBanner = () => {
+        return (
+            <div className={styles["errors"]}>
+                <p className={styles["title"]}>Found the following errors:</p>
+                {Array.from(formErrors, ([k,v]) => 
+                    <p key={'error.' + k} className={styles["error"]}>&bull; {v}</p>
+                )}
+            </div>
+        )
     }
 
     return (
@@ -69,9 +85,14 @@ const password = () => {
                 </span>
                 <h1 className={styles["title"]}>Change Password</h1>
             </div>
+
+            {formErrors.size > 0 
+                ? <ErrorsBanner/>
+                : null
+            }
+
             {wasUpdated 
             ? <SuccessBanner/>
-
             :<form>
                 <div className={styles['inputCol']}>
                     <label>New Password</label>

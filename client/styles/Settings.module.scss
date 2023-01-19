@@ -212,6 +212,17 @@
     .submit{
         text-align: center;
     }
+    .errors{
+        .title{
+            font-size: large;
+            color: rgb(239, 44, 44);
+            margin: 0.25rem;
+        }
+        .error{
+            color: rgb(239, 44, 44);
+            margin-left: 5%;
+        }
+    }
 }
 
 .forgot_password{
