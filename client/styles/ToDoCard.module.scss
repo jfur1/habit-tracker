@@ -38,17 +38,21 @@
   .container.expand { 
     animation: slide 0.5s forwards;
   }
+
+  // .container.shrink { 
+  //   animation: shrink 0.5s forwards;
+  // }
   
   
   @keyframes slide
   {
     from {height: 100px;}
-    to {height: 100%;}
+    to {height: 400px;}
   }
 
   @keyframes shrink
   {
-    from {height: 100%;}
+    from {height: 400px;}
     to {height: 100px;}
   }
 
