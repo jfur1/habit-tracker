@@ -12,6 +12,7 @@
       a {
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
+        text-decoration: none;
       }
       table {
         border-collapse: collapse !important;
@@ -25,11 +26,12 @@
       .resetBtn{
         background-color: rgb(50, 141, 215);
         padding: 10px;
+        border: none;
         border-radius: 6px;
+        margin: 10px auto 20px auto;
       }
-      a{
-        text-decoration: none;
-        color:#fefefe;
+      .resetBtn a {
+        color:#fefefe !important;
       }
       @media screen and (max-width: 525px) {
         .wrapper {
@@ -46,11 +48,9 @@
           padding: 0 15px 50px 15px !important;
         }
       }
-      .center{
+      div.center{
         display: flex !important;
-        align-items: center !important;
         justify-content: center !important;
-        width: 100% !important;
       }
       .form-container {
         margin-bottom: 24px;
@@ -61,7 +61,6 @@
         color: #2a2a2a;
         font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
         font-weight: 400;
-        text-align: left;
         line-height: 20px;
         font-size: 18px;
         margin: 0 0 8px;
@@ -71,15 +70,12 @@
         color: #2a2a2a;
         font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
         font-weight: 300;
-        text-align: left;
         line-height: 20px;
         font-size: 16px;
         margin: 0 0 24px;
         padding: 0;
       }
-      div[style*="margin: 16px 0;"] {
-        margin: 0 !important;
-      }
+
     </style>
   </head>
   <body style="margin: 0 !important; padding: 0 !important; background: #fff">
@@ -98,6 +94,7 @@
     <table cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td
+          text-align="center"
           style="padding: 10px 15px 30px 15px"
           class="section-padding"
         >
@@ -128,7 +125,7 @@
                             "
                             class="padding message-content"
                           >
-                            <h2>New Contact Message</h2>
+                            <h2>Reset Password</h2>
                             <div class="form-container">${htmlData}</div>
                           </td>
                         </tr>

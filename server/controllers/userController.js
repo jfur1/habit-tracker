@@ -168,24 +168,22 @@ export const updatePassword = asyncHandler(async (req, res) => {
 
 const CONTACT_MESSAGE_FIELDS = {
   name: "Hello,",
-  email: "Email",
-  subject: "Subject",
-  message: " ",
-  submessage: " ",
-  link: " ",
-  thanks: " ",
-  team: " "
+  message: "Message",
+  submessage: "Note:",
+  link: "Link",
+  thanks: "",
+  team: ""
 };
 
 const generateEmailContent = (data) => {
   const stringData = Object.entries(data).reduce(
     (str, [key, val]) =>
-      (str += `${CONTACT_MESSAGE_FIELDS[key]}: \n${val} \n \n`),
+      (str += `${CONTACT_MESSAGE_FIELDS[key]} ${val}`),
     ""
   );
   const htmlData = Object.entries(data).reduce((str, [key, val]) => {
     if(key === 'link'){
-      return (str += `<span class="center"><button class="resetBtn"><a href="${val}">Reset Password</a></button></span>`);
+      return (str += `<div class="center"><button align=justify class="resetBtn"><a href="${val}">Reset Password</a></button></div>`);
     } else {
       return (str += `<h3 class="form-heading" align="left">${CONTACT_MESSAGE_FIELDS[key]}</h3><p class="form-answer" align="left">${val}</p>`);
     }
@@ -193,7 +191,7 @@ const generateEmailContent = (data) => {
 
   return {
     text: stringData,
-    html: `<!DOCTYPE html><html> <head> <title></title> <meta charset="utf-8"/> <meta name="viewport" content="width=device-width, initial-scale=1"/> <meta http-equiv="X-UA-Compatible" content="IE=edge"/> <style type="text/css"> body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}table{border-collapse: collapse !important;}body{height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;}.resetBtn{background-color: rgb(50, 141, 215); color:#fefefe; padding: 10px; border-radius: 6px;}a{text-decoration: none;}@media screen and (max-width: 525px){.wrapper{width: 100% !important; max-width: 100% !important;}.responsive-table{width: 100% !important;}.padding{padding: 10px 5% 15px 5% !important;}.section-padding{padding: 0 15px 50px 15px !important;}}.center{display: flex; align-items: center; justify-content: center;}.form-container{margin-bottom: 24px; padding: 20px; border: 1px dashed #ccc;}.form-heading{color: #2a2a2a; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-weight: 400; text-align: left; line-height: 20px; font-size: 18px; margin: 0 0 8px; padding: 0;}.form-answer{color: #2a2a2a; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-weight: 350; text-align: left; line-height: 20px; font-size: 16px; margin: 0 0 24px; padding: 0;}div[style*="margin: 16px 0;"]{margin: 0 !important;}</style> </head> <body style="margin: 0 !important; padding: 0 !important; background: #fff"> <div style=" display: none; font-size: 1px; color: #fefefe; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; " ></div><table cellpadding="0" cellspacing="0" width="100%"> <tr> <td style="padding: 10px 15px 30px 15px" class="section-padding" > <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px" class="responsive-table" > <tr> <td> <table width="100%" cellspacing="0" cellpadding="0"> <tr> <td> <table width="100%" cellspacing="0" cellpadding="0" > <tr> <td style=" padding: 0 0 0 0; font-size: 16px; line-height: 25px; color: #232323; " class="padding message-content" > <h2>New Contact Message</h2> <div class="form-container">${htmlData}</div></td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </body></html>`
+    html: `<!DOCTYPE html><html> <head> <title></title> <meta charset="utf-8"/> <meta name="viewport" content="width=device-width, initial-scale=1"/> <meta http-equiv="X-UA-Compatible" content="IE=edge"/> <style type="text/css"> body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-decoration: none;}table{border-collapse: collapse !important;}body{height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;}.resetBtn{background-color: rgb(50, 141, 215); padding: 10px; border: none; border-radius: 6px; margin: 10px auto 20px auto;}.resetBtn a{color:#fefefe !important;}@media screen and (max-width: 525px){.wrapper{width: 100% !important; max-width: 100% !important;}.responsive-table{width: 100% !important;}.padding{padding: 10px 5% 15px 5% !important;}.section-padding{padding: 0 15px 50px 15px !important;}}div.center{display: flex !important; justify-content: center !important;}.form-container{margin-bottom: 24px; padding: 20px; border: 1px dashed #ccc;}.form-heading{color: #2a2a2a; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-weight: 400; line-height: 20px; font-size: 18px; margin: 0 0 8px; padding: 0;}.form-answer{color: #2a2a2a; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-weight: 300; line-height: 20px; font-size: 16px; margin: 0 0 24px; padding: 0;}</style> </head> <body style="margin: 0 !important; padding: 0 !important; background: #fff"> <div style=" display: none; font-size: 1px; color: #fefefe; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; " ></div><table cellpadding="0" cellspacing="0" width="100%"> <tr> <td text-align="center" style="padding: 10px 15px 30px 15px" class="section-padding" > <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px" class="responsive-table" > <tr> <td> <table width="100%" cellspacing="0" cellpadding="0"> <tr> <td> <table width="100%" cellspacing="0" cellpadding="0" > <tr> <td style=" padding: 0 0 0 0; font-size: 16px; line-height: 25px; color: #232323; " class="padding message-content" > <h2>Reset Password</h2> <div class="form-container">${htmlData}</div></td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </body></html>`
   }
 }
 
@@ -240,7 +238,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
       message: `<b>A request has been received to change the password for your Habit Tracker account.</b> This token will expire in 15 minutes.`,
       link: resetLink,
       submessage: `If you did not initate this request, please contact us immediately at habittrackerteam@gmail.com.`,
-      thanks: "Thank you," ,
+      thanks: "Thank you,",
       team: "The HabitTracker Team"
     }
     
