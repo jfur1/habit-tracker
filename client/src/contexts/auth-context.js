@@ -48,12 +48,43 @@ export const AuthProvider = ({ children }) => {
             return false;
     }
 
+    const updateUser = async (userData) => {
+        console.log("userData", userData)
+        console.log("user", user)
+        const headers = {
+            "Authorization": "Bearer " + userData.token,
+            "Content-Type": 'application/json',
+            "id": userData.user_id
+        }
+        try {
+            const res = await Axios.post(process.env.API_URL + 'update', userData, {headers});
+            // console.log("RES:", res)
+            const user = {
+                user_id: res.data.user_id,
+                first_name: res.data.first_name,
+                last_name: res.data.last_name,
+                email: res.data.email,
+                token: res.data.token
+            }
+            localStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
+            setLoading(false);
+
+        } catch (error) {
+            console.log(error);
+            alert('Incorrect username/password combination!');
+            setLoading(false);
+        }
+    }
+
     const userLogin = async (userData) => {
         setLoading(true);
         try {
             const res = await Axios.post(process.env.API_URL + 'login', userData);
             // console.log("RES:", res)
             const user = {
+                first_name: res.data.first_name,
+                last_name: res.data.last_name,
                 user_id: res.data.user_id,
                 email: res.data.email,
                 token: res.data.token
@@ -82,6 +113,7 @@ export const AuthProvider = ({ children }) => {
                 isLoading,
                 setLoading,
                 setUser,
+                updateUser,
                 isUserAuthenticated,
                 userLogin,
                 userLogout

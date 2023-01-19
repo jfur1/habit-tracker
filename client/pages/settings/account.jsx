@@ -4,7 +4,7 @@ import styles from '../../styles/Settings.module.scss'
 import { AuthContext, useAuth } from '../../src/contexts/auth-context.js'
 
 const account = () => {
-  const { isUserAuthenticated, isLoading, user } = useAuth();
+  const { isUserAuthenticated, isLoading, user, updateUser } = useAuth();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -22,6 +22,7 @@ const account = () => {
         email: user.email
       })
     }
+    console.log(user)
   
   }, [user]);
 
@@ -37,9 +38,18 @@ const account = () => {
     }))
   }
 
-  const handleSave = () => {
+  const handleSave = async (e) => {
     // TODO: Add api call to update user info
-    return
+    e.preventDefault();
+    const userData = {
+      user_id: user.user_id,
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      token: user.token
+    }
+    await updateUser(userData);
+    router.reload(window.location.pathname);
   }
 
   return (

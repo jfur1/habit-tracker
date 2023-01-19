@@ -73,6 +73,8 @@ export const loginUser = asyncHandler(async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({
         user_id: user.user_id,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
         token: generateToken(user.user_id),
       })
@@ -80,6 +82,41 @@ export const loginUser = asyncHandler(async (req, res) => {
       res.status(400)
       throw new Error('Invalid credentials')
     }
+})
+
+// @desc    Update a user
+// @route   POST /api/users/update
+// @access  Private
+export const updateUser = asyncHandler(async (req, res) => {
+  const { user_id, email, first_name, last_name, token } = req.body
+
+  // Update
+  var user = await connectionPool.query(`
+  UPDATE users
+  SET first_name=?, last_name=?, email=?
+  WHERE user_id = ?
+  `, [first_name, last_name, email, user_id]);
+
+  var [user] = await connectionPool.query(`
+  SELECT * 
+  FROM users
+  WHERE email = ?
+  `, [email]);
+  user = user[0]
+  console.log("api response:", user)
+
+  if (user) {
+    res.status(200).json({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      user_id: user.user_id,
+      email: user.email,
+      token: token 
+    })
+  } else {
+    res.status(400)
+    throw new Error('Invalid credentials')
+  }
 })
 
 // Generate JWT
