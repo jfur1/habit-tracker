@@ -248,8 +248,8 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     var mailOptions = {
       subject: "Password Reset",
       from: process.env.NODEMAILER_EMAIL,
-      // to: email,
-      to: 'johnfurlong24@gmail.com',
+      to: email,
+      // to: 'johnfurlong24@gmail.com',
       ...generateEmailContent(data)
       
     };
