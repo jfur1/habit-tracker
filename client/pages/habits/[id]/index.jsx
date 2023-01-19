@@ -72,71 +72,55 @@ const index = () => {
     return <LoadingScreen/>
 
   return (
-    <main className={styles.container}>
-      { showNewHabitForm 
+    <>
+    { showNewHabitForm 
         ? <UpdateHabit habit={habit} setShowNewHabitForm={setShowNewHabitForm}/> 
-        : null} 
+        : 
+      <main className={styles.container}>
 
-      { showConfirmModal 
-        ? <ConfirmDeleteModal habitID={habitID} setShowConfirmModal={setShowConfirmModal}/> 
-        : null} 
+        { showConfirmModal 
+          ? <ConfirmDeleteModal habitID={habitID} setShowConfirmModal={setShowConfirmModal}/> 
+          : null} 
 
-      <div className={styles.top}>
-        <span className={styles.backBtnContainer}>
-         <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
-        </span>
-        <div className={styles["menu-nav"]}>
-          <div className={styles["dropdown-container"]}>
-          <BsThreeDotsVertical className={styles.moreBtn} onClick={() => setShowMore(!showMore)}/>
-            <div className={styles.dropdown + ' ' + (showMore ? styles.show : '')}>
-              <a className={styles.dropdownItem} onClick={updateHabit}><div>Edit Habit</div></a>
-              <a className={styles.dropdownItem } onClick={() => setShowConfirmModal(true)}>
-                <div>Delete Habit</div>
-              </a>
+        <div className={styles.top}>
+          <span className={styles.backBtnContainer}>
+          <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
+          </span>
+          <div className={styles["menu-nav"]}>
+            <div className={styles["dropdown-container"]}>
+            <BsThreeDotsVertical className={styles.moreBtn} onClick={() => setShowMore(!showMore)}/>
+              <div className={styles.dropdown + ' ' + (showMore ? styles.show : '')}>
+                <a className={styles.dropdownItem} onClick={updateHabit}><div>Edit Habit</div></a>
+                <a className={styles.dropdownItem } onClick={() => setShowConfirmModal(true)}>
+                  <div>Delete Habit</div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className={styles["titleInfo"]}>
-          <div className={styles.infoCol}>
-            <h1 className={styles.title}>{habit?.title}</h1>
-            <p className={styles.description}>{habit?.description}</p>
-            {/* <p className={styles.description}>{habit?.frequency} {habit?.units}</p> */}
-            <span className={styles.schedule}>
-              <IoIosRepeat className={styles.repeatIcon} style={{ transform: 'scale(1.25)' }}/> 
-               {targetDays.length} days per week
-            </span>
-          </div>
-          <div className={styles.progressCol}>
-            <Icon showRings={true} index={habit?.icon} squareSize={85} strokeWidth={5} iconColor={habit?.color}/>
-            <p className={styles["progress"]}>{0}% Complete</p>
-          </div>
-      </div>
-
-      {/* <span className={styles.hrLine}/> */}
-
-      <Calendar entries={entries} habit={habit}/>
-
-      {/* <div className={styles["infoContainer"]}>
-          <div className={styles.target}>
-            <div className={styles.targetDays}>
-              Schedule:  {targetDays?.map((day, idx) => 
-              <p className={styles.day} key={idx}>{day.substring(0,2)}</p>
-            )}
+        <div className={styles["titleInfo"]}>
+            <div className={styles.infoCol}>
+              <h1 className={styles.title}>{habit?.title}</h1>
+              <p className={styles.description}>{habit?.description}</p>
+              {/* <p className={styles.description}>{habit?.frequency} {habit?.units}</p> */}
+              <span className={styles.schedule}>
+                <IoIosRepeat className={styles.repeatIcon} style={{ transform: 'scale(1.25)' }}/> 
+                {targetDays.length} days per week
+              </span>
             </div>
-          </div>
-          <div className={styles.type}>
-            Type: {habit?.type === false ? 'To Avoid' : "To Do"}
-          </div>
-          <div className={styles.startDate}>
-            Started On: {habit?.created}
-          </div>
-          <p>Frequency: {habit?.frequency}</p>
-          <p>Units: {habit?.units}</p>
-      </div> */}
+            <div className={styles.progressCol}>
+              <Icon showRings={true} index={habit?.icon} squareSize={85} strokeWidth={5} iconColor={habit?.color}/>
+              <p className={styles["progress"]}>{0}% Complete</p>
+            </div>
+        </div>
 
-    </main>
+        {/* <span className={styles.hrLine}/> */}
+
+        <Calendar entries={entries} habit={habit}/>
+
+      </main>}
+    </>
   )
 }
 
