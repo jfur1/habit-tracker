@@ -49,8 +49,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     const updateUser = async (userData) => {
-        console.log("userData", userData)
-        console.log("user", user)
+        // console.log("userData", userData)
+        // console.log("user", user)
         const headers = {
             "Authorization": "Bearer " + userData.token,
             "Content-Type": 'application/json',
@@ -100,6 +100,25 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const updatePassword = async (userData) => {
+        const { token, user_id, password } = userData;
+        const headers = {
+            "Authorization": "Bearer " + token,
+            "Content-Type": 'application/json',
+            "id": user_id
+        }
+        try {
+            const res = await Axios.post(process.env.API_URL + 'password', userData, {headers});
+            // console.log("RES:", res)
+            setLoading(false);
+            return res.data;
+        } catch (error) {
+            console.log(error);
+            alert('Could not set new password. Please try again!');
+            setLoading(false);
+        }
+    }
+
     const userLogout = async () => {
         localStorage.removeItem('user');
         setUser(null);
@@ -114,6 +133,7 @@ export const AuthProvider = ({ children }) => {
                 setLoading,
                 setUser,
                 updateUser,
+                updatePassword,
                 isUserAuthenticated,
                 userLogin,
                 userLogout

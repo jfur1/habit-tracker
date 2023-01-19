@@ -44,6 +44,8 @@ export const registerUser = async(req, res) => {
     if (user) {
         res.status(201).json({
           user_id: user.user_id,
+          first_name: user.first_name,
+          user_id: user.user_id,
           email: user.email,
           token: generateToken(user.user_id),
         })
@@ -118,6 +120,50 @@ export const updateUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid credentials')
   }
 })
+
+// @desc    Update user's password
+// @route   POST /api/users/password
+// @access  Private
+export const updatePassword = asyncHandler(async (req, res) => {
+  const { user_id, token, password } = req.body
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+
+  console.log("Unencrypted pwd: ", password);
+  console.log('Hashed pwd:', hashedPassword);
+
+  // Update user pwd
+  const updated = await connectionPool.query(`
+  UPDATE users
+  SET password=?
+  WHERE user_id = ?
+  `, [hashedPassword, user_id]);
+
+  var [user] = await connectionPool.query(`
+  SELECT * 
+  FROM users
+  WHERE user_id = ?
+  `, [user_id]);
+  user = user[0]
+
+  console.log("updatePWD res: ", user)
+
+  if (user) {
+    res.status(201).json({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      user_id: user.user_id,
+      email: user.email,
+      token: generateToken(user.user_id),
+    })
+  } else {
+    res.status(400)
+    throw new Error('Server error while updating password.')
+  }
+})
+
 
 // Generate JWT
 const generateToken = (id) => {

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from '../styles/Settings.module.scss'
 import { AuthContext, useAuth } from '../src/contexts/auth-context.js'
 
 const password = () => {
-    const { isUserAuthenticated, loading, setUser, userLogin } = useAuth();
+    const { isUserAuthenticated, loading, setUser, user, userLogin, updatePassword } = useAuth();
+    const router = useRouter();
 
+    const [wasUpdated, setWasUpdated] = useState(false)
     const [formData, setFormData] = useState({
         old_password: '',
         password: '',
@@ -20,9 +23,42 @@ const password = () => {
         }))
     }
 
+    const validate = () => {
+        var errors = new Map();
+
+        if(!password || !password2)
+            errors.set('blank', 'Please fill all required fields!')
+
+        if(password !== password2)
+            errors.set('match', 'Passwords do not match!')
+        
+        return errors
+    }
+
     const onSubmit = async (e) => {
-        // e.preventDefault();
-        return;
+        e.preventDefault();
+        var errs = validate();
+        const userData = {
+            token: user.token,
+            user_id: user.user_id,
+            password: password
+        }
+        if(errs.size > 0){
+            console.log(errs);
+            alert(errs)
+            return;
+        } else {
+            const res = await updatePassword(userData);
+            if(res){
+                setWasUpdated(true);
+            }
+            // router.reload(window.location.pathname);
+            // TODO: Need front-end confirmation on pwd change
+        }
+    }
+
+    const SuccessBanner = () => {
+        return <p className="success">Updated password successfully.</p>
     }
 
     return (
@@ -33,11 +69,10 @@ const password = () => {
                 </span>
                 <h1 className={styles["title"]}>Change Password</h1>
             </div>
-            <form>
-                <div className={styles['inputCol']}>
-                    <label>Current Password</label>
-                    <input type="password" name="old_password" id='old_password' value={old_password} onChange={onChange} required/>
-                </div>
+            {wasUpdated 
+            ? <SuccessBanner/>
+
+            :<form>
                 <div className={styles['inputCol']}>
                     <label>New Password</label>
                     <input type="password" name="password" id='password' value={password} onChange={onChange} required/>
@@ -51,7 +86,7 @@ const password = () => {
                         Submit
                     </a>
                 </div>
-            </form>
+            </form>}
         </div>
     )
 }
