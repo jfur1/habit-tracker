@@ -3,11 +3,13 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from '../../styles/Settings.module.scss'
 import { AuthContext, useAuth } from '../../src/contexts/auth-context.js'
+import { BsEye, BsEyeSlash } from 'react-icons/bs'
 
 const protectedReset = () => {
     const { isUserAuthenticated, loading, setUser, user, userLogin, updatePassword } = useAuth();
     const router = useRouter();
 
+    const [showPassword, setShowPassword] = useState(false);
     const [formErrors, setFormErrors] = useState({})
     const [wasUpdated, setWasUpdated] = useState(false)
     const [formData, setFormData] = useState({
@@ -86,21 +88,29 @@ const protectedReset = () => {
                 <h1 className={styles["title"]}>Change Password</h1>
             </div>
 
+            <p className="desc">Password must be at least 8 characters, and contain at least one letter and one number. </p>
+
             {formErrors.size > 0 
                 ? <ErrorsBanner/>
                 : null
             }
 
+            {/* TODO: Add pwd visible toggle */}
+
             {wasUpdated 
             ? <SuccessBanner/>
             :<form>
                 <div className={styles['inputCol']}>
-                    <label>New Password</label>
-                    <input type="password" name="password" id='password' value={password} onChange={onChange} required/>
+                    <span className={styles["inputRow"]}>
+                        <label>New Password</label>
+                        {showPassword ? <BsEyeSlash onClick={() => setShowPassword(!showPassword)}/> : <BsEye onClick={() => setShowPassword(!showPassword)}/>}
+                    </span>
+                    
+                    <input type={showPassword ? "text" : "password"} name="password" id='password' value={password} onChange={onChange} required/>
                 </div>
                 <div className={styles['inputCol']}>
                     <label>Confirm New Password</label>
-                    <input type="password" name="password2" id='password2' value={password2} onChange={onChange} required/>
+                    <input type={showPassword ? "text" : "password"} name="password2" id='password2' value={password2} onChange={onChange} required/>
                 </div>
                 <div className={styles['inputCol']}>
                     <a href="" onClick={onSubmit} className={styles['submit']}>

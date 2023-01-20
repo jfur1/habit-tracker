@@ -210,6 +210,10 @@
         flex-direction: column;
         margin: 1rem 3rem;
     }
+    .inputRow{
+        display: flex;
+        justify-content: space-between;
+    }
     .submit{
         text-align: center;
     }
