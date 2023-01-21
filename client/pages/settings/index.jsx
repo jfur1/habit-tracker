@@ -16,6 +16,7 @@ const settings = () => {
   const router = useRouter();
   const { isUserAuthenticated, isLoading, user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [showNewHabitForm, setShowNewHabitForm] = useState(false);
 
   const logout = () => {
     setLoading(true);
@@ -88,7 +89,7 @@ const settings = () => {
             </li>
 
         </ul>
-        <NavBar currentIdx={4} />
+        <NavBar currentIdx={4} showNewHabitForm={showNewHabitForm} setShowNewHabitForm={setShowNewHabitForm}/>
     </div>
     
   )
