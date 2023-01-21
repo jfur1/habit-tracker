@@ -1,8 +1,8 @@
-.container{
+.main{
+    margin: 1.5em 0;
+    // padding: 1em;
     display: flex;
     flex-direction: column;
-    margin: 0.5em;
-    padding: 1em;
 }
 
 .top{
@@ -55,6 +55,8 @@
 
 .list{
     color: var(--font-color);
+    padding: 1em;
+
 
     .item{
         // border: 1px solid red;
@@ -91,8 +93,9 @@
 }
 
 // Account
-
+$grid-gap: 12px;
 .account{
+    padding: 1em;
 
     input{
         height: 3em;
@@ -109,14 +112,16 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         align-items: baseline;
-        grid-gap: 10px;
+        grid-gap: $grid-gap;
         margin-bottom: 1rem;
-
-        .inputCol{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            color: var(--font-color);
+    }
+    .inputCol{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        color: var(--font-color);
+        &.email{
+            padding: 0 1rem;
         }
     }
 }
@@ -139,13 +144,42 @@
 // Appearance
 
 .appearance{
+    &.container{
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+    }
+    
+    .desc{
+        color: var(--font-color);
+    }
+    .preference{
+        color: var(--font-color);
+    }
 
+    .toggle{
+        color: var(--font-color);
+        margin: 0.5rem;
+        padding: 0.5rem 0.2rem;
+        border: 1px solid transparent;
+        border-radius: 5px;
+    }
+    .save{
+        color: var(--font-color);
+        margin: 0.5rem;
+        padding: 0.5rem 0.2rem;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        background-color: rgb(106, 180, 106);
+    }
 }
 
 // About
 
 .about{
     color: var(--font-color);
+    padding: 1.5rem 2rem;
+
     .version{
         margin-bottom: 0;
     }
@@ -181,6 +215,7 @@
 // Help
 
 .help{
+    padding: 1.5rem 2rem;
 
     .faq{
         .title{

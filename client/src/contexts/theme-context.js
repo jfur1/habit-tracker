@@ -1,13 +1,15 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
+import { useAuth } from './auth-context.js'
+import Axios from 'axios'
 
 const DarkModeContext = createContext();
+const { Provider } = DarkModeContext
 
-const DarkModeProvider = (props) => {
-    const [darkMode, setDarkMode] = useState(
-        (typeof(window) !== 'undefined' && window.localStorage) 
-            ? JSON.parse(localStorage.getItem('darkMode'))
-            : false
-        );
+export const DarkModeProvider = ({ children }) => {
+
+    const { user } = useAuth();
+
+    const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
         if (darkMode) {
@@ -22,18 +24,44 @@ const DarkModeProvider = (props) => {
         setDarkMode(!darkMode);
     }
 
+    const setTheme = (userPreference) => {
+        console.log("userPreference:", userPreference)
+        localStorage.setItem("darkMode", userPreference);
+        setDarkMode(userPreference);
+    }
+
+    const saveThemePreference = async (darkMode, userData) => {
+        // darkMode: boolean
+        console.log("savePreference API received: ", darkMode)
+        console.log(userData)
+        const headers = {
+            "Authorization": "Bearer " + userData.token,
+            "Content-Type": 'application/json',
+            "id": userData.user_id
+        };
+        // console.log('headers:', headers)
+        try {
+            const res = await Axios.post(process.env.API_URL + 'theme', {darkMode}, {headers});
+            console.log(res)
+            return res;
+        } catch (error) {
+            alert("Error saving preference. Please try again!: ");
+            return;
+        }
+    }
+
     return (
-        <div>
-            <DarkModeContext.Provider
-                value={{ 
-                    darkMode, 
-                    toggleDarkMode
-                }}
-            >
-                {props.children}
-            </DarkModeContext.Provider>
-        </div>
+        <Provider
+            value={{ 
+                darkMode, 
+                setTheme,
+                toggleDarkMode,
+                saveThemePreference
+            }}
+        >
+            {children}
+        </Provider>
     )
 }
 
-export { DarkModeContext, DarkModeProvider }
+export const useThemeContext = () => useContext(DarkModeContext);

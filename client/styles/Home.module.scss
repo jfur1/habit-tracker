@@ -43,6 +43,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 3em;
+  color: var(--font-color);
 }
 
 .title,
@@ -54,6 +55,7 @@
   margin: 2rem 0;
   line-height: 1.5;
   font-size: 1.5rem;
+  color: var(--secondary-font-color);
 }
 
 .code {
@@ -127,6 +129,10 @@ $card-padding: 40px;
       color: #fff;
       text-align: center;
   }
+
+  .forgot{
+    color: var(--secondary-font-color);
+  }
   
   .input-box {
       position: relative;
@@ -137,10 +143,11 @@ $card-padding: 40px;
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  // color: #fff;
+  color: var(--font-color);
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid var(--secondary-font-color);
   outline: none;
   background: transparent;
 }
@@ -151,7 +158,7 @@ $card-padding: 40px;
   left: 0;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  color: var(--font-color);
   pointer-events: none;
   transition: .5s;
 }
@@ -206,9 +213,11 @@ $card-padding: 40px;
   .or{
     display: inline-block;
     position: relative;
+    color: var(--secondary-font-color);
   }
   .or::before{
-    background: #ccd0d5;
+    // background: #ccd0d5;
+    background: var(--secondary-font-color);
     content: '';
     height: 1px;
     position: absolute;
@@ -220,7 +229,8 @@ $card-padding: 40px;
   .or::after{
     left: 100%;
     margin-left: 15px;
-    background: #ccd0d5;
+    // background: #ccd0d5;
+    background: var(--secondary-font-color);
     content: '';
     height: 1px;
     position: absolute;
@@ -245,6 +255,7 @@ $card-padding: 40px;
   background: none;
   border: 1px solid var(--secondary-color);
   border-radius: 5px;
+  color: var(--secondary-font-color);
   font-size: medium;
 }
 

@@ -17,6 +17,7 @@ const index = () => {
   const { isUserAuthenticated, isLoading, user } = useAuth();
   const { ctxHabits, ctxEntries, userDataLoading, userData, getHabit, getEntriesForHabit, deleteHabit } = useDataContext();
 
+  const [loading, setLoading] = useState(false);
   const [habit, setHabit] = useState(null);
   const [entries, setEntries] = useState(null)
   const [targetDays, setTargetDays] = useState([])
@@ -45,6 +46,7 @@ const index = () => {
     return <LoadingScreen/>
 
   const goBack = () => {
+    setLoading(true)
     router.push('/habits')
   }
 
@@ -68,7 +70,7 @@ const index = () => {
     )
   }
 
-  if(isLoading || userDataLoading )
+  if(isLoading || userDataLoading || loading)
     return <LoadingScreen/>
 
   return (

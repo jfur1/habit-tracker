@@ -80,6 +80,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
+        theme: user.theme,
         token: generateToken(user.user_id),
       })
     } else {
@@ -87,6 +88,49 @@ export const loginUser = asyncHandler(async (req, res) => {
       throw new Error('Invalid credentials')
     }
 })
+
+// @desc    Save user's theme preference
+// @route   POST /api/users/theme
+// @access  Private
+export const saveThemePreference = asyncHandler(async (req, res) => {
+  const { darkMode } = req.body;
+  const user_id = req.headers.id;
+  console.log("server received params:")
+  console.log("darkMode:", darkMode)
+  console.log("user_id:", user_id)
+
+  // Check for user email
+  var [user] = await connectionPool.query(`
+  SELECT * 
+  FROM users
+  WHERE user_id = ?
+  `, [user_id]);
+
+  user = user[0];
+  console.log('user:', user)
+
+  if(user){
+    try{
+        // Update user theme preference
+        const updated = await connectionPool.query(`
+        UPDATE users
+        SET theme=?
+        WHERE user_id = ?
+        `, [darkMode, user_id]);
+
+        res.status(201).json({ msg: "Theme updated", theme: darkMode });
+
+    } catch(error){
+      res.status(400);
+      throw new Error('Server error while getting reset password.')
+    }
+  }
+  else{
+    res.status(400).json({ msg : 'Server error while saving preference. Please try again!'})
+    // throw new Error('Server error while saving preference. Please try again!')
+  }
+})
+
 
 // @desc    Update a user
 // @route   POST /api/users/update

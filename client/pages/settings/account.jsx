@@ -3,11 +3,12 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from '../../styles/Settings.module.scss'
 import { AuthContext, useAuth } from '../../src/contexts/auth-context.js'
+import LoadingScreen from '../../pages/loading.jsx'
 
 const account = () => {
   const { isUserAuthenticated, isLoading, user, updateUser } = useAuth();
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -29,6 +30,7 @@ const account = () => {
 
 
   const goBack = () => {
+    setLoading(true)
     router.push('/settings')
   }
 
@@ -53,6 +55,9 @@ const account = () => {
     router.reload(window.location.pathname);
   }
 
+  if(isLoading || loading)
+    return <LoadingScreen/>
+
   return (
     <div className={styles["account"] + ' ' + styles["container"]}>
       <div className={styles["top"]}>
@@ -74,11 +79,13 @@ const account = () => {
         </div>
       </div>
 
-      <label htmlFor="html" className={styles["email_label"]}>Email</label>
-      <input type="text" name="email" className={styles["email"]} onChange={onChange} value={email}/>
+      <div className={styles["inputCol"] + ' '+ styles["email"]}>
+        <label htmlFor="html" className={styles["email_label"]}>Email</label>
+        <input type="text" name="email" className={styles["email"]} onChange={onChange} value={email}/>
+      </div>
 
       <div className={styles["account"] + ' ' + styles["row"]}>
-        <Link className={styles['change_pwd']} href="/settings/protectedReset">
+        <Link onClick={() => setLoading(true)} className={styles['change_pwd']} href="/settings/protectedReset">
           Change Password
         </Link>
 

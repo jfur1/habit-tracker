@@ -13,6 +13,7 @@ import LoadingScreen from '../loading.jsx'
 
 const habits = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [habits, setHabits] = useState(null);
   const [showNewHabitForm, setShowNewHabitForm] = useState(false);
   const { isUserAuthenticated, isLoading, user } = useAuth();
@@ -25,7 +26,7 @@ const habits = () => {
 
   const ROUTE_POST_ID = "habits/[id]";
 
-  if(isLoading || userDataLoading)
+  if(isLoading || userDataLoading || loading)
     return <LoadingScreen/>
   
   const NewUserPrompt = () => {
@@ -54,6 +55,7 @@ const habits = () => {
                   <Link
                     key={'link-' + idx}
                     className={styles.card}
+                    onClick={() => setLoading(true)}
                     href={{
                       pathname: ROUTE_POST_ID,
                       query: { id: habit.habit_id }

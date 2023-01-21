@@ -17,6 +17,7 @@ const index = () => {
     const { isUserAuthenticated, isLoading, user } = useAuth();
     const { ctxHabits, ctxEntries, userDataLoading, userData, getHabit, getEntriesForHabit, deleteHabit } = useDataContext();
 
+    const [loading, setLoading] = useState(false);
     const [showMore, setShowMore] = useState(false);
     const [habit, setHabit] = useState(null);
     const [entries, setEntries] = useState(null)
@@ -44,6 +45,7 @@ const index = () => {
     }, [user, habitID]) // Runs whenever user changes or habitID changes
 
     const goBack = () => {
+        setLoading(true)
         router.push('/stats')
     }
 
@@ -74,7 +76,7 @@ const index = () => {
     }
 
     // Need this to avoid hydration errors
-    if(isLoading || userDataLoading )
+    if(isLoading || userDataLoading || loading)
         return <LoadingScreen/>
 
     return (

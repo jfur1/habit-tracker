@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, createContext } from "react";
 import { useRouter } from "next/router";
 import LoadingScreen from '../../pages/loading.jsx'
 import Axios from 'axios';
+import { useThemeContext } from './theme-context.js'
 
 const AuthContext = React.createContext({
     user: {},
@@ -14,6 +15,7 @@ const { Provider } = AuthContext;
 
 export const AuthProvider = ({ children }) => {
     const router = useRouter();
+    const { setTheme } = useThemeContext();
     const [user, setUser] = useState(null)
     const [isLoading, setLoading] = useState(true)
 
@@ -27,6 +29,8 @@ export const AuthProvider = ({ children }) => {
             if (user) {
                 // console.log("Got a user from the cookies", user)
                 setUser(user);
+                if(user.theme !== null)
+                    setUser(user);
             }
             setLoading(false)
         }
@@ -101,11 +105,13 @@ export const AuthProvider = ({ children }) => {
                 last_name: res.data.last_name,
                 user_id: res.data.user_id,
                 email: res.data.email,
+                theme: res.data.theme,
                 token: res.data.token
             }
             localStorage.setItem('user', JSON.stringify(user));
             setUser(user);
             setLoading(false);
+            setTheme(user.theme)
             router.push('/dashboard');
         } catch (error) {
             console.log(error);

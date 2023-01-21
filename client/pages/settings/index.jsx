@@ -10,25 +10,28 @@ import { CgDarkMode } from 'react-icons/cg'
 import { FiUser, FiHeadphones } from 'react-icons/fi'
 import { TfiLock } from "react-icons/tfi";
 import { MdLogout } from "react-icons/md";
+import LoadingScreen from '../../pages/loading.jsx'
 
 const settings = () => {
   const router = useRouter();
   const { isUserAuthenticated, isLoading, user } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const logout = () => {
+    setLoading(true);
     localStorage.removeItem('user');
     router.push('/');
   }
 
+  if(isLoading || loading)
+    return <LoadingScreen/>
+
   return (
-    <>
-    <div className={styles.container}>
+    <div className={styles.main}>
 
         <div className={styles["top"]}>
             <h1 className={styles["title"]}>Settings</h1>
         </div>
-
-
 
         <ul className={styles["list"]}>
             <Link href={'/settings/account'}>
@@ -85,9 +88,9 @@ const settings = () => {
             </li>
 
         </ul>
+        <NavBar currentIdx={4} />
     </div>
-    <NavBar currentIdx={4}/>
-    </>
+    
   )
 }
 

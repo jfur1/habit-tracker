@@ -4,11 +4,13 @@ import styles from '../../styles/NavBar.module.scss'
 import { FaUserAlt, FaHome, FaRegPlusSquare, FaRegChartBar, FaLayerGroup } from "react-icons/fa";
 // import { AuthContext } from '../context/auth-context.js'
 import NewHabit from '../../pages/newHabit.jsx'
+import LoadingScreen from '../../pages/loading.jsx'
 
 const NavBar = ({ currentIdx, showNewHabitForm, setShowNewHabitForm }) => {
     const router = useRouter();
     // const authContext = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState(currentIdx);
+    const [loading, setLoading] = useState(false);
     // console.log(router.pathname)
 
     const MENU_LIST = [
@@ -20,15 +22,20 @@ const NavBar = ({ currentIdx, showNewHabitForm, setShowNewHabitForm }) => {
     ];
 
     const handleClick = (activeIdx) => {
+        setLoading(true);
         if(router.pathname === MENU_LIST[activeIdx].href)
             return
         if(activeIdx === 2){
+            setLoading(false);
             setShowNewHabitForm(true)
             setActiveTab(2)
         } else {
             router.push(MENU_LIST[activeIdx].href);
         }
     }
+
+    if(loading)
+        return <LoadingScreen/>
 
     return (
             <>

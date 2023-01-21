@@ -15,6 +15,7 @@ const stats = () => {
   const { ctxHabits, ctxEntries, userDataLoading } = useDataContext();
   const [entries, setEntries] = useState(null);
   const [habits, setHabits] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [showNewHabitForm, setShowNewHabitForm] = useState(false);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const stats = () => {
     )
   }
   
-  if(isLoading || userDataLoading)
+  if(isLoading || userDataLoading || loading)
     return <LoadingScreen/>
 
   const ROUTE_POST_ID = "stats/[id]";
@@ -55,6 +56,7 @@ const stats = () => {
               <Link
                 key={'link-' + idx}
                 className={styles.card}
+                onClick={() => setLoading(true)}
                 href={{
                   pathname: ROUTE_POST_ID,
                   query: { id: habit.habit_id }
@@ -80,7 +82,7 @@ const stats = () => {
 
         </ul>
       }
-      
+
       <NavBar currentIdx={3} showNewHabitForm={showNewHabitForm} setShowNewHabitForm={setShowNewHabitForm}/>
     </div>
   )

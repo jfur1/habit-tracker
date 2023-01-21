@@ -14,6 +14,7 @@ import LoadingScreen from './loading.jsx'
 export default function Home() {
   const router = useRouter()
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loading, setLoginLoading] = useState(false)
     const { isUserAuthenticated, isLoading, setUser, userLogin, setLoading } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -30,6 +31,7 @@ export default function Home() {
   }
 
   const onSubmit = async (e) => {
+    setLoginLoading(true);
     e.preventDefault()
     const userData = { email, password }
 
@@ -43,6 +45,9 @@ export default function Home() {
   const registerUser = () => {
     router.push('/register')
   }
+
+  if(isLoading || loading)
+    return <LoadingScreen/>
 
 
   return (
