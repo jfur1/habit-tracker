@@ -33,6 +33,7 @@
     color: white;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     background-color: var(--card-color);
+    margin-bottom: 0.5rem;
   }
 
   .container.expand { 
@@ -56,8 +57,6 @@
     to {height: 100px;}
   }
 
-
-  
   .container p {
     opacity: 0.6;
   }

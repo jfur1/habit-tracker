@@ -6,9 +6,12 @@ import { FaCheck } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import { ICONS } from '../src/components/Icon.jsx'
 import Icon from '../src/components/Icon.jsx'
+import { DataContext, useDataContext } from '../src/contexts/data-context.js'
 
 const NewHabit = ({ setShowNewHabitForm }) => {
   const router = useRouter()
+  const { ctxHabits, ctxEntries } = useDataContext()
+
   const colors = [
     '#E74C3C',
     '#F4D03F',
@@ -88,7 +91,11 @@ const NewHabit = ({ setShowNewHabitForm }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // if(!title || !schedule)
+    // Cap allowable habits at 5
+    if(ctxHabits.length === 3){
+      alert('You have reached the maximum amount of habits! Please delete a habit or upgrade to add aditional habits.')
+      return;
+    }
 
     const postData = async() => {
 
