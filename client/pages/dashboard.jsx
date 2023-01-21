@@ -109,7 +109,7 @@ const dashboard = () => {
         })
         // console.log(typeof(data[0]) === 'undefined')
         return (
-            typeof(data[0]) === 'undefined'
+            typeof(data) === 'undefined'
                 ? <p>No habits to track for today!</p>
                 : data
             

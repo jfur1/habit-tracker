@@ -27,10 +27,9 @@ export const AuthProvider = ({ children }) => {
                 user = JSON.parse(localStorage.getItem('user'))
                 
             if (user) {
-                // console.log("Got a user from the cookies", user)
+                console.log("Got a user from the cookies", user)
                 setUser(user);
-                if(user.theme !== null)
-                    setUser(user);
+                setTheme(user.theme)
             }
             setLoading(false)
         }

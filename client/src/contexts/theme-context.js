@@ -9,7 +9,7 @@ export const DarkModeProvider = ({ children }) => {
 
     const { user } = useAuth();
 
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(user?.theme ? user.theme : false);    
 
     useEffect(() => {
         if (darkMode) {
@@ -25,9 +25,10 @@ export const DarkModeProvider = ({ children }) => {
     }
 
     const setTheme = (userPreference) => {
+        var dark = userPreference === 0 ? false : true;
         console.log("userPreference:", userPreference)
-        localStorage.setItem("darkMode", userPreference);
-        setDarkMode(userPreference);
+        localStorage.setItem("darkMode", dark);
+        setDarkMode(dark);
     }
 
     const saveThemePreference = async (darkMode, userData) => {
