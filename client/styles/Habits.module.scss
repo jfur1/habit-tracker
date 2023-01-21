@@ -32,3 +32,38 @@
         transform: scale(2);
     }
 }
+
+
+.title{
+    margin-top: 1em;
+    font-size: xx-large;
+    font-weight: 300;
+    text-align: center;
+    color: var(--font-color);
+}
+
+.prompt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .row{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+  
+    .title{
+        color: var(--font-color);
+        text-align: center;
+        font-size: x-large;
+        font-weight: 300;
+    }
+  
+    .firstHabitLink{
+        text-decoration: underline;
+        color:rgb(70, 151, 221);
+    }
+}
+  

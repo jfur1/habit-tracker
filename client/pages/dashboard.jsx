@@ -20,11 +20,13 @@ const dashboard = () => {
     const [numerator, setNumerator] = useState(0);
     const [todaysCount, setTodaysCount] = useState(null);
     const [activeToggle, setActiveToggle] = useState(1);
+    const [showNewHabitForm, setShowNewHabitForm] = useState(false);
 
     // TODO: Remove local hooks and just use context values
     useEffect(() => {
         setEntries(ctxEntries);
         setHabits(ctxHabits);
+        console.log(habits, entries)
     }, [ctxEntries, ctxHabits]);
 
     const TodaysDate = ( ) => {
@@ -37,7 +39,7 @@ const dashboard = () => {
                     {months[today.getMonth()]} {today.getDate()}
                 </h1>
                 <p className={styles.msg}>
-                    {user?.first_name !== '' 
+                    {user?.first_name !== null 
                         ? "Welcome back " + user.first_name + "!" 
                         : 'Carpe Diem!'}
                 </p>
@@ -110,6 +112,18 @@ const dashboard = () => {
             </div>
         )
     }
+
+    const NewUserPrompt = () => {
+        return(
+            <div className={styles['prompt']}>
+                <h2 className={styles["title"]}>Welcome to Habit Tracker!</h2>
+                <span className={styles["row"]}>
+                    <p className={styles["desc"]}>To get started,&nbsp;</p>
+                    <p className={styles["firstHabitLink"]} onClick={() => setShowNewHabitForm(true)}>create a new habit to track.</p>
+                </span>
+            </div>
+        )
+    }
     
     if(isLoading || userDataLoading)
         return <LoadingScreen/>
@@ -127,13 +141,18 @@ const dashboard = () => {
                 </div>
             </div> */}
 
+            { (entries === null || entries.length === 0) && (habits === null || habits.length === 0)
+                ? <NewUserPrompt/>
+                : null
+            }
+
             <div className={styles.listContainer}>
                 { habits 
                     ? <TodaysHabits todaysCount={todaysCount} setTodaysCount={setTodaysCount} habits={habits}/> 
                     : null
                 }
             </div>
-            <NavBar currentIdx={0}/>
+            <NavBar currentIdx={0} showNewHabitForm={showNewHabitForm} setShowNewHabitForm={setShowNewHabitForm}/>
         </div>
     )
 }

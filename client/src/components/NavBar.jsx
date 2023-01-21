@@ -5,11 +5,10 @@ import { FaUserAlt, FaHome, FaRegPlusSquare, FaRegChartBar, FaLayerGroup } from 
 // import { AuthContext } from '../context/auth-context.js'
 import NewHabit from '../../pages/newHabit.jsx'
 
-const NavBar = ({ currentIdx }) => {
+const NavBar = ({ currentIdx, showNewHabitForm, setShowNewHabitForm }) => {
     const router = useRouter();
     // const authContext = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState(currentIdx);
-    const [showNewHabitForm, setShowNewHabitForm] = useState(false)
     // console.log(router.pathname)
 
     const MENU_LIST = [
