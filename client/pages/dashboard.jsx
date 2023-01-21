@@ -77,7 +77,7 @@ const dashboard = () => {
     }
 
     // Returns ToDoCard for each habit that occurs today
-    const TodaysHabits = ({ habits }) => {
+    const TodaysHabits = () => {
         const today = new Date();
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         const dow = today.getDay();
@@ -91,25 +91,28 @@ const dashboard = () => {
         const currentYmd = today.getFullYear() + '-' + monthIdx + '-' + dayIdx
         // console.log('Currrent ymd: ', currentYmd)
 
+        const data = habits.map((habit, idx) => {
+            if(habit.schedule.indexOf(currentDayName) >= 0){
+                
+                var habitEntry = entries?.filter((entry, idx) => (
+                        entry.habit_id === habit.habit_id
+                        && entry.ymd.split('T')[0] === currentYmd
+                ))
+                
+                if(typeof(habitEntry) !== 'undefined' && habitEntry !== [])
+                    habitEntry = habitEntry[0]
+
+                return (
+                    <ToDoCard entry={habitEntry} key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>
+                )
+            }
+        })
+        // console.log(typeof(data[0]) === 'undefined')
         return (
-            <div className={styles.habitsList}>
-                {habits.map((habit, idx) => {
-                    if(habit.schedule.indexOf(currentDayName) >= 0){
-                        
-                        var habitEntry = entries?.filter((entry, idx) => (
-                            entry.habit_id === habit.habit_id
-                            && entry.ymd.split('T')[0] === currentYmd
-                        ))
-
-                        if(typeof(habitEntry) !== 'undefined' && habitEntry !== [])
-                            habitEntry = habitEntry[0]
-
-                        return (
-                            <ToDoCard entry={habitEntry} key={idx} habit={habit} isOpen={isOpen} setIsOpen={setIsOpen}/>
-                        )
-                    }
-                })}
-            </div>
+            typeof(data[0]) === 'undefined'
+                ? <p>No habits to track for today!</p>
+                : data
+            
         )
     }
 
@@ -142,16 +145,12 @@ const dashboard = () => {
             </div> */}
 
             { (entries === null || entries.length === 0) && (habits === null || habits.length === 0)
-                ? <NewUserPrompt/>
-                : null
+            ? <NewUserPrompt/>
+            : 
+                <div className={styles.listContainer}>
+                    <TodaysHabits todaysCount={todaysCount} setTodaysCount={setTodaysCount} habits={habits}/> 
+                </div>
             }
-
-            <div className={styles.listContainer}>
-                { habits 
-                    ? <TodaysHabits todaysCount={todaysCount} setTodaysCount={setTodaysCount} habits={habits}/> 
-                    : null
-                }
-            </div>
             <NavBar currentIdx={0} showNewHabitForm={showNewHabitForm} setShowNewHabitForm={setShowNewHabitForm}/>
         </div>
     )

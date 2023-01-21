@@ -10,16 +10,17 @@ import CircleSlider from '../components/CircleSlider.jsx'
 const ToDoCard = ({ habit, entry, isOpen, setIsOpen }) => {
     const [numerator, setNumerator] = useState(!!entry ? entry.frequency: 0);
     var today = new Date();
+    
+    console.log('habit: ', habit)
+    console.log('entry: ', entry)
 
     const handleInput = (numberToSet) => {
       if(numberToSet < 0 || numberToSet > habit.frequency)
         return;
-
       setNumerator(numberToSet)
     }
 
     const handleShowToggle = (habit_id) => {
-
       // Base case: Close card
       if(isOpen === habit_id)
         setIsOpen(null)

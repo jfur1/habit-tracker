@@ -80,10 +80,7 @@ const stats = () => {
 
         </ul>
       }
-      {/* {habits?.map((habit) => 
-        <p>{habit.title}</p>
-      )} */}
-      {/* <Dropdown/> */}
+      
       <NavBar currentIdx={3} showNewHabitForm={showNewHabitForm} setShowNewHabitForm={setShowNewHabitForm}/>
     </div>
   )
