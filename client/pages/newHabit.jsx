@@ -28,7 +28,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
     title: '',
     description: '',
     schedule: '',
-    frequency: 1,
+    frequency: counter,
     units: 'times',
     type: true,
     icon: 0

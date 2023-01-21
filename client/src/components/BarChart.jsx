@@ -60,6 +60,7 @@ const BarChart = ({ entries, habit, setCurrentStreak, setBestStreak, setTotalCom
     if(startDateStr === todayDateStr){
       dates.push(todayDateStr)
       labels.push(todayDateStr)
+      total = total + 1
     } else {
       // To set two dates to two variables
       var date1 = new Date(startDate);
