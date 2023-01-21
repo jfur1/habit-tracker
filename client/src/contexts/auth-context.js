@@ -48,6 +48,20 @@ export const AuthProvider = ({ children }) => {
             return false;
     }
 
+    const registerUser = async(userData) => {
+        try {
+            const res = await Axios.post(process.env.API_URL + 'register', userData);
+            // console.log("RES:", res)
+            setLoading(false);
+            return res;
+
+        } catch (error) {
+            console.log(error);
+            alert('Server error while trying to register. Please try again!');
+            setLoading(false);
+        }
+    }
+
     const updateUser = async (userData) => {
         // console.log("userData", userData)
         // console.log("user", user)
@@ -171,6 +185,7 @@ export const AuthProvider = ({ children }) => {
                 isLoading,
                 setLoading,
                 setUser,
+                registerUser,
                 updateUser,
                 updatePassword,
                 forgotPassword,

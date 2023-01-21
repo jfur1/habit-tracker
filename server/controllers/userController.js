@@ -17,13 +17,16 @@ export const registerUser = async(req, res) => {
     }
 
     // Check if user exists
-    const userExists = await connectionPool.query(`
+    const [userExists] = await connectionPool.query(`
     SELECT * 
     FROM users
     WHERE email = ?
     `, [email]);
 
-    if (userExists) {
+
+    console.log("UserExists?:", userExists)
+
+    if (userExists.length > 0) {
         res.status(400);
         throw new Error('User already exists')
     }
@@ -42,17 +45,15 @@ export const registerUser = async(req, res) => {
     VALUES (?, ?)
     `, [email, hashedPassword]);
 
+    console.log('Register user server res:', user)
+
     if (user) {
         res.status(201).json({
-          user_id: user.user_id,
-          first_name: user.first_name,
-          user_id: user.user_id,
-          email: user.email,
           token: generateToken(user.user_id),
         })
       } else {
-        res.status(400)
-        throw new Error('Invalid user data')
+        res.status(400).json({ msg: "Invalid user data. Please try again!" });
+        // throw new Error('Invalid user data')
     }
 
 }
