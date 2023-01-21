@@ -53,21 +53,31 @@ const BarChart = ({ entries, habit, setCurrentStreak, setBestStreak, setTotalCom
     console.log('tmpEntries:', tmpEntries)
     const startDate = entries[0]?.ymd 
     console.log('First entry for the selected goal:', formatDate(startDate))
-    // To set two dates to two variables
-    var date1 = new Date(startDate);
-    // To calculate the time difference of two dates
-    var Difference_In_Time = today.getTime() - date1.getTime();
-    // To calculate the no. of days between two dates
-    var Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
-    console.log("Number of days since start date:", Difference_In_Days)
-    var j = Difference_In_Days
-    for(var i = Difference_In_Days; i >= 0; i--){
-      var dateOffset = (24*60*60*1000) * j;
-      var dateString = formatDate(new Date(today.getTime() - dateOffset))
-      dates.push(dateString)
-      labels.push(dateString)
-      j--;
+
+    // Base case: startDate === today
+    const startDateStr = formatDate(startDate)
+    const todayDateStr = formatDate(today)
+    if(startDateStr === todayDateStr){
+      dates.push(todayDateStr)
+      labels.push(todayDateStr)
+    } else {
+      // To set two dates to two variables
+      var date1 = new Date(startDate);
+      // To calculate the time difference of two dates
+      var Difference_In_Time = today.getTime() - date1.getTime();
+      // To calculate the no. of days between two dates
+      var Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+      console.log("Number of days since start date:", Difference_In_Days)
+      var j = Difference_In_Days
+      for(var i = Difference_In_Days; i >= 0; i--){
+        var dateOffset = (24*60*60*1000) * j;
+        var dateString = formatDate(new Date(today.getTime() - dateOffset))
+        dates.push(dateString)
+        labels.push(dateString)
+        j--;
+      }
     }
+
     console.log("dates:", dates)
 
     dates.forEach((date) => {
