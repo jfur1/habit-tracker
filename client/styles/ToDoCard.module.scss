@@ -9,11 +9,14 @@
     font-size: clamp(20px, 22px, 25px);
     font-weight: 400;
     margin: 0.25em 0 ;
+    color: var(--font-color);
 }
 
 .desc{
   margin: 0;
-  font-size: clamp(15px, 16px, 18px);;
+  font-size: clamp(15px, 16px, 18px);
+  color: var(--secondary-font-color);
+
 }
 
 .iconContainer{
@@ -156,6 +159,7 @@
     vertical-align: middle;
     transform: rotate(45deg);
     transition: transform .25s;
+    color: var(--font-color);
 
     &.open{
         content: "\d7";
