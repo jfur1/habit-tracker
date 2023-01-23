@@ -11,7 +11,7 @@ const appearance = () => {
   const { user, setUser } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [wasUpdated, setWasUpdated] = useState(false)
+  const [wasUpdated, setWasUpdated] = useState(false);
 
   const goBack = () => {
     setLoading(true);
@@ -27,6 +27,7 @@ const appearance = () => {
       var updatedUser = {...user, theme: res.data.theme }
       setUser(updatedUser);
       setWasUpdated(true);
+      console.log('Saved preference: ', theme)
     }
   }
 
