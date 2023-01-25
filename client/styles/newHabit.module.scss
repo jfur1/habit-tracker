@@ -20,6 +20,19 @@
       animation: summonUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
     }
   }
+
+
+  .modalOpen.updateHabit{
+    display: block;
+    height: 98vh;
+    padding: 2.5em 0 0;
+    // margin: 1em 0 0;
+    // z-index: 1;
+    animation: fadeIn 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
+    .modalInner {
+      animation: summonUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
+    }
+  }
   
   .closeIcon {
     width: 36px;

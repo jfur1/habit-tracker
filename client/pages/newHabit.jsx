@@ -206,7 +206,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
                           id={'everyday'}
                           value={`everyday`}
                           onClick={() => handleFrequencyFilter('everyday')}
-                          style={selectedDays.length === 7 ? {backgroundColor: 'blue'} : {backgroundColor: 'transparent'}}
+                          style={selectedDays.length === 7 ? {backgroundColor: 'var(--secondary-color)'} : {backgroundColor: 'transparent'}}
                         >Everyday</p>
 
                         <p 
@@ -214,7 +214,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
                           id={'weekdays'}
                           value={`weekdays`}
                           onClick={() => handleFrequencyFilter('weekdays')}
-                          style={selectedDays.length===5 && !selectedDays.includes("Sat") && !selectedDays.includes("Sun") ? {backgroundColor: 'blue'} : {backgroundColor: 'transparent'}}
+                          style={selectedDays.length===5 && !selectedDays.includes("Sat") && !selectedDays.includes("Sun") ? {backgroundColor: 'var(--secondary-color)'} : {backgroundColor: 'transparent'}}
                         >Weekdays</p>
                         
                         <p 
@@ -222,7 +222,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
                           id={'weekends'}
                           value={`weekends`}
                           onClick={() => handleFrequencyFilter('weekends')}
-                          style={selectedDays.length===2 && selectedDays.includes("Sat") && selectedDays.includes("Sun") ? {backgroundColor: 'blue'} : {backgroundColor: 'transparent'}}
+                          style={selectedDays.length===2 && selectedDays.includes("Sat") && selectedDays.includes("Sun") ? {backgroundColor: 'var(--secondary-color)'} : {backgroundColor: 'transparent'}}
                         >Weekends</p>
                         
                       </div>
@@ -237,7 +237,7 @@ const NewHabit = ({ setShowNewHabitForm }) => {
                               key={idx}
                               value={day}
                               style={selectedDays.includes(day)
-                                ? {backgroundColor: 'blue'} 
+                                ? {backgroundColor: 'var(--secondary-color)'} 
                                 : {backgroundColor: 'transparent'}}
                               onClick={(e) => handleFrequencyFilter(day)}
                             >

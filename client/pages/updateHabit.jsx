@@ -134,7 +134,7 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
   
     return (
       <>
-        <div id="modal" className={`${styles.modalOpen}`}>
+        <div id="modal" className={styles['modalOpen'] + ' ' + styles['updateHabit']}>
           <div className={styles.contentTable}>
             <div className={styles.contentCell}>
               <div className={styles.modalInner}>
