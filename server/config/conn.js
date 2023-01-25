@@ -24,7 +24,7 @@ connectionPool = mysql.createPool({
         ? process.env.DB_PASSWORD : process.env.RDS_PASSWORD),
 
     database: (process.env.NODE_ENV === 'DEV' 
-        ? process.env.DB_NAME : ''),
+        ? process.env.DB_NAME : 'habit_tracker'),
 
     port: (process.env.NODE_ENV === 'DEV' 
         ? '' : process.env.RDS_PORT)
