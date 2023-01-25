@@ -6,8 +6,6 @@ import Axios from 'axios'
 import { useRouter } from 'next/router'
 // import { AuthContext } from '../src/context/auth-context.js'
 import styles from '../styles/Home.module.scss'
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
 import {AuthContext, useAuth} from '../src/contexts/auth-context.js'
 import LoadingScreen from './loading.jsx'
 

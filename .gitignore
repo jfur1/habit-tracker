@@ -21,6 +21,7 @@ client/node_modules
 # misc
 .DS_Store
 *.pem
+deploy.md
 
 # debug
 npm-debug.log*
