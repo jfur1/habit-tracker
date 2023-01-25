@@ -11,7 +11,8 @@
   
   .modalOpen {
     display: block;
-    height: 90vh;
+    height: 92vh;
+    padding: 1.5em 0 1em;
     // z-index: 1;
     animation: fadeIn 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
     .modalInner {
