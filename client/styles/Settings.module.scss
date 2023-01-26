@@ -72,6 +72,7 @@
         grid-template-columns: 1fr 3fr 0.3fr;
         align-items: center !important;
         padding: 0.25rem 0.5rem !important;
+        cursor: pointer;
         
         &:nth-child(1){
             border-top-left-radius: 6px;
@@ -86,6 +87,7 @@
         .label{
             font-size: large !important;
             margin: 1rem 0 !important;
+            color: var(--font-color) !important;
         }
 
         .icon{
