@@ -77,7 +77,7 @@ const login = () => {
                         Submit
                     </a>
                 </form>
-                <p>
+                <p className={styles.registerText}>
                     No account?&nbsp;
                     <Link href="/register">Register</Link>
                 </p>

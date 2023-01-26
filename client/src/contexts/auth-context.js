@@ -17,7 +17,14 @@ export const AuthProvider = ({ children }) => {
     const router = useRouter();
     const { setTheme } = useThemeContext();
     const [user, setUser] = useState(null)
-    const [isLoading, setLoading] = useState(true)
+    const [isLoading, setLoading] = useState(true);
+    // const unprotectedRoutes = [
+    //     '/',
+    //     '/login',
+    //     '/register',
+    //     '/forgot',
+    //     '/404'
+    // ]
 
     useEffect(() => {
         async function loadUserFromCookies() {
@@ -31,7 +38,15 @@ export const AuthProvider = ({ children }) => {
                 setUser(user);
                 setTheme(user.theme)
             }
-            setLoading(false)
+            setLoading(false);
+
+            // const valid = isUserAuthenticated();
+            // const path = router.pathname;
+            // console.log('isUserAuthenticated:', valid)
+            // console.log('pathname:', router.pathname)
+            
+            // if(!valid && !unprotectedRoutes.indexOf(path) >= 0)
+            //     router.push('/')
         }
         loadUserFromCookies()
     }, [])

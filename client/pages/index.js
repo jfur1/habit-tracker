@@ -80,8 +80,8 @@ export default function Home() {
                       Submit
                   </a>
               </form>
-              <div className={styles["center"]}>
-                <Link className={styles['forgot']} href="/forgot">
+              <div className={styles["forgot"]}>
+                <Link className={styles['forgotLink']} href="/forgot">
                   Forgot password?
                 </Link>
               </div>

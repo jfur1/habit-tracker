@@ -132,6 +132,13 @@ $card-padding: 40px;
 
   .forgot{
     color: var(--secondary-font-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em;
+    a:hover{
+        color: #03e9f4;
+    }
   }
   
   .input-box {
@@ -182,7 +189,7 @@ $card-padding: 40px;
   transition: .5s;
   margin-top: 5px;
   margin-bottom: 20px;
-  margin-left: calc(($card-width / 4));
+  margin-left: calc(($card-width / 4) + 20px);
   letter-spacing: 4px;
 
   &:hover {
@@ -277,4 +284,68 @@ $card-padding: 40px;
   .logo img {
     filter: invert(1);
   }
+}
+
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+  $card-width: 400px;
+  $card-padding: 40px;
+
+  .login-box {
+    width: $card-width;
+    padding: 2em 1em 1em;
+    // background: rgba(0, 0, 0, 0.451);
+    background: rgba(116, 116, 116, 0.451);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.247);
+    border-radius: 10px;
+    
+    h2 {
+        margin: 0 0 30px;
+        padding: 0;
+        color: #fff;
+        text-align: center;
+    }
+    
+    .input-box {
+        position: relative;
+    }
+  }
+
+  .seperator{
+    width: 55%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 40px 0 4px 0;
+  
+    .or{
+      display: inline-block;
+      position: relative;
+      color: var(--secondary-font-color);
+    }
+    .or::before{
+      // background: #ccd0d5;
+      background: var(--secondary-font-color);
+      content: '';
+      height: 1px;
+      position: absolute;
+      top: 50%;
+      width: 9999px;
+      margin-right: 15px;
+      right: 100%;
+    }
+    .or::after{
+      left: 100%;
+      margin-left: 15px;
+      // background: #ccd0d5;
+      background: var(--secondary-font-color);
+      content: '';
+      height: 1px;
+      position: absolute;
+      top: 50%;
+      width: 9999px;
+    }
+  }
+
 }

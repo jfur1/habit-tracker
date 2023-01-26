@@ -293,7 +293,7 @@ $grid-gap: 12px;
 
 .forgot_password{
     color: var(--font-color);
-
+    // When the device width is 768px and above (larger than tablets in portrait)
     .desc{
         margin: 0 0.5rem 0.5rem;
     }
@@ -324,5 +324,20 @@ $grid-gap: 12px;
             border-radius: 6px;
             font-size: medium
         }
+    }
+}
+
+@media (min-width: 768px){
+    .forgot_password{
+        max-width: 55%;
+        margin: auto;
+            
+        input{
+            height: 2rem;
+            text-indent: 0.5rem;
+            line-height: 1.4em;
+            font-size: medium;
+        }
+
     }
 }
