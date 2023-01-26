@@ -45,14 +45,14 @@ body {
   display: flex;
   flex-direction: column;
   // overflow: hidden;
-  background-color: var('--app-bg');
+  background-color: var('--app-bg') !important;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 ul {
@@ -67,7 +67,7 @@ ul {
   }
   body {
     color: white;
-    background: var(--app-bg);
+    background: var(--app-bg) !important;
   }
 }
 

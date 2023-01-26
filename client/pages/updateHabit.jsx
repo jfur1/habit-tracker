@@ -136,7 +136,6 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
       <>
         <div id="modal" className={styles['modalOpen'] + ' ' + styles['updateHabit']}>
           <div className={styles.contentTable}>
-            <div className={styles.contentCell}>
               <div className={styles.modalInner}>
               {showIconMenu 
                 ? 
@@ -270,7 +269,6 @@ const updateHabit = ({ setShowNewHabitForm, habit }) => {
                   </form>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </>

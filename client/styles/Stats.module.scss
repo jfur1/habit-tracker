@@ -21,6 +21,12 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 0;
+
+    a:-webkit-any-link {
+        text-decoration: none !important;
+        color: white;
+        cursor: pointer;
+    }
     
     .card{
         display: flex;

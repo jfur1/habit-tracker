@@ -41,7 +41,6 @@ const habits = () => {
     )
   }
   return (
-    <>
       <div className={styles.main}>
         <h1 className={styles["title"]}>Habits</h1>
 
@@ -60,16 +59,18 @@ const habits = () => {
                       pathname: ROUTE_POST_ID,
                       query: { id: habit.habit_id }
                     }}
+                    style={{ textDecoration: 'none !important' }}
+
                   >
                     <li
                       key={idx}
                       className={styles.card}
-                      style={{ backgroundColor: habit.color }}
+                      style={{ backgroundColor: habit.color, textDecoration: 'none !important' }}
                     >
-                      <span className={styles.iconContainer} style={{ margin: '1rem' }}>
+                      <span className={styles.iconContainer} style={{ margin: '1rem', textDecoration: 'none !important' }}>
                         {ICONS[habit.icon].icon}
                       </span>
-                      <h1 className={styles.title}>{habit.title}</h1>
+                      <h1 className={styles.title} style={{ textDecoration: 'none !important' }}>{habit.title}</h1>
                       <p></p>
                     </li>
                   </Link>
@@ -81,8 +82,7 @@ const habits = () => {
 
 
         <NavBar currentIdx={1} showNewHabitForm={showNewHabitForm} setShowNewHabitForm={setShowNewHabitForm}/>
-      </div>
-    </>
+    </div>
   )
 }
 

@@ -14,7 +14,8 @@
     height: 92vh;
     padding: 3.5em 0 0;
     margin: 1em 0 0;
-    // z-index: 1;
+      overflow-y: auto;
+      // z-index: 1;
     animation: fadeIn 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
     .modalInner {
       animation: summonUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s forwards;
@@ -54,7 +55,7 @@
   }
   
   .modalInner {
-    width: 100vw;
+    width: 100%;
     color: var(--color, rgba(255, 255, 255, 0.577));
     background: var(--habit-form);
     border-radius: 1rem;
@@ -74,8 +75,10 @@
     }
 
     .formTitle{
+      font-size: xx-large;
       color: var(--font-color);
-      font-weight: 400;
+      font-weight: 300;
+      margin: 1.5rem 0 1rem;
     }
 
     .submit{
@@ -90,6 +93,8 @@
     justify-content: center;
 
     .title{
+      font-size: x-large;
+      margin: 1rem 0;
       font-weight: 400;
       color: var(--font-color);
     }
@@ -124,9 +129,10 @@
 
 
     .title{
+      font-size: x-large;
+      margin: 1rem 0;
       font-weight: 400;
       color: var(--font-color);
-
     }
     .counter{
       display: flex;
@@ -166,6 +172,8 @@
     flex-direction: column;
 
     .title{
+      font-size: x-large;
+      margin: 1rem 0;
       font-weight: 400;
       color: var(--font-color);
     }
@@ -214,16 +222,18 @@
         top: 0;
         left: 0;
         color: #222;
-        padding: 0 1rem;
+        padding: 0.5rem 1rem;
         font-size: 18px;
+        cursor: pointer;
     }
 
     .ok{
       position: absolute;
       top: 0;
       right: 0;
-      padding: 0 1rem;
+      padding: 0.5rem 1rem;
       font-size: 18px;
+      cursor: pointer;
     }
     
     .iconsContainer{
@@ -231,6 +241,7 @@
       position: relative;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-gap: 1rem;
+
     }
   }
 
@@ -316,5 +327,17 @@
 
   .modalInner {
     width: 49vw;
+  }
+  .contentTable {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modalOpen.updateHabit{
+    height: 98vh;
+    padding: 0em 0 0;
   }
 }

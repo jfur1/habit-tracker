@@ -21,6 +21,7 @@ $card-padding: 40px;
         color: var(--font-color);
     }
     .backBtnContainer{
+        cursor: pointer;
         position: absolute;
         left: 0;
         margin-left: 2.75em;
@@ -93,7 +94,7 @@ $card-padding: 40px;
     transition: .5s;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: calc(($card-width / 4) + 20px) ;
+    margin-left: calc(($card-width / 4));
     letter-spacing: 4px;
 
     &:hover {
@@ -121,6 +122,10 @@ $card-padding: 40px;
 @media (min-width: 768px){
     $card-width: 400px;
     $card-padding: 40px;
+
+    .top .backBtnContainer{
+        left: 10vw;
+    }
   
     .register-box {
         width: $card-width;
@@ -179,5 +184,8 @@ $card-padding: 40px;
         width: 9999px;
       }
     }
-  
+    .register-box form a.submit{
+        margin-left: calc(($card-width / 4) + 20px);
+
+    }
   }

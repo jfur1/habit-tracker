@@ -7,6 +7,7 @@
     // background-color: var(--calendar-bg);
     border-radius: 16px;
     padding: 0.25rem 1rem 0.25rem 1rem;
+    width: 100%;
 
     &-header{
         // border: 1px solid green;
@@ -124,6 +125,7 @@
 // When the device width is 768px and above (larger than tablets in portrait)
 @media (min-width: 768px){
   .calendar{
-    max-width: 500px;
+    max-width: 400px;
+    width: 100%;
   }
 }

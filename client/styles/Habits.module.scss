@@ -1,3 +1,5 @@
+$link-decoration: none !important;
+
 .main{
     margin: 0;
     padding: 0;
@@ -11,6 +13,12 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 0;
+
+    a:-webkit-any-link {
+        text-decoration: none !important;
+        color: white;
+        cursor: pointer;
+    }
     
     .card{
         display: flex;
@@ -23,6 +31,7 @@
             font-size: 30px;
             font-weight: 400;
             margin: 1.25rem 0.5rem;
+            text-decoration: none !important;
         }
     }
 
@@ -31,6 +40,8 @@
         align-items: center;
         justify-content: center;
         transform: scale(2);
+        text-decoration: none !important;
+
     }
 }
 

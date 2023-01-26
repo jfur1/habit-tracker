@@ -1,27 +1,33 @@
 import React, { useState } from 'react'
+import Dropdown from 'react-bootstrap/Dropdown';
+import { BsThreeDotsVertical } from 'react-icons/bs'
 import styles from '../../styles/Dropdown.module.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Dropdown = () => {
-    const [selectedValue, setSelectedValue] = useState('Orange')
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
-    }
+const CustomDropdown = ({ updateHabit, setShowConfirmModal }) => {
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+          href=""
+          className={styles['my-toggle']}
+          ref={ref}
+          onClick={e => {
+            e.preventDefault();
+            onClick(e);
+          }}
+        >
+            <BsThreeDotsVertical className={styles['my-toggle']}/>
+          {children}
+        </a>
+    ));
     return (
-        <div className={styles['custom-select']}>
-            <select 
-                className={styles.select}
-                value={selectedValue} 
-                onChange={handleChange}
-            >
-                <option value="Orange">Orange</option>
-                <option value="Pineapple">Pineapple</option>
-                <option value="Cherry">Cherry</option>
-                <option value="Banana">Banana</option>
-                <option value="Pear">Pear</option>
-            </select>
-            <p className={styles.msg}>You selected {selectedValue}</p>
-        </div>      
+        <Dropdown drop={'start'}>
+            <Dropdown.Toggle as={CustomToggle}/>
+            <Dropdown.Menu align={'end'}> 
+            <Dropdown.Item onClick={updateHabit}>Edit Habit</Dropdown.Item>
+            <Dropdown.Item onClick={() => setShowConfirmModal(true)}>Delete Habit</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
     )
 }
 
-export default Dropdown
+export default CustomDropdown

@@ -189,7 +189,7 @@ $card-padding: 40px;
   transition: .5s;
   margin-top: 5px;
   margin-bottom: 20px;
-  margin-left: calc(($card-width / 4) + 20px);
+  margin-left: calc(($card-width / 4));
   letter-spacing: 4px;
 
   &:hover {
@@ -310,6 +310,10 @@ $card-padding: 40px;
     .input-box {
         position: relative;
     }
+  }
+
+  .login-box form a.submit {
+    margin-left: calc(($card-width / 4) + 20px);
   }
 
   .seperator{

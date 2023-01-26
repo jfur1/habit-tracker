@@ -11,15 +11,11 @@ main.container{
     cursor: pointer;
 }
 
-.moreBtn{
-    transform: scale(1.75);
-}
-
 .top{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.25rem 1rem 0;
+    padding: 2rem 1rem 0;
     color: var(--font-color);
 
     .pageTitle{
@@ -188,9 +184,15 @@ main.container{
     align-items: center;
     justify-content: center;
 
+    h1{
+        color: var(--font-color);
+        font-size: xx-large;
+        margin: 1rem;
+    }
     p{
         padding: 0 1rem;
         font-size: 18px;
+        color: var(--font-color);
     }
     
     .btnRow{
@@ -217,10 +219,35 @@ main.container{
     }
 }
 
+.calendarContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 // When the device width is 768px and above (larger than tablets in portrait)
 @media (min-width: 768px){
     main.container{
         margin: 0;
-        padding: 2rem 20vw;
+        padding: 0 20vw 0;
+        margin-bottom: 1rem;
+    }
+
+    .top{
+        padding: 2rem 0 0;
+    }
+
+    .modal{
+        width: 50vw;
+        .closeModal{
+            cursor: pointer;
+        }
+
+        .confirmModal{
+            cursor: pointer;
+            &:hover{
+                background-color: rgb(197, 56, 56);
+            }
+        }
     }
 }
