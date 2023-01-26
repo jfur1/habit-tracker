@@ -25,6 +25,7 @@
     margin-left: 2.75em;
     transform: scale(1.75);
     color: var(--font-color);
+    cursor: pointer;
 }
 
 
@@ -327,7 +328,51 @@ $grid-gap: 12px;
     }
 }
 
+// When the device width is 768px and above (larger than tablets in portrait)
 @media (min-width: 768px){
+    .main{
+        align-items: center;
+    }
+    .list{
+        width: 50vw;
+    }
+
+    .backBtnContainer{
+        transform: scale(2.5);
+        left: 10vw;
+    }
+
+    .about{
+        padding: 2rem 20vw
+    }
+
+    .account{
+        margin: 2rem 20vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        input.email{
+            width: 25vw;
+        }
+        .row{
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+    }
+
+    .appearance{
+        margin: 2rem 20vw;
+    }
+
+    .help{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .faq{
+            width: 65vw;
+        }
+    }
+
     .forgot_password{
         max-width: 55%;
         margin: auto;

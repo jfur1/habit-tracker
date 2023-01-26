@@ -70,3 +70,11 @@
         color:rgb(70, 151, 221);
     }
 }
+
+
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+    .habits .card{
+        width: 55vw;
+    }
+}

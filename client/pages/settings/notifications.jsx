@@ -15,6 +15,9 @@ const notifications = () => {
           </span>
           <h1 className={styles["title"]}>Notifications</h1>
       </div>
+      <div className={styles["body"]}>
+        <p>🚧 Under Construction</p>
+      </div>
     </div>
   )
 }

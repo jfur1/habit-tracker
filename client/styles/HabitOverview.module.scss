@@ -8,6 +8,7 @@ main.container{
 
 .backBtn{
     transform: scale(2);
+    cursor: pointer;
 }
 
 .moreBtn{
@@ -30,6 +31,7 @@ main.container{
 
     .backBtnContainer{
         display: flex;
+        cursor: pointer;
     }
 }
 
@@ -212,5 +214,13 @@ main.container{
         font-size: 20px;
         padding: 0.5rem 1rem;
         margin: 0.5rem 0 0.5rem 1rem;
+    }
+}
+
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+    main.container{
+        margin: 0;
+        padding: 2rem 20vw;
     }
 }

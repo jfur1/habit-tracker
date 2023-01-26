@@ -194,8 +194,9 @@
     padding: 1rem;
 }
 
-// .group{
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+  .container{
+    width: 50vw;
+  }
+}

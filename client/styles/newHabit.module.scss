@@ -46,7 +46,6 @@
   .contentTable {
     width: 100%;
     height: 100%;
-    overflow-y: auto;
   }
   
   .modalContent {
@@ -60,6 +59,7 @@
     background: var(--habit-form);
     border-radius: 1rem;
     transform: scale(0.95) translateY(10%);
+    
   }
   
   .modalHeader {
@@ -70,6 +70,7 @@
 
     .cancel{
       color: var(--secondary-font-color);
+      cursor: pointer;
     }
 
     .formTitle{
@@ -79,6 +80,7 @@
 
     .submit{
       color: var(--color, rgba(255, 238, 86, 0.864));
+      cursor: pointer;
     }
   }
 
@@ -111,6 +113,7 @@
       border-radius: 5px;
       padding: 5px;
       margin: 0 5px;
+      cursor: pointer;
     }
   }
 
@@ -129,6 +132,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
 
       .number{
         font-size : 24px;
@@ -175,12 +179,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 
   .iconPicker{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 
 
@@ -189,7 +195,7 @@
     z-index: 2;
     top: 50%;
     left: 50%;
-    width: 90vw;
+    width: 90%;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 4rem 1rem 1rem;
@@ -281,3 +287,34 @@
     }
   }
   
+
+
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+  // Modal content
+  .modalOpen {
+      padding: 0;
+      overflow-y: auto;
+
+      form{
+        width: 90%;
+        margin: 0;
+    }
+  }
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input{
+      width: 90%;
+    }
+    textarea{
+      width: 98%;
+    }
+  }
+
+  .modalInner {
+    width: 49vw;
+  }
+}

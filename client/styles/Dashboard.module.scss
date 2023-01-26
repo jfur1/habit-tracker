@@ -144,3 +144,31 @@
     font-weight: 350;
     margin: 1rem 0 0.5rem 1.5rem;
 }
+
+
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+    .main{
+        margin: 0 2em;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .weeklyRow{
+        li{
+            width: calc(60% / 7);
+
+            .day{
+                margin: 0;
+                font-size: 22px;
+            }
+            .date{
+                margin: 0;
+                font-size: 20px;
+            }
+        }
+    }
+}

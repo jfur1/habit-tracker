@@ -1,5 +1,12 @@
 .container{
     height: 30vh;
-    width: 95vw;
+    width: 95%;
     padding-left: 0.25rem;
+}
+
+// When the device width is 768px and above (larger than tablets in portrait)
+@media (min-width: 768px){
+    .container{
+        height: 35vh;
+    }
 }

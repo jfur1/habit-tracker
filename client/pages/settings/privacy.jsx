@@ -14,6 +14,10 @@ const privacy = () => {
               <p className={styles["backBtn"]} onClick={goBack}>&larr;</p>
           </span>
           <h1 className={styles["title"]}>Privacy & Security</h1>
+
+      </div>
+      <div className={styles["body"]}>
+        <p>🚧 Under Construction</p>
       </div>
     </div>
   )
