@@ -87,15 +87,23 @@
         .label{
             font-size: large !important;
             margin: 1rem 0 !important;
-            color: var(--font-color) !important;
+            color: var(--font-color);
+            .logout{
+                color: red !important;
+            }
         }
 
         .icon{
             transform: translate3d(2rem, 0, 0) scale(1.75);
+            color: var(--font-color);
+            .logout{
+                color: red !important;
+            }
         }
 
         .rarr{
             transform: translate3d(-1rem, 0, 0) scale(1.25);
+            color: var(--font-color) !important;
         }
 
     }

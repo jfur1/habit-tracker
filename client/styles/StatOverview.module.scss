@@ -172,7 +172,7 @@ input.radio {
 input.radio {
 	&:checked {
 		& + label {
-			color: var(--font-color);
+			color: rgb(209, 209, 209);
 		}
 	}
 }
@@ -206,7 +206,7 @@ input[id="radio-3"] {
 	display: flex;
 	height: 54px;
 	width: 200px;
-	background-color: var(--secondary-color);
+	background-color: rgb(114, 114, 114);
 	z-index: 1;
 	border-radius: 99px; // just a high number to create pill effect
 	transition: 0.25s ease-out;

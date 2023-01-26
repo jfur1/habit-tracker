@@ -84,8 +84,8 @@ const settings = () => {
             </Link>
 
             <li className={styles["item"]} onClick={logout}>
-            <MdLogout className={styles['icon']} style={{ color: 'red' }}/>
-            <p className={styles["label"]}>Logout</p>
+            <MdLogout className={styles['icon'] + ' ' + styles['logout']} style={{ color: 'red' }}/>
+            <p className={styles["label"] + ' ' + styles['logout']}>Logout</p>
             </li>
 
         </ul>
