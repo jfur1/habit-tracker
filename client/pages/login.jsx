@@ -66,7 +66,7 @@ const login = () => {
             <div className={styles['login-box']}>
                 <form>
                     <div className={styles['input-box']}>
-                        <input type="email" name="email" id='email' value={email} onChange={onChange} required/>
+                        <input type="text" name="email" id='email' value={email} onChange={onChange} required/>
                         <label>Email</label>
                     </div>
                     <div className={styles['input-box']}>
