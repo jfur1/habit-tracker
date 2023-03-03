@@ -45,19 +45,19 @@ const NavBar = ({ currentIdx, showNewHabitForm, setShowNewHabitForm }) => {
                 <nav className={styles.navbar}>
                     <ul className={styles.iconList}>
                         <li className={styles.icons}>
-                            <FaHome className={`${styles.icon} ${router.pathname === '/dashboard' ? styles.active : ""}`} onClick={() => handleClick(0)}/>
+                            <FaHome className={`${styles.icon} ${router.pathname === '/dashboard' && !showNewHabitForm ? styles.active : ""}`} onClick={() => handleClick(0)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaLayerGroup className={`${styles.icon} ${router.pathname === '/habits' ? styles.active : ""}`} onClick={() => handleClick(1)}/>
+                            <FaLayerGroup className={`${styles.icon} ${router.pathname === '/habits' && !showNewHabitForm ? styles.active : ""}`} onClick={() => handleClick(1)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaRegPlusSquare className={`${styles.icon} ${router.pathname === '/newHabit' ? styles.active : ""}`} onClick={() => handleClick(2)}/>
+                            <FaRegPlusSquare className={`${styles.icon} ${showNewHabitForm ? styles.active : ""}`} onClick={() => handleClick(2)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaRegChartBar className={`${styles.icon} ${router.pathname === '/stats' ? styles.active : ""}`} onClick={() => handleClick(3)}/>
+                            <FaRegChartBar className={`${styles.icon} ${router.pathname === '/stats' && !showNewHabitForm ? styles.active : ""}`} onClick={() => handleClick(3)}/>
                         </li>
                         <li className={styles.icons}>
-                            <FaUserAlt className={`${styles.icon} ${router.pathname === '/settings' ? styles.active : ""}`} onClick={() => handleClick(4)}/>
+                            <FaUserAlt className={`${styles.icon} ${router.pathname === '/settings' && !showNewHabitForm ? styles.active : ""}`} onClick={() => handleClick(4)}/>
                         </li>
                     </ul>
                 </nav>

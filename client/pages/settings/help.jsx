@@ -19,20 +19,35 @@ const help = () => {
       <div className={styles["faq"]}>
         <h3 className={styles["title"]}>FAQ</h3>
 
-        <p className={styles["question"]}>Why is the sky blue?</p>
+        <p className={styles["question"]}>Can I track more than one habit at a time?</p>
         <p className={styles["answer"]}>
-          {`As white light passes through our atmosphere, tiny air molecules cause it to 'scatter'. The scattering caused by these tiny air molecules (known as Rayleigh scattering) increases as the wavelength of light decreases. Violet and blue light have the shortest wavelengths and red light has the longest.`}
+          {`Yes! Habit Tracker App allows you to create and track multiple habits at the same time. You can view all of your habits on the stats page, which displays completion data for each habit.`}
         </p>
 
-        <p className={styles["question"]}>Lorem Ipsum</p>
+        <p className={styles["question"]}>What types of habits can I track?</p>
         <p className={styles["answer"]}>
-          {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis beatae quisquam enim voluptate non aliquid veniam voluptas voluptatem temporibus consectetur sunt eaque tenetur earum doloremque ut, fuga ex impedit.`}
+          {`You can track any habit you'd like with the Habit Tracker App. Some popular habits to track include exercise, meditation, drinking water, and reading.`}
         </p>
 
 
-        <p className={styles["question"]}>Lorem Ipsum</p>
+        <p className={styles["question"]}>Can I change the attributes of a habit after I've created it?</p>
         <p className={styles["answer"]}>
-          {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis beatae quisquam enim voluptate non aliquid veniam voluptas voluptatem temporibus consectetur sunt eaque tenetur earum doloremque ut, fuga ex impedit.`}
+          {`Yes, you can edit the attributes of a habit at any time. Simply go to the habit's details page and click the "Edit" button. You can then update the habit's name, description, frequency, and times per day.`}
+        </p>
+
+        <p className={styles["question"]}>Can I delete a habit?</p>
+        <p className={styles["answer"]}>
+          {`Yes, you can delete a habit at any time. Simply go to the habit's details page and click the "Delete" button. Please note that deleting a habit will permanently delete all of the habit's completion data.`}
+        </p>
+
+        <p className={styles["question"]}>Can I delete a habit?</p>
+        <p className={styles["answer"]}>
+          {`If you miss a day of a habit, the corresponding day on the habit's weekly schedule will show up as incomplete. You can still check off the habit on a later day, but the habit's completion data will not be updated for the missed day.`}
+        </p>
+
+        <p className={styles["question"]}>Can I view my habit completion data over time?</p>
+        <p className={styles["answer"]}>
+          {`Yes, the Habit Tracker App includes a chart on the dashboard that displays your habit completion data over time. The chart shows your completion percentage for each habit, as well as your overall completion percentage.`}
         </p>
       </div>
 
