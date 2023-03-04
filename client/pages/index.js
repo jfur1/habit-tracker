@@ -14,6 +14,8 @@ export default function Home() {
     const [loading, setLoginLoading] = useState(false)
     const { isUserAuthenticated, isLoading, setUser, userLogin, setLoading } = useAuth();
 
+  const date = new Date()
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -89,9 +91,9 @@ export default function Home() {
           </Link>
       </main>
 
-      {/* <footer className={styles.footer}>
-        
-      </footer> */}
+      <footer className={styles.footer}>
+        Habit Tracker {date.getFullYear()} &copy;        
+      </footer>
     </div>
   )
 }
